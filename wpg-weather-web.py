@@ -161,18 +161,18 @@ def shortFDetermine(FDetIn): #Used to determine forecast, called by pages 1-3, 6
 
 def tempDetermine(dirty_TempIn):
         tempDirty = (dirty_TempIn[140:150]) #Isloates a section of the long string of data from NOAA, temp value will be surrounded by garbage data
-        tempClean = re.sub("\D", "", tempDirty) #Pulls only numbers from data, so in theory only the temp value will be left
+        tempClean = re.sub("\\D", "", tempDirty) #Pulls only numbers from data, so in theory only the temp value will be left
         return tempClean
 
 def precipDetermine(dirty_precipIn): #Works similar to tempDetermine
         precipDirty = (dirty_precipIn[255:275])
-        precipClean = re.sub("\D", "", precipDirty)
+        precipClean = re.sub("\\D", "", precipDirty)
         return precipClean
 
 #Set current humidity. Works similar to tempDetermine function.
 def humidDetermine(humidIn):
     humidDirty = (humidIn[355:405])
-    humidNums = re.sub("\D", "", humidDirty)
+    humidNums = re.sub("\\D", "", humidDirty)
     humidOut = (humidNums[0:2])
     return humidOut
 
@@ -198,7 +198,7 @@ def WinDirDetermine(windDirtyIn):
 
 def WindSpdDetermine(WindSpdIn):
     WindSpdDirty = (WindSpdIn[405:430]) #originally 410:430 #Works similar to tempDetermine function
-    WindStr = re.sub("\D", "", WindSpdDirty)
+    WindStr = re.sub("\\D", "", WindSpdDirty)
     Windint = WindStr
     if Windint.isdigit(): #Checks if Windit is a number, if there's no wind there will be no value
          return str(Windint)
@@ -207,7 +207,7 @@ def WindSpdDetermine(WindSpdIn):
 
 def dewDetermine(dewIn):
     dewDirty = (dewIn[310:345]) #Pull section from current weather info
-    dewRaw = re.sub("\D", "", dewDirty) #Pull numbers from section
+    dewRaw = re.sub("\\D", "", dewDirty) #Pull numbers from section
     dewC = (dewRaw[0:2]) + "." + (dewRaw[3:5]) #Pull only 4 digits in form xx.xx. This is in celcius
     dewC_S = float(dewC) #Convert string (dewC) to float data type 
     dewF = (dewC_S * 1.8) + 32 #Convert C to F
@@ -217,13 +217,13 @@ def dewDetermine(dewIn):
 
 def pressureDetermine(pressureIn):
     pressureDirty = (pressureIn[950:1050]) #Works similar to setting current temp
-    pressureNum = re.sub("\D", "", pressureDirty)
+    pressureNum = re.sub("\\D", "", pressureDirty)
     PressureOut = (pressureNum[0:3] + "." + pressureNum[4:5]) #Puts pressure in xxx.x format
     return PressureOut
 
 def visDetermine(visIn):
     visDirty = (visIn[1100:1200]) #Works similar to setting current temp
-    visNum = re.sub("\D", "", visDirty)
+    visNum = re.sub("\\D", "", visDirty)
     VisibilityOut = (visNum[0:2]) #Pulls only first 2 digits
     return VisibilityOut
 
