@@ -1,0 +1,16 @@
+services:
+  wpg-weather-web:
+    container_name: wpg-weather-web
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 9000:9000
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    environment:
+      - "WPG_ZIP=48205"
+      - "WPG_MUSIC=ON"
+      - "WPG_RSSFEED=https://www.wxyz.com/news/region/detroit.rss"

@@ -22,13 +22,13 @@ prog = "wpg-weather-web"
 ver = "3.1"
 
 # environment variables
-## "Music" Enables or disables music player, ON to turn it on, and anyhing else to disable it
-Music = OFF
+## "Music" Enables or disables music player, ON to turn it on, and anyhing else to disable it.
+Music = os.getenv('WPG_MUSIC', "ON")
 ## "url" is the source for local news feeds.
-url = "https://www.wkyc.com/feeds/syndication/rss/news/local"
+url = os.getenv('WPG_RSSFEED', "https://feeds.nbcnews.com/nbcnews/public/news")
 ## "ZIP" is a valid US zip code.
-ZIP = 97035
-### get the city name from the zip code
+ZIP = os.getenv('WPG_ZIP', "60601")
+## get the city name from the zip code
 zipsearch = SearchEngine(simple_zipcode=True)
 zipresult = zipsearch.by_zipcode(ZIP)
 Pg1_City = zipresult.post_office_city.upper()
@@ -66,7 +66,7 @@ root = Tk()
 root.attributes('-fullscreen',True)
 root.geometry("720x480") # this must be 720x480 for a proper filled out screen on composite output. 640x480 will have black bar on RH side. use 720x576 for PAL.
 root.config(cursor="none", bg="green")
-root.wm_title("wpg-weatherchan")
+root.wm_title("wpg-weather-web")
 updateTimer = 1800000 #30 minutes
 current_time = datetime.datetime.now()
 
@@ -277,10 +277,11 @@ def weekData(): #This is used to setup data used on page 3, this was tricky to f
     for i in res:
         print(i) #Prints data to stdout, which has been redirected to a text file
     sys.stdout = sys.__stdout__ #Changes stdout back to normal
+curr_weaval=""
 def pullWeatherData(): #Obtaining weather data from NWS/NOAA
 #Get page 1 and 2 weather data
     debug_msg("Getting Page 1 and 2 Weather Data",1)
-    global curr_weaval #Export all variables to outside of function. Without this nothing outside of this function will be able to access the variables, which would make the program unusable
+    #Export all variables to outside of function. Without this nothing outside of this function will be able to access the variables, which would make the program unusable
     global Pg6_C1_curr_weaval
     global Pg6_C2_curr_weaval
     global Pg6_C3_curr_weaval
@@ -974,7 +975,7 @@ clock()
 
 # Title - Top LEFT
 debug_msg("ROOT-placing Title Text",1)
-Title = Label(root, text="ENVIORNMENT USA", font=("VCR OSD Mono", 22, "bold"), fg="white", bg="green")
+Title = Label(root, text="⛅ THE WEATHER CHANNEL", font=("VCR OSD Mono", 22, "bold"), fg="white", bg="green")
 Title.place(x=0, y=40)
 
 # total number of groups broken up to update sections of weather data, to keep update time short
