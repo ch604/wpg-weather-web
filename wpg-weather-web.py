@@ -1,6 +1,7 @@
 # Retro Winnipeg Weather Channel
 # Original By probnot
 # Updated/modified for USA by TechSavvvvy
+# Updated for web by ch604
 
 from tkinter import *
 import time
