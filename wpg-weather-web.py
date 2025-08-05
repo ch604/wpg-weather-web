@@ -14,26 +14,24 @@ import random # for background music
 import os # for background music
 import re # for word shortener
 from noaa_sdk import NOAA #Used to import data from National Weather Service, added by -TS
+from usazipcode import SearchEngine
 import linecache
 import sys
-prog = "wpg-usa"
-ver = "3.0"
-Music = OFF #Enables or disables music player, ON to turn it on, and anyhing else to disable it
-#probnot's Retro Winnipeg Weather Channel USA version by TechSavvvvy
-#Started on June 27, 2024, last updated August 6, 2024
 
-#Change log
+prog = "wpg-weather-web"
+ver = "3.1"
 
-#V3.0
-    #Fixed mispelling of forecast, was forcast before.
-    #Removed previous change log entries to save space, will be in a dedicated file on GitHub
-    #Removed env_canda error from RSS feed updater (I usually didn't run the program long enough to get it, lol)
-    #Fixed issue with rainPoss where 80% or above would cause the program to crash due to an incorrect </> sign, also added else statement to prevent future crashing
-    #Changed screen routine debug messages to 3 priorty
-    #Converted previous print messages used for troubleshooting updater to debug messages with a 2 priority
-    #Added diagnostic priority to probnot's debug message function
-ZIP = 97035 #Enter USA ZIP code here, added by -TS, TX-75007 Kill Devil Hills 27948
-Pg1_City = "PORTLAND"
+# environment variables
+## "Music" Enables or disables music player, ON to turn it on, and anyhing else to disable it
+Music = OFF
+## "url" is the source for local news feeds.
+url = "https://www.wkyc.com/feeds/syndication/rss/news/local"
+## "ZIP" is a valid US zip code.
+ZIP = 97035
+### get the city name from the zip code
+zipsearch = SearchEngine(simple_zipcode=True)
+zipresult = zipsearch.by_zipcode(ZIP)
+Pg1_City = zipresult.post_office_city.upper()
 
 
 Pg6_C1_Name = "DETRIOT" #Set city name for the first city on page 6, used only for looks
@@ -480,8 +478,6 @@ WindSpd = WindSpdDetermine(curr_weaval)
 humid = humidDetermine(curr_weaval)
 precip = precipDetermine(curr_weaval)
 shortForecast = shortFDetermine(curr_weaval)
-PageNum = " "
-startUpdate = " "
 debug_msg("Launching Screen Routine",1) #Used to send message to CLI that the screen routine will begin, also let's you know all weather data has been successfully obtained
 debug_msg(("Current Hour is: " + str(current_time.hour)),2)
 debug_msg(("Update Hour is: " + str(UpdateHour)),2)
@@ -530,7 +526,7 @@ def weather_page(PageColour, PageNum): #Written by probnot
         debug_msg(("WEATHER_PAGE-display page " + str(PageNum)),3) 
        # PageNum = PageNum +3 #Added by TS to skip forecast continued pages, comment out or remove this line to bring them back
         X_VAL = 80
-        s1 = ("        " + Pg1_City + " CITY FORECAST")
+        s1 = ("        " + Pg1_City + " FORECAST")
         s2 = ("TODAY'S WEATHER WILL BE " + shortForecast + ".")
         s3 = ("TODAY WILL BE  A " + shortTemp + " DAY." + temp + " F")
         s4 = ("THERE IS A " + rainPoss + " CHANCE OF RAIN. " + precip + " %")
@@ -790,7 +786,7 @@ def weather_page(PageColour, PageNum): #Written by probnot
         s8 = " "
         startUpdate = 1
     elif (PageNum == 10):
-#        global startUpdate
+        global startUpdate
         startUpdate = 0
         # ===================== Screen 10 =====================
         Pg6_C1_precip = precipDetermine(Pg6_C1_curr_weaval)
@@ -878,7 +874,6 @@ def bottom_marquee(grouptotal):
     for r in range(width): #create an empty string of 35 characters
         pad = pad + " " 
 
-    url = "https://www.wkyc.com/feeds/syndication/rss/news/local"
     wpg = feedparser.parse(url)
     debug_msg("BOTTOM_MARQUEE-RSS feed refreshed",1)
 

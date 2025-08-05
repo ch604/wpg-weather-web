@@ -1,4 +1,4 @@
 FROM python:3.12-slim
 ADD wpg-weather-web.py .
-RUN pip install NOAA pygame feedparser noaa_sdk
+RUN pip install NOAA pygame feedparser noaa_sdk uszipcode
 CMD ["python", "./wpg-weather-web.py"]
