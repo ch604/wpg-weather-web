@@ -11,6 +11,6 @@ services:
       - 1.1.1.1
       - 1.0.0.1
     environment:
-      - "WPG_ZIP=48205"
+      - "WPG_HOMEZIP=48205"
       - "WPG_MUSIC=ON"
       - "WPG_RSSFEED=https://www.wxyz.com/news/region/detroit.rss"

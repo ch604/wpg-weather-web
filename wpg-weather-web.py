@@ -10,7 +10,7 @@ import re # for word shortener
 
 from tkinter import *
 from noaa_sdk import NOAA #Used to import data from National Weather Service, added by -TS
-from usazipcode import SearchEngine
+from uszipcode import SearchEngine
 
 prog = "wpg-weather-web"
 ver = "3.1"
@@ -20,21 +20,38 @@ ver = "3.1"
 Music = os.getenv('WPG_MUSIC', "ON")
 ## "url" is the source for local news feeds.
 url = os.getenv('WPG_RSSFEED', "https://feeds.nbcnews.com/nbcnews/public/news")
-## "ZIP" is a valid US zip code.
-ZIP = os.getenv('WPG_ZIP', "60601")
+## "homezip" is a valid US zip code.
+homezip = os.getenv('WPG_HOMEZIP', "60601")
+## "extrazips" is an array of 21 additional zip codes which support extra pages of "nationwide weather"
+extrazips = [48127,42127,10001,98039,60007,47750,43537,77301,43004,36043,27513,95758,32301,20500,27948,96795,90001,89166,29572,27959,14301]
+
+# store weather for a zip code
+class CityWeather:
+	def __init__(self, zip):
+		self.
 
 # get state/city from a zip code
-class zipsearch:
+class ZipData:
 	def __init__(self, zip):
-		z = SearchEngine(simple_zipcode=True)
-		self = z.by_zipcode(zip)
+		self.zipdata = SearchEngine(simple_zipcode=True).by_zipcode(zip)
 	
-	def to_state(self):
-		return self.state.upper()
+	def get_state(self):
+		if self.zipdata:
+			return self.zipdata.state.upper()
+		return None
 	
-	def to_city(self):
-		return self.post_office_city.upper()
+	def get_city(self):
+		if self.zipdata:
+			return self.zipdata.post_office_city.upper()
+		return None
 
+zip_objects = []
+
+for zipcode in extrazips:
+	zip_obj = ZipData(zipcode)
+	zip_objects.append(zip_obj)
+
+for i in range(1, 7):
 
 Pg6_C1_Name = "DETRIOT" #Set city name for the first city on page 6, used only for looks
 Pg6_C1_State = "MI" #Set 2 digit state abbreviation for first city on page 6, also only used for looks
@@ -275,7 +292,7 @@ def weekData(): #This is used to setup data used on page 3, this was tricky to f
     WeeklyData = open("/tmp/weekData.txt", "w") #Creates file to be written to, overwrites if it already exists
     sys.stdout = WeeklyData #Changes standard out of console (what you see in the terminal window when the progrma outputs text) to go to the text file instead
     n = NOAA() #Same thing as pullData
-    res = n.get_forecasts(ZIP, 'US')
+    res = n.get_forecasts(homezip, 'US')
     for i in res:
         print(i) #Prints data to stdout, which has been redirected to a text file
     sys.stdout = sys.__stdout__ #Changes stdout back to normal
@@ -305,7 +322,7 @@ def pullWeatherData(): #Obtaining weather data from NWS/NOAA
     global Pg8_C5_curr_weaval
     global Pg8_C6_curr_weaval
     global Pg8_C7_curr_weaval
-    curr_weaval = pullData(ZIP) #Setup page 1 data using pullData function
+    curr_weaval = pullData(homezip) #Setup page 1 data using pullData function
     weekData() #Setup page 3 data using weekData function
     Pg6_C1_curr_weaval = pullData(Pg6_C1_Zip) #Uses pullData function to pull weather data from NOAA
     Pg6_C2_curr_weaval = pullData(Pg6_C2_Zip)
@@ -458,7 +475,7 @@ T_Date = dateBuild() #Calls above function, only used when the program first run
 #Get extra forecast data, this is needed for Pressure and visibility
 def extraData():
     n = NOAA()
-    observations = n.get_observations(ZIP,'US',start=T_Date,end=T_Date)
+    observations = n.get_observations(homezip,'US',start=T_Date,end=T_Date)
     for Today_Data in observations:
         return str(Today_Data)
         break
