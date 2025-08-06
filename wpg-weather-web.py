@@ -56,13 +56,17 @@ class ZipData:
 			return self.zipdata.post_office_city.upper()
 		return None
 
-zip_objects = []
 
-for zipcode in extrazips:
-	zip_obj = ZipData(zipcode)
-	zip_objects.append(zip_obj)
-
-for i in range(1, 7):
+# create forecast objects for all of the extra zips
+weather_objects = [CityWeather(zipcode) for zipcode in extrazips]
+#TODO replace the variable monster with the CityWeather objects in this array with smart pagination
+# items_per_page = 7
+# page_number = 6
+# start_index = (page_number - 1) * items_per_page
+# end_index = start_index + items_per_page
+# page_objects = weather_objects[start_index:end_index]
+# for obj in page_objects:
+#	print(f"City: {obj.city}")
 
 Pg6_C1_Name = "DETRIOT" #Set city name for the first city on page 6, used only for looks
 Pg6_C1_State = "MI" #Set 2 digit state abbreviation for first city on page 6, also only used for looks
