@@ -3,13 +3,13 @@
 # Updated/modified for USA by TechSavvvvy
 # Updated for web by ch604
 
-import time, datetime, linecache, sys
-import feedparser, requests, json # for RSS feed
+import time, datetime, linecache, sys, json
+import feedparser, requests # for RSS feed
 import pygame, random, os # for background music
 import re # for word shortener
 
 from tkinter import *
-from noaa_sdk import NOAA #Used to import data from National Weather Service, added by -TS
+from noaa_sdk import NOAA # for noaa weather data, added by -TS
 from uszipcode import SearchEngine
 
 prog = "wpg-weather-web"
@@ -25,12 +25,23 @@ homezip = os.getenv('WPG_HOMEZIP', "60601")
 ## "extrazips" is an array of 21 additional zip codes which support extra pages of "nationwide weather"
 extrazips = [48127,42127,10001,98039,60007,47750,43537,77301,43004,36043,27513,95758,32301,20500,27948,96795,90001,89166,29572,27959,14301]
 
+
 # store weather for a zip code
 class CityWeather:
 	def __init__(self, zip):
-		self.
+		z = ZipData(zip)
+		self.zip = zip
+		self.state = z.get_state()
+		self.city = z.get_city()
 
-# get state/city from a zip code
+	def get_weather(self):
+		if self.zip:
+			n = NOAA()
+			res = n.get_forecasts(self.zip, 'US')
+			return res[0]
+
+
+# translate state/city from a zip code
 class ZipData:
 	def __init__(self, zip):
 		self.zipdata = SearchEngine(simple_zipcode=True).by_zipcode(zip)
