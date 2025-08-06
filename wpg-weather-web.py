@@ -75,8 +75,7 @@ def newmain():
 
 ################old code below here
 
-# DEF debug messenger
-def debug_msg(message, priority): #Written by probnot, moved to the top so it would work earlier
+def debug_msg(message, priority): # debug messenger Written by probnot
 
     debugmode = 1;
     # 0 = disabled
@@ -101,8 +100,7 @@ def debug_msg(message, priority): #Written by probnot, moved to the top so it wo
     if ((debugmode > 0) and (priority <= debugmode)):
         print(timestr + prog + "." + ver + "." + message)
 
-# DEF clock Updater Written by probnot
-def clock():
+def clock(): # clock Updater Written by probnot
     current = time.strftime("%-I %M %S").rjust(8," ")
     timeText.configure(text=current)
     root.after(1000, clock) # run every 1sec
@@ -611,7 +609,7 @@ def weather_page(PageColour, PageNum): #Written by probnot
         Pg3_day_4_Precip = precipDetermine(Pg3_day_4_Weaval)
         Pg3_day_5_Precip = precipDetermine(Pg3_day_5_Weaval)
         Pg3_day_6_Precip = precipDetermine(Pg3_day_6_Weaval)
-#        PageNum = PageNum + 3 Added by TS, first/failed attempt to skip this page
+		#PageNum = PageNum + 3 Added by TS, first/failed attempt to skip this page
         X_VAL = 0
         # create 8 lines of text
         s1 = "WEEK FORECAST".center(35," ")
@@ -849,7 +847,7 @@ def weather_page(PageColour, PageNum): #Written by probnot
     root.after(20000, weather_page, PageColour, PageNum) # re-run every 20sec from program launch
 
 
-# DEF bottom marquee scrolling text
+# bottom marquee scrolling text
 def bottom_marquee(grouptotal):
 
     group = 1
@@ -902,10 +900,9 @@ def bottom_marquee(grouptotal):
                 p = 0 # keep the for loop from ending
                 wpg = feedparser.parse(url)
                 debug_msg("BOTTOM_MARQUEE-RSS feed refreshed",1)
-weatherDataUpdate()
-# DEF generate playlist from folder
-if Music == ON: #Added by TechSavvvvy to allow music player to be easily enabled/disabled
- def playlist_generator(musicpath):
+
+# generate playlist from folder
+def playlist_generator(musicpath):
 
     # this code from https://thispointer.com/python-how-to-get-list-of-files-in-directory-and-sub-directories/
     # create a list of file and sub directories 
@@ -925,14 +922,10 @@ if Music == ON: #Added by TechSavvvvy to allow music player to be easily enabled
             allFiles.append(fullPath)
     debug_msg(("PLAYLIST_GENERATOR-found " + str(len(allFiles))),1)
     return allFiles
-else:
- print("Music player has been disabled")
-# DEF play background music
-if Music == ON: #Added by TechSavvvvy to allow music player to be easily enabled/disabled
- def music_player(songNumber, playlist, musicpath):
 
-    # make sure musicpath ONLY contains playable mp3 files. this does not check if files are valid and will crash if it tries to play something else
-
+# play background music
+def music_player(songNumber, playlist, musicpath):
+    #TODO make sure musicpath ONLY contains playable mp3 files. this does not check if files are valid and will crash if it tries to play something else
     if ((pygame.mixer.music.get_busy() == False) and (songNumber < len(playlist))):
         debug_msg(("MUSIC_PLAYER-playing song " + playlist[songNumber]),1)
         pygame.mixer.music.load(playlist[songNumber])
@@ -944,8 +937,6 @@ if Music == ON: #Added by TechSavvvvy to allow music player to be easily enabled
         random.shuffle(playlist)   
 
     root.after(2000, music_player, songNumber, playlist, musicpath) # re-run every 2sec from program launch
-else:
- print("Music player has been disabled")
 
 # ROOT main stuff
 def main():
@@ -990,6 +981,7 @@ def main():
 	T_Date = dateBuild()
 	Today_Data_Dirty = extraData()
 	updateHour()
+	weatherDataUpdate()
 
 	temp = tempDetermine(curr_weaval)
 	WindDir = WinDirDetermine(curr_weaval)
