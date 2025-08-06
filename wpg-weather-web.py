@@ -3,20 +3,14 @@
 # Updated/modified for USA by TechSavvvvy
 # Updated for web by ch604
 
-from tkinter import *
-import time
-import datetime
-import feedparser # for RSS feed
-import requests # for RSS feed
-import json # for RSS feed
-import pygame # for background music
-import random # for background music
-import os # for background music
+import time, datetime, linecache, sys
+import feedparser, requests, json # for RSS feed
+import pygame, random, os # for background music
 import re # for word shortener
+
+from tkinter import *
 from noaa_sdk import NOAA #Used to import data from National Weather Service, added by -TS
 from usazipcode import SearchEngine
-import linecache
-import sys
 
 prog = "wpg-weather-web"
 ver = "3.1"
@@ -28,10 +22,18 @@ Music = os.getenv('WPG_MUSIC', "ON")
 url = os.getenv('WPG_RSSFEED', "https://feeds.nbcnews.com/nbcnews/public/news")
 ## "ZIP" is a valid US zip code.
 ZIP = os.getenv('WPG_ZIP', "60601")
-## get the city name from the zip code
-zipsearch = SearchEngine(simple_zipcode=True)
-zipresult = zipsearch.by_zipcode(ZIP)
-Pg1_City = zipresult.post_office_city.upper()
+
+# get state/city from a zip code
+class zipsearch:
+	def __init__(self, zip):
+		z = SearchEngine(simple_zipcode=True)
+		self = z.by_zipcode(zip)
+	
+	def to_state(self):
+		return self.state.upper()
+	
+	def to_city(self):
+		return self.post_office_city.upper()
 
 
 Pg6_C1_Name = "DETRIOT" #Set city name for the first city on page 6, used only for looks
