@@ -24,6 +24,9 @@ url = os.getenv('WPG_RSSFEED', "https://feeds.nbcnews.com/nbcnews/public/news")
 homezip = os.getenv('WPG_HOMEZIP', "60601")
 ## "extrazips" is an array of 21 additional zip codes which support extra pages of "nationwide weather"
 extrazips = [48127,42127,10001,98039,60007,47750,43537,77301,43004,36043,27513,95758,32301,20500,27948,96795,90001,89166,29572,27959,14301]
+#Set Time Zone
+TZ = time.tzname
+TZ_String = str(TZ)
 
 
 # store weather for a zip code
@@ -57,52 +60,20 @@ class ZipData:
 		return None
 
 
-# create forecast objects for all of the extra zips
-weather_objects = [CityWeather(zipcode) for zipcode in extrazips]
-#TODO replace the variable monster with the CityWeather objects in this array with smart pagination
-# items_per_page = 7
-# page_number = 6
-# start_index = (page_number - 1) * items_per_page
-# end_index = start_index + items_per_page
-# page_objects = weather_objects[start_index:end_index]
-# for obj in page_objects:
-#	print(f"City: {obj.city}")
+def newmain():
+	# create forecast objects for all of the extra zips
+	weather_objects = [CityWeather(zipcode) for zipcode in extrazips]
+	#TODO replace the variable monster with the CityWeather objects in this array with smart pagination
+	# items_per_page = 7
+	# page_number = 6
+	# start_index = (page_number - 1) * items_per_page
+	# end_index = start_index + items_per_page
+	# page_objects = weather_objects[start_index:end_index]
+	# for obj in page_objects:
+	#	print(f"City: {obj.city}")
 
-Pg6_C1_Name = "DETRIOT" #Set city name for the first city on page 6, used only for looks
-Pg6_C1_State = "MI" #Set 2 digit state abbreviation for first city on page 6, also only used for looks
-Pg6_C1_Zip = 48127 #Zip code for first city on page 6, used by NOAA to determine weather data
 
-# From here on it repeats itself
-Pg6_C2_Name = "CAVE CITY" ; Pg6_C2_State = "KY" ; Pg6_C2_Zip = 42127
-Pg6_C3_Name = "N.Y. CITY"; Pg6_C3_State = "NY"; Pg6_C3_Zip = 10001
-Pg6_C4_Name = "SEATTLE"; Pg6_C4_State = "WA"; Pg6_C4_Zip = 98039
-Pg6_C5_Name = "CHICAGO"; Pg6_C5_State = "IL" ;Pg6_C5_Zip = 60007
-Pg6_C6_Name = "MARIETTA" ; Pg6_C6_State = "OH" ; Pg6_C6_Zip = 47750
-Pg6_C7_Name = "TOLEDO" ; Pg6_C7_State = "OH" ; Pg6_C7_Zip = 43537
-
-Pg7_C1_Name = "AUSTIN" ; Pg7_C1_State = "TX" ;Pg7_C1_Zip = 77301
-Pg7_C2_Name = "COLUMBUS" ; Pg7_C2_State = "OH" ;Pg7_C2_Zip = 43004
-Pg7_C3_Name = "MONTGOMERY" ; Pg7_C3_State = "AL" ; Pg7_C3_Zip = 36043
-Pg7_C4_Name = "RALEIGH" ; Pg7_C4_State = "NC" ; Pg7_C4_Zip = 27513
-Pg7_C5_Name = "SACRAMENTO" ; Pg7_C5_State = "CA" ; Pg7_C5_Zip = 95758
-Pg7_C6_Name = "TALLAHASSEE" ; Pg7_C6_State = "FL" ; Pg7_C6_Zip = 32301
-Pg7_C7_Name = "WASHINGTON D.C." ; Pg7_C7_State = " " ; Pg7_C7_Zip = 20500
-
-Pg8_C1_Name = "KILL DEVIL HILLS" ; Pg8_C1_State = "NC" ; Pg8_C1_Zip = 27948
-Pg8_C2_Name = "HONOLULU" ; Pg8_C2_State = "HI" ; Pg8_C2_Zip = 96795
-Pg8_C3_Name = "LA ANGELES" ; Pg8_C3_State = "CA" ; Pg8_C3_Zip = 90001
-Pg8_C4_Name = "LAS VEGAS" ; Pg8_C4_State = "NV" ; Pg8_C4_Zip = 89166
-Pg8_C5_Name = "MYRTLE BEACH" ; Pg8_C5_State = "SC" ; Pg8_C5_Zip = 29572
-Pg8_C6_Name = "NAGS HEAD" ; Pg8_C6_State = "NC" ; Pg8_C6_Zip = 27959
-Pg8_C7_Name = "NIAGRA FALLS" ; Pg8_C7_State = "NY" ; Pg8_C7_Zip = 14301
-
-root = Tk()
-root.attributes('-fullscreen',True)
-root.geometry("720x480") # this must be 720x480 for a proper filled out screen on composite output. 640x480 will have black bar on RH side. use 720x576 for PAL.
-root.config(cursor="none", bg="green")
-root.wm_title("wpg-weather-web")
-updateTimer = 1800000 #30 minutes
-current_time = datetime.datetime.now()
+################old code below here
 
 # DEF debug messenger
 def debug_msg(message, priority): #Written by probnot, moved to the top so it would work earlier
@@ -301,6 +272,7 @@ def wetDryDetermine(wetDryIn):
            return "DRY"
     elif wetDryInt > 60:
            return "POSSIBLY WET"
+
 def weekData(): #This is used to setup data used on page 3, this was tricky to figure out. All data is stored in a text file in /tmp and read back using linecache, allowing each line of text to be imported as a variable
     WeeklyData = open("/tmp/weekData.txt", "w") #Creates file to be written to, overwrites if it already exists
     sys.stdout = WeeklyData #Changes standard out of console (what you see in the terminal window when the progrma outputs text) to go to the text file instead
@@ -309,7 +281,7 @@ def weekData(): #This is used to setup data used on page 3, this was tricky to f
     for i in res:
         print(i) #Prints data to stdout, which has been redirected to a text file
     sys.stdout = sys.__stdout__ #Changes stdout back to normal
-curr_weaval=""
+
 def pullWeatherData(): #Obtaining weather data from NWS/NOAA
 #Get page 1 and 2 weather data
     debug_msg("Getting Page 1 and 2 Weather Data",1)
@@ -360,8 +332,6 @@ def pullWeatherData(): #Obtaining weather data from NWS/NOAA
     Pg8_C5_curr_weaval = pullData(Pg8_C5_Zip)
     Pg8_C6_curr_weaval = pullData(Pg8_C6_Zip)
     Pg8_C7_curr_weaval = pullData(Pg8_C7_Zip)
-
-pullWeatherData()
 
 def weatherDataUpdate(): #Obtaining weather data from NWS/NOAA
 #Get page 1 and 2 weather data
@@ -462,6 +432,7 @@ def pg1DateSet():
          return ("0" + Date_String) #If it's before the 10th, a "0" will be added in front of it, ex. changing 8 to 08. Used for NOAA and looks. 
     else:
         return Date_String
+
 def pg1DateTimeUpdate(): #This updates the time and date on page 1
     debug_msg("Updating pg 1 time/date",1)
     global Day #Make variables global, so they will be passed to the rest of the program
@@ -475,7 +446,6 @@ def pg1DateTimeUpdate(): #This updates the time and date on page 1
     Date = pg1DateSet()
     Year_String = str(current_time.year)
     Hour_String = str(Hour)
-pg1DateTimeUpdate() #Calls above function, only used when the program first runs, after which it's called by weatherDataUpdate
 
 #Build current date in YYYY-MM-DD form to obtain more data from NOOAA
 def dateBuild():
@@ -485,7 +455,6 @@ def dateBuild():
     else:
         Month_Num = Month_Str #ignores above for months with 2 digit value
     return (Year_String + "-" + Month_Num + "-" + Date) #Builds data value in YYYY-MM-DD form
-T_Date = dateBuild() #Calls above function, only used when the program first runs, after which it's called by weatherDataUpdate
 
 #Get extra forecast data, this is needed for Pressure and visibility
 def extraData():
@@ -494,10 +463,7 @@ def extraData():
     for Today_Data in observations:
         return str(Today_Data)
         break
-Today_Data_Dirty = extraData() #This is being updated by weatherDataUpdate
-#Set Time Zone
-TZ = time.tzname
-TZ_String = str(TZ)
+
 def updateHour(): #Determines what the UpdateHour variable needs to be, which is used to determine when data needs to be updated
     global UpdateHour
     UpdateHour = current_time.hour + 1 #Sets UpdateHour by taking current hour and adding one
@@ -505,20 +471,10 @@ def updateHour(): #Determines what the UpdateHour variable needs to be, which is
         UpdateHour = 0 #This makes it 0 if needed, which is only at 11pm, so it will update after midnight
     else:
         UpdateHour = UpdateHour
-updateHour()
-#Shared data
-temp = tempDetermine(curr_weaval)
-WindDir = WinDirDetermine(curr_weaval)
-WindSpd = WindSpdDetermine(curr_weaval)
-humid = humidDetermine(curr_weaval)
-precip = precipDetermine(curr_weaval)
-shortForecast = shortFDetermine(curr_weaval)
-debug_msg("Launching Screen Routine",1) #Used to send message to CLI that the screen routine will begin, also let's you know all weather data has been successfully obtained
-debug_msg(("Current Hour is: " + str(current_time.hour)),2)
-debug_msg(("Update Hour is: " + str(UpdateHour)),2)
+
 def weather_page(PageColour, PageNum): #Written by probnot
     # pull in current seconds and minutes -- to be used to cycle the middle section every 30sec
-#    global PageNum
+    global PageNum
     time_sec = time.localtime().tm_sec
     time_min = time.localtime().tm_min
     
@@ -990,53 +946,107 @@ if Music == ON: #Added by TechSavvvvy to allow music player to be easily enabled
     root.after(2000, music_player, songNumber, playlist, musicpath) # re-run every 2sec from program launch
 else:
  print("Music player has been disabled")
+
 # ROOT main stuff
+def main():
+	Pg6_C1_Name = "DETRIOT" #Set city name for the first city on page 6, used only for looks
+	Pg6_C1_State = "MI" #Set 2 digit state abbreviation for first city on page 6, also only used for looks
+	Pg6_C1_Zip = 48127 #Zip code for first city on page 6, used by NOAA to determine weather data
 
-# setup root
+	# From here on it repeats itself
+	Pg6_C2_Name = "CAVE CITY" ; Pg6_C2_State = "KY" ; Pg6_C2_Zip = 42127
+	Pg6_C3_Name = "N.Y. CITY"; Pg6_C3_State = "NY"; Pg6_C3_Zip = 10001
+	Pg6_C4_Name = "SEATTLE"; Pg6_C4_State = "WA"; Pg6_C4_Zip = 98039
+	Pg6_C5_Name = "CHICAGO"; Pg6_C5_State = "IL" ;Pg6_C5_Zip = 60007
+	Pg6_C6_Name = "MARIETTA" ; Pg6_C6_State = "OH" ; Pg6_C6_Zip = 47750
+	Pg6_C7_Name = "TOLEDO" ; Pg6_C7_State = "OH" ; Pg6_C7_Zip = 43537
 
-# Clock - Top RIGHT
-# this got complicated due to the new font (7-Segment Normal), which doesn't have proper colon(:) char, 
-# so I've removed the colon from the time string and added them on top using VCR OSD Mono
-debug_msg("ROOT-placing clock",1)
-timeText = Label(root, text="", font=("7-Segment Normal", 22), fg="white", bg="green")
-timeText.place(x=403, y=40)
-timeColon1 = Label(root, text=":", font=("VCR OSD Mono", 32), fg="white", bg="green")
-timeColon1.place(x=465, y=36)
-timeColon2 = Label(root, text=":", font=("VCR OSD Mono", 32), fg="white", bg="green")
-timeColon2.place(x=560, y=36)
-debug_msg("ROOT-launching clock updater",1)
-clock()
+	Pg7_C1_Name = "AUSTIN" ; Pg7_C1_State = "TX" ;Pg7_C1_Zip = 77301
+	Pg7_C2_Name = "COLUMBUS" ; Pg7_C2_State = "OH" ;Pg7_C2_Zip = 43004
+	Pg7_C3_Name = "MONTGOMERY" ; Pg7_C3_State = "AL" ; Pg7_C3_Zip = 36043
+	Pg7_C4_Name = "RALEIGH" ; Pg7_C4_State = "NC" ; Pg7_C4_Zip = 27513
+	Pg7_C5_Name = "SACRAMENTO" ; Pg7_C5_State = "CA" ; Pg7_C5_Zip = 95758
+	Pg7_C6_Name = "TALLAHASSEE" ; Pg7_C6_State = "FL" ; Pg7_C6_Zip = 32301
+	Pg7_C7_Name = "WASHINGTON D.C." ; Pg7_C7_State = " " ; Pg7_C7_Zip = 20500
 
-# Title - Top LEFT
-debug_msg("ROOT-placing Title Text",1)
-Title = Label(root, text="⛅ THE WEATHER CHANNEL", font=("VCR OSD Mono", 22, "bold"), fg="white", bg="green")
-Title.place(x=0, y=40)
+	Pg8_C1_Name = "KILL DEVIL HILLS" ; Pg8_C1_State = "NC" ; Pg8_C1_Zip = 27948
+	Pg8_C2_Name = "HONOLULU" ; Pg8_C2_State = "HI" ; Pg8_C2_Zip = 96795
+	Pg8_C3_Name = "LA ANGELES" ; Pg8_C3_State = "CA" ; Pg8_C3_Zip = 90001
+	Pg8_C4_Name = "LAS VEGAS" ; Pg8_C4_State = "NV" ; Pg8_C4_Zip = 89166
+	Pg8_C5_Name = "MYRTLE BEACH" ; Pg8_C5_State = "SC" ; Pg8_C5_Zip = 29572
+	Pg8_C6_Name = "NAGS HEAD" ; Pg8_C6_State = "NC" ; Pg8_C6_Zip = 27959
+	Pg8_C7_Name = "NIAGRA FALLS" ; Pg8_C7_State = "NY" ; Pg8_C7_Zip = 14301
 
-# total number of groups broken up to update sections of weather data, to keep update time short
-grouptotal = 3 
+	root = Tk()
+	root.attributes('-fullscreen',True)
+	root.geometry("720x480") # this must be 720x480 for a proper filled out screen on composite output. 640x480 will have black bar on RH side. use 720x576 for PAL.
+	root.config(cursor="none", bg="green")
+	root.wm_title("wpg-weather-web")
+	updateTimer = 1800000 #30 minutes
+	current_time = datetime.datetime.now()
+	curr_weaval=""
+	pullWeatherData()
+	pg1DateTimeUpdate()
+	T_Date = dateBuild()
+	Today_Data_Dirty = extraData()
+	updateHour()
 
-# Middle Section (Cycling weather pages, every 30sec)
-debug_msg("ROOT-launching weather_page",1)
-PageColour = "blue" # blue
-PageNum = 1
-weather_page(PageColour, PageNum)
-if Music == ON: #Added by TechSavvvvy to allow music player to be easily enabled/disabled
-# Generate background music playlist
- debug_msg("ROOT-launching playlist generator",1)
- musicpath = "/home/techsavvvvy/Music" # must show full path
- playlist = playlist_generator(musicpath) # generate playlist array
- random.shuffle(playlist) # shuffle playlist
+	temp = tempDetermine(curr_weaval)
+	WindDir = WinDirDetermine(curr_weaval)
+	WindSpd = WindSpdDetermine(curr_weaval)
+	humid = humidDetermine(curr_weaval)
+	precip = precipDetermine(curr_weaval)
+	shortForecast = shortFDetermine(curr_weaval)
+	debug_msg("Launching Screen Routine",1) #Used to send message to CLI that the screen routine will begin, also let's you know all weather data has been successfully obtained
+	debug_msg(("Current Hour is: " + str(current_time.hour)),2)
+	debug_msg(("Update Hour is: " + str(UpdateHour)),2)
+ 
+	# Clock - Top RIGHT
+	# this got complicated due to the new font (7-Segment Normal), which doesn't have proper colon(:) char, 
+	# so I've removed the colon from the time string and added them on top using VCR OSD Mono
+	debug_msg("ROOT-placing clock",1)
+	timeText = Label(root, text="", font=("7-Segment Normal", 22), fg="white", bg="green")
+	timeText.place(x=403, y=40)
+	timeColon1 = Label(root, text=":", font=("VCR OSD Mono", 32), fg="white", bg="green")
+	timeColon1.place(x=465, y=36)
+	timeColon2 = Label(root, text=":", font=("VCR OSD Mono", 32), fg="white", bg="green")
+	timeColon2.place(x=560, y=36)
+	debug_msg("ROOT-launching clock updater",1)
+	clock()
 
-# Play background music on shuffle using pygame
- debug_msg("ROOT-launching background music",1)
- songNumber = 1
- pygame.mixer.init()
- music_player(songNumber, playlist, musicpath)
-else:
- print("Music player has been disabled")
-# Bottom Scrolling Text (City of Winnipeg RSS Feed)
-debug_msg("ROOT-launching bottom_marquee",1)
-bottom_marquee(grouptotal)
+	# Title - Top LEFT
+	debug_msg("ROOT-placing Title Text",1)
+	Title = Label(root, text="⛅ THE WEATHER CHANNEL", font=("VCR OSD Mono", 22, "bold"), fg="white", bg="green")
+	Title.place(x=0, y=40)
 
-# loop program  
-root.mainloop()
+	# total number of groups broken up to update sections of weather data, to keep update time short
+	grouptotal = 3 
+
+	# Middle Section (Cycling weather pages, every 30sec)
+	debug_msg("ROOT-launching weather_page",1)
+	PageColour = "blue" # blue
+	PageNum = 1
+	weather_page(PageColour, PageNum)
+	if Music == ON: #Added by TechSavvvvy to allow music player to be easily enabled/disabled
+		# Generate background music playlist
+		debug_msg("ROOT-launching playlist generator",1)
+		musicpath = "/home/techsavvvvy/Music" # must show full path
+		playlist = playlist_generator(musicpath) # generate playlist array
+		random.shuffle(playlist) # shuffle playlist
+
+		# Play background music on shuffle using pygame
+		debug_msg("ROOT-launching background music",1)
+		songNumber = 1
+		pygame.mixer.init()
+		music_player(songNumber, playlist, musicpath)
+	else:
+		print("Music player has been disabled")
+
+	# Bottom Scrolling Text (News RSS Feed)
+	debug_msg("ROOT-launching bottom_marquee",1)
+	bottom_marquee(grouptotal)
+
+	# loop program  
+	root.mainloop()
+
+main()
