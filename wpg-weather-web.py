@@ -139,10 +139,8 @@ def clock():
 def pullData(pullZip): #Use NOAA to retrive weather data
       n = NOAA()
       res = n.get_forecasts(pullZip, 'US')
-      for i in res:
-          Data = str(i) #Convert i to string, stored as Current_WeatherValue (curr_weaval). All data from NOAA is in one REALLY long string and must be broken down/extracted
-          break
-      return Data
+	  # this breaks everything for now, but we can just return the json dict instead of making a string and trying to clean it up later. this note just for my own reference to remind me to change everything.
+      return res[0]
 
 def shortFDetermine(FDetIn): #Used to determine forecast, called by pages 1-3, 6-8 (4 and 5 are currently disabled)
      dirtyIn = FDetIn[450:580]
@@ -362,7 +360,9 @@ def pullWeatherData(): #Obtaining weather data from NWS/NOAA
     Pg8_C5_curr_weaval = pullData(Pg8_C5_Zip)
     Pg8_C6_curr_weaval = pullData(Pg8_C6_Zip)
     Pg8_C7_curr_weaval = pullData(Pg8_C7_Zip)
+
 pullWeatherData()
+
 def weatherDataUpdate(): #Obtaining weather data from NWS/NOAA
 #Get page 1 and 2 weather data
     global UpdateHour
