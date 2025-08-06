@@ -25,8 +25,8 @@ homezip = os.getenv('WPG_HOMEZIP', "60601")
 ## "extrazips" is an array of 21 additional zip codes which support extra pages of "nationwide weather"
 extrazips = [48127,42127,10001,98039,60007,47750,43537,77301,43004,36043,27513,95758,32301,20500,27948,96795,90001,89166,29572,27959,14301]
 #Set Time Zone
-TZ = time.tzname
-TZ_String = str(TZ)
+TZ = os.getenv('TZ', time.tzname[time.daylight])
+#TODO timezone will not change when DST starts or stops
 
 
 # store weather for a zip code
@@ -493,7 +493,7 @@ def weather_page(PageColour, PageNum): #Written by probnot
         debug_msg(("WEATHER_PAGE-display page " + str(PageNum)),3)             
         X_VAL = 80
         # create 8 lines of text     
-        s1 = (" " + Pg1_City + " " + Hour_String + " " + AM_PM + " " + (TZ_String[9:12]) + "  " + Day + " " + Month + " " + Date + "/" + Year_String)
+        s1 = (" " + Pg1_City + " " + Hour_String + " " + AM_PM + " " + TZ + "  " + Day + " " + Month + " " + Date + "/" + Year_String)
         s2 = ("TEMP  " + temp + " F" + "            WIND " + WindDir + " " + WindSpd + " MPH") #Fixed
         # s2 = s2[0:24] + " HIGH " + "?" + " F" Removed due to NOAA not showing High temp
         s3 = shortForecast + "                         " #Fixed

@@ -14,3 +14,4 @@ services:
       - "WPG_HOMEZIP=48205"
       - "WPG_MUSIC=ON"
       - "WPG_RSSFEED=https://www.wxyz.com/news/region/detroit.rss"
+      - "WPG_TZ=EDT"
