@@ -11,6 +11,7 @@ import re # for word shortener
 from tkinter import *
 from noaa_sdk import NOAA # for noaa weather data, added by -TS
 from uszipcode import SearchEngine
+from flask import Flask, render_template
 
 prog = "wpg-weather-web"
 ver = "3.1"
