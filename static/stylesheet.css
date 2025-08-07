@@ -18,8 +18,8 @@
 
 body {
     background-color: blue;
-    color: white; /* Neon green, classic 80s look */
-    font-family: 'Press Start 2P', monospace; /* Use a pixel font */
+    color: white;
+    font-family: 'VCR OSD Mono';
     margin: 0;
     overflow: hidden;
 }
@@ -35,6 +35,7 @@ body {
     top: 20px;
     right: 20px;
     font-size: 24px;
+	font-family: '7-Segment Normal'
 }
 
 .display-area {
