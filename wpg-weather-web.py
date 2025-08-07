@@ -16,8 +16,8 @@ prog = "wpg-weather-web"
 ver = "3.1"
 
 # environment variables
-## "Music" Enables or disables music player, ON to turn it on, and anyhing else to disable it.
-Music = os.getenv('WPG_MUSIC', "ON")
+## "music" Enables or disables music player, ON to turn it on, and anyhing else to disable it.
+music = os.getenv('WPG_MUSIC', "ON")
 ## "url" is the source for local news feeds.
 url = os.getenv('WPG_RSSFEED', "https://feeds.nbcnews.com/nbcnews/public/news")
 ## "homezip" is a valid US zip code.
@@ -1019,7 +1019,7 @@ def main():
 	PageColour = "blue" # blue
 	PageNum = 1
 	weather_page(PageColour, PageNum)
-	if Music == ON: #Added by TechSavvvvy to allow music player to be easily enabled/disabled
+	if music == ON: #Added by TechSavvvvy to allow music player to be easily enabled/disabled
 		# Generate background music playlist
 		debug_msg("ROOT-launching playlist generator",1)
 		musicpath = "/home/techsavvvvy/Music" # must show full path
