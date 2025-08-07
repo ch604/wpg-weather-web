@@ -16,7 +16,7 @@ from flask import Flask, render_template
 prog = "wpg-weather-web"
 ver = "3.1"
 
-# environment variables
+####################### environment variables
 ## "music" Enables or disables music player, ON to turn it on, and anyhing else to disable it.
 music = os.getenv('WPG_MUSIC', "ON")
 ## "url" is the source for local news feeds.
@@ -29,7 +29,7 @@ extrazips = [48127,42127,10001,98039,60007,47750,43537,77301,43004,36043,27513,9
 TZ = os.getenv('TZ', time.tzname[time.daylight])
 #TODO timezone will not change when DST starts or stops
 
-
+####################### classes
 # store weather for a zip code
 class CityWeather:
 	def __init__(self, zip):
@@ -38,12 +38,20 @@ class CityWeather:
 		self.state = z.get_state()
 		self.city = z.get_city()
 
-	def get_weather(self):
+	def get_daily_forecast(self):
+		# returns a json array of 14d of forecasts
 		if self.zip:
 			n = NOAA()
-			res = n.get_forecasts(self.zip, 'US')
-			return res[0]
+			res = n.get_forecasts(self.zip, 'US', type='forecast')
+			return res
 
+	def get_hourly_forecast(self):
+		# returns a json array of 156h of forecasts (about 7 days worth). filter with [0] for current conditions
+		if self.zip:
+			n = NOAA()
+			res = n.get_forecasts(self.zip, 'US', type='forecastHourly')
+			return res
+	
 
 # translate state/city from a zip code
 class ZipData:
@@ -60,16 +68,25 @@ class ZipData:
 			return self.zipdata.post_office_city.upper()
 		return None
 
+####################### flask app and routes
+app = Flask(__name__)
 
-def newmain():
-	# create forecast objects for all of the extra zips
-	weather_objects = [CityWeather(zipcode) for zipcode in extrazips]
-	#TODO replace the variable monster with the CityWeather objects in this array with smart pagination
+@app.route('/')
+def index():
+	weather_data = CityWeather(homezip)
+	# use hourly json array for current conditions [0] and next 6 hours [1-6]
+	weather_hourly = weather_data.get_hourly_forecast()
+	# use forecast json array for the 14 day outlook [0-13]
+	weather_forecast = weather_data.get_daily_forecast()
+
+	# create objects with current conditions for all of the extra zips
+	nationwide_weather_objects = [CityWeather(zipcode).get_hourly_forecast[0] for zipcode in extrazips]
+	#TODO replace the variable monster with the CityWeather objects in this array with smart pagination?
 	# items_per_page = 7
 	# page_number = 6
 	# start_index = (page_number - 1) * items_per_page
 	# end_index = start_index + items_per_page
-	# page_objects = weather_objects[start_index:end_index]
+	# page_objects = nationwide_weather_objects[start_index:end_index]
 	# for obj in page_objects:
 	#	print(f"City: {obj.city}")
 
