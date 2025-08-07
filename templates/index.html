@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WPG Weather Channel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+<body>
+    <div class="main-container">
+        <div class="clock-container">
+            <span id="current-time"></span>
+        </div>
+
+        <div class="display-area">
+            <div class="weather-info">
+                <h1>{{ weather.location }}</h1>
+                <p class="temperature">{{ weather.temperature }}</p>
+                <p class="condition">{{ weather.condition }}</p>
+            </div>
+            </div>
+
+        <div class="ticker-wrap">
+            <div class="ticker">
+                <p>{{ weather.scrolling_text }}</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const localTime = new Date();
+
+            const hours = String(localTime.getHours()).padStart(2, '0');
+            const minutes = String(localTime.getMinutes()).padStart(2, '0');
+            const seconds = String(localTime.getSeconds()).padStart(2, '0');
+            const currentTime = `${hours}:${minutes}:${seconds}`;
+
+            document.getElementById('current-time').textContent = currentTime;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); 
+    </script>
+</body>
