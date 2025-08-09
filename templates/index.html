@@ -3,26 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WPG Weather Channel</title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
 </head>
 <body>
     <div class="main-container">
+		<div class="title-container">
+			<h1>{{ title }}</h1>
+		</div>
         <div class="clock-container">
             <span id="current-time"></span>
         </div>
 
         <div class="display-area">
-            <div class="weather-info">
-                <h1>{{ weather.location }}</h1>
-                <p class="temperature">{{ weather.temperature }}</p>
-                <p class="condition">{{ weather.condition }}</p>
+            <div class="slider-item local-weather active">
+				<!--screen 1, local conditions-->
+                <h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<p style="text-align:center;">CURRENT CONDITIONS</p>
+                <p>TEMP {{ weather.temperature }}</p>
+                <p>WIND {{ weather.wind.direction }} {{ weather.wind.speed }}</p>
+                <p>{{ weather.condition }}</p>
+				<p style="text-align:center;">CHANCE OF PRECIP. {{ weather.precipchance }} %</p>
+				<p>HUMID {{ weather.humidity }} %</p>
+				<p>VISBY {{ weather.visibility }}</p>
+				<p>DEWPT {{ weather.dewpoint }}</p>
+				<p>PRESS {{ weather.pressure }}</p>
             </div>
-            </div>
+			<div class="slider-item local-forecast">
+				<!--screen 2, local short-term forecast-->
+				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+			</div>
+			<div class="slider-item local-seven-day">
+				<!--screen 3, local upcoming weekly forecast-->
+				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+			</div>
+			<div class="slider-item local-averages">
+				<!--screen 4, local weather averages-->
+				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+			</div>
+			<div class="slider-item national-weather-1">
+				<!--screen 5, extrazips current conditions-->
+			</div>
+			<div class="slider-item national-weather-2">
+				<!--screen 6, extrazips current conditions-->
+			</div>
+			<div class="slider-item national-weather-3">
+				<!--screen 7, extrazips current conditions-->
+			</div>
+        </div>
 
         <div class="ticker-wrap">
             <div class="ticker">
-                <p>{{ weather.scrolling_text }}</p>
+                <p>{{ news.scrolling_text }}</p>
             </div>
         </div>
     </div>

@@ -35,7 +35,15 @@ body {
     top: 20px;
     right: 20px;
     font-size: 24px;
-	font-family: '7-Segment Normal'
+	font-family: '7-Segment Normal';
+}
+
+.title-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+	font-family: 'VCR OSD Mono';
 }
 
 .display-area {
@@ -43,17 +51,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    text-align: left;
 }
 
-.weather-info h1 {
+.display-area p {
+    font-size: 36px;
+    margin: 10px 0;
+}
+
+.display-area h1 {
     font-size: 48px;
     margin: 0;
-}
-
-.temperature {
-    font-size: 80px;
-    margin: 10px 0;
 }
 
 /* Scrolling Text Bar */
