@@ -18,58 +18,60 @@
         <div class="display-area">
             <div class="slider-item local-weather active">
 				<!--screen 1, local conditions-->
-                <h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
+				<h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
 				<p style="text-align:center;">CURRENT CONDITIONS</p>
-                <p>TEMP {{ weather.temperature }}</p>
-                <p>WIND {{ weather.wind.direction }} {{ weather.wind.speed }}</p>
-                <p>{{ weather.condition.upper() }}</p>
-				<p style="text-align:center;">CHANCE OF PRECIP. {{ weather.precipchance }} %</p>
-				<p>HUMID {{ weather.humidity }} %</p>
-				<p>VISBY {{ weather.visibility }}</p>
-				<p>DEWPT {{ weather.dewpoint }}</p>
-				<p>PRESS {{ weather.pressure }}</p>
+                <p>TEMP {{ weather_hourly[0]['temperature'] }} {{ weather_hourly[0]['temperatureUnit'] }}</p>
+                <p>WIND {{ weather_hourly[0]['windSpeed'] }} {{ weather_hourly[0]['windDirection'] }}</p>
+                <p>{{ weather_hourly[0]['shortForecast'].upper() }}</p>
+				<p style="text-align:center;">CHANCE OF PRECIP. {{ weather_hourly[0]['probabilityOfPrecipitation']['value'] }} %</p>
+				<p>HUMID {{ weather_hourly[0]['relativeHumidity']['value'] }} %</p>
             </div>
 			<div class="slider-item local-alerts">
 				<!--local alerts-->
-				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
 				<p style="text-align:center;">WEATHER ADVISORIES</p>
-				<p>{{ len(weather.alerts) }} ACTIVE WEATHER ALERTS</p>
+				<p>{{ weather_alerts['features']|length }} ACTIVE WEATHER ALERTS</p>
+			</div>
+			<div class="slider-item local-hourly">
+				<!--local next 6 hours-->
+				<h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
+				<p style="text-align:center;">NEXT 6 HOURS</p>
 			</div>
 			<div class="slider-item local-forecast-1">
-				<!--screen 2, local short-term forecast-->
-				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<!--local short-term forecast-->
+				<h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
 				<p style="text-align:center;">LOCAL FORECAST</p>
-				<p>{{ forecast[0]['name'].upper() }}...{{ forecast[0]['detailedForecast'].upper() }}</p>
+				<p>{{ weather_forecast[0]['name'].upper() }}...{{ weather_forecast[0]['detailedForecast'].upper() }}</p>
 			</div>
 			<div class="slider-item local-forecast-2">
-				<!--local short-term forecast and alerts-->
-				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<!--local short-term forecast-->
+				<h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
 				<p style="text-align:center;">LOCAL FORECAST</p>
-				<p>{{ forecast[1]['name'].upper() }}...{{ forecast[1]['detailedForecast'].upper() }}</p>
+				<p>{{ weather_forecast[1]['name'].upper() }}...{{ weather_forecast[1]['detailedForecast'].upper() }}</p>
 			</div>
 			<div class="slider-item local-forecast-3">
-				<!--local short-term forecast and alerts-->
-				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<!--local short-term forecast-->
+				<h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
 				<p style="text-align:center;">LOCAL FORECAST</p>
-				<p>{{ forecast[2]['name'].upper() }}...{{ forecast[2]['detailedForecast'].upper() }}</p>
+				<p>{{ weather_forecast[2]['name'].upper() }}...{{ weather_forecast[2]['detailedForecast'].upper() }}</p>
 			</div>
 			<div class="slider-item local-radar">
 				<!--local radar loop-->
-				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
 				<p style="text-align:center;">LOCAL RADAR</p>
-				<img src={{ weather.radar }} alt="45 MINUTE RADAR LOOP">
+				<img src={{ weather_radar }} alt="45 MINUTE RADAR LOOP">
 			</div>
 			<div class="slider-item local-seven-day">
-				<!--screen 3, local upcoming weekly forecast-->
-				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<!--local upcoming weekly forecast-->
+				<h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
 			</div>
 			<div class="slider-item local-averages">
-				<!--screen 4, local hi/lo averages-->
-				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<!--local hi/lo averages-->
+				<h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
 			</div>
 			<div class="slider-item local-almanac">
-				<!--screen 5, local sunrise/sunset, moon phase forecast-->
-				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<!--local sunrise/sunset, moon phase forecast-->
+				<h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
 			</div>
 			<div class="slider-item national-weather-1">
 				<!--screen 6, extrazips current conditions-->
@@ -83,9 +85,7 @@
         </div>
 
         <div class="ticker-wrap">
-            <div class="ticker">
-                <p>{{ news.scrolling_text }}</p>
-            </div>
+            <div class="ticker"></div>
         </div>
     </div>
 

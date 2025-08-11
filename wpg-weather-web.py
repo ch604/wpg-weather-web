@@ -42,10 +42,22 @@ class CityWeather:
 		self.pointProperties = n.points(z.get_latlong())['properties']
 
 	def get_daily_forecast(self):
-		# returns a json array of 14d of forecasts
+		# returns a json array of 14 day/night forecasts (7 days)
 		if self.zip:
 			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
 			return n.get_forecasts(self.zip, 'US', type='forecast')
+		return None
+	
+	def get_sevenday_forecast(self):
+		# returns a json array of upcoming day forecasts, excluding today
+		if self.zip:
+			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
+			res = n.get_forecasts(self.zip, 'US', type='forecast')
+			out = []
+			for i in res:
+				if i['isDaytime'] == True and i['name'] != "Today":
+					out.append(i)
+			return out
 		return None
 
 	def get_hourly_forecast(self):
@@ -102,15 +114,17 @@ def index():
 	weather_data = CityWeather(homezip)
 	# hourly json array for current conditions [0] and next 6 hours [1-6]
 	weather_hourly = weather_data.get_hourly_forecast()
-	# forecast json array for the 14 day outlook [0-13]
+	# forecast json array for the day/night forecast and 7 day outlook
 	weather_forecast = weather_data.get_daily_forecast()
+	weather_outlook = weather_data.get_sevenday_forecast()
 	# alerts json array
 	weather_alerts = weather_data.get_alerts()
 	# radar url
 	weather_radar = weather_data.get_radar_url()
 
 	# create objects with current conditions for all of the extra zips
-	nationwide_weather_objects = [CityWeather(zipcode).get_hourly_forecast()[0] for zipcode in extrazips]
+	#TODO async this
+	#nationwide_weather_objects = [CityWeather(zipcode).get_hourly_forecast()[0] for zipcode in extrazips]
 	#TODO replace the variable monster with the CityWeather objects in this array with smart pagination?
 	# items_per_page = 7
 	# page_number = 6
@@ -120,7 +134,7 @@ def index():
 	# for obj in page_objects:
 	#	print(f"City: {obj.city}")
 
-	return render_template('index.html')
+	return render_template('index.html', **locals())
 
 
 ################old code below here
