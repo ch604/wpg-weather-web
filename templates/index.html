@@ -18,7 +18,7 @@
         <div class="display-area">
             <div class="slider-item local-weather active">
 				<!--screen 1, local conditions-->
-                <h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+                <h1>{{ weather_data.location }} UPDATED: {{ weather_data.update_time }}</h1>
 				<p style="text-align:center;">CURRENT CONDITIONS</p>
                 <p>TEMP {{ weather.temperature }}</p>
                 <p>WIND {{ weather.wind.direction }} {{ weather.wind.speed }}</p>

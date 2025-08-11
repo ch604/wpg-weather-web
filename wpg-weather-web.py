@@ -38,37 +38,35 @@ class CityWeather:
 		self.zip = zip
 		self.state = z.get_state()
 		self.city = z.get_city()
-		self.latlong = z.get_latlong()
+		self.location = self.city + ", " + self.state
+		self.pointProperties = n.points(z.get_latlong())['properties']
 
 	def get_daily_forecast(self):
 		# returns a json array of 14d of forecasts
 		if self.zip:
-			res = n.get_forecasts(self.zip, 'US', type='forecast')
-			return res
+			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
+			return n.get_forecasts(self.zip, 'US', type='forecast')
 		return None
 
 	def get_hourly_forecast(self):
 		# returns a json array of 156h of forecasts (about 7 days worth). filter with [0] for current conditions
 		if self.zip:
-			res = n.get_forecasts(self.zip, 'US', type='forecastHourly')
-			return res
+			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
+			return n.get_forecasts(self.zip, 'US', type='forecastHourly')
 		return None
 	
 	def get_radar_url(self):
 		# populates self.radar with url of 45m historical loop.
-		if self.latlong:
-			self.radar = "https://radar.weather.gov/ridge/standard/" + n.points(self.latlong)['properties']['radarStation'] + "_loop.gif"
+		if self.pointProperties:
+			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
+			return "https://radar.weather.gov/ridge/standard/" + self.pointProperties['radarStation'] + "_loop.gif"
 		return None
 
 	def get_alerts(self):
 		# returns a json object of alerts for the area. 
-		if self.point:
-			res = n.active_alerts(area=self.point)
-			return res
-		elif self.latlong:
-			self.point = n.points(self.latlong)['properties']['forecastZone'].rsplit('/', 1)[-1]
-			res = n.active_alerts(zone_id=self.point)
-			return res
+		if self.pointProperties:
+			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
+			return n.active_alerts(zone_id=self.pointProperties['forecastZone'].rsplit('/', 1)[-1])
 		return None
 
 
@@ -97,7 +95,7 @@ class ZipData:
 
 ####################### flask app and routes
 app = Flask(__name__)
-n = NOAA(user_agent="wpg-weather-web")
+n = NOAA(user_agent="wpg-weather-web (github.com/ch604/wpg-weather-web)")
 
 @app.route('/')
 def index():
@@ -108,6 +106,8 @@ def index():
 	weather_forecast = weather_data.get_daily_forecast()
 	# alerts json array
 	weather_alerts = weather_data.get_alerts()
+	# radar url
+	weather_radar = weather_data.get_radar_url()
 
 	# create objects with current conditions for all of the extra zips
 	nationwide_weather_objects = [CityWeather(zipcode).get_hourly_forecast()[0] for zipcode in extrazips]
