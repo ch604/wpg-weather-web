@@ -2,4 +2,4 @@ NOAA
 noaa_sdk
 pygame
 feedparser
-uszipcode
+zipcodes

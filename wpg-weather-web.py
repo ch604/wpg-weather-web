@@ -10,7 +10,7 @@ import re # for word shortener
 
 from tkinter import *
 from noaa_sdk import NOAA # for noaa weather data, added by -TS
-from uszipcode import SearchEngine
+import zipcodes
 from flask import Flask, render_template
 
 prog = "wpg-weather-web"
@@ -56,17 +56,25 @@ class CityWeather:
 # translate state/city from a zip code
 class ZipData:
 	def __init__(self, zip):
-		self.zipdata = SearchEngine(simple_zipcode=True).by_zipcode(zip)
+		if zipcodes.is_real(zip):
+			self.zipdata = zipcodes.matching(zip)[0]
+		return None
 	
 	def get_state(self):
 		if self.zipdata:
-			return self.zipdata.state.upper()
+			return self.zipdata['state'].upper()
 		return None
 	
 	def get_city(self):
 		if self.zipdata:
-			return self.zipdata.post_office_city.upper()
+			return self.zipdata['city'].upper()
 		return None
+
+	def get_latlong(self):
+		if self.zipdata:
+			return self.zipdata['lat'] + "," + self.zipdata['long']
+		return None
+
 
 ####################### flask app and routes
 app = Flask(__name__)
