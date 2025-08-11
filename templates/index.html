@@ -53,6 +53,12 @@
 				<p style="text-align:center;">LOCAL FORECAST</p>
 				<p>{{ forecast[2]['name'].upper() }}...{{ forecast[2]['detailedForecast'].upper() }}</p>
 			</div>
+			<div class="slider-item local-radar">
+				<!--local radar loop-->
+				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<p style="text-align:center;">LOCAL RADAR</p>
+				<img src={{ weather.radar }} alt="45 MINUTE RADAR LOOP">
+			</div>
 			<div class="slider-item local-seven-day">
 				<!--screen 3, local upcoming weekly forecast-->
 				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>

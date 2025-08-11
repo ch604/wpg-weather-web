@@ -42,7 +42,6 @@ class CityWeather:
 	def get_daily_forecast(self):
 		# returns a json array of 14d of forecasts
 		if self.zip:
-			n = NOAA()
 			res = n.get_forecasts(self.zip, 'US', type='forecast')
 			return res
 		return None
@@ -50,24 +49,27 @@ class CityWeather:
 	def get_hourly_forecast(self):
 		# returns a json array of 156h of forecasts (about 7 days worth). filter with [0] for current conditions
 		if self.zip:
-			n = NOAA()
 			res = n.get_forecasts(self.zip, 'US', type='forecastHourly')
 			return res
+		return None
+	
+	def get_radar_url(self):
+		# populates self.radar with url of 45m historical loop.
+		if self.latlong:
+			self.radar = "https://radar.weather.gov/ridge/standard/" + n.points(self.latlong)['properties']['radarStation'] + "_loop.gif"
 		return None
 
 	def get_alerts(self):
 		# returns a json object of alerts for the area. 
 		if self.point:
-			n = NOAA()
 			res = n.active_alerts(area=self.point)
 			return res
 		elif self.latlong:
-			n = NOAA()
 			self.point = n.points(self.latlong)['properties']['forecastZone'].rsplit('/', 1)[-1]
 			res = n.active_alerts(zone_id=self.point)
 			return res
 		return None
-	
+
 
 # translate state/city from a zip code
 class ZipData:
@@ -94,6 +96,7 @@ class ZipData:
 
 ####################### flask app and routes
 app = Flask(__name__)
+n = NOAA(user_agent="wpg-weather-web")
 
 @app.route('/')
 def index():
