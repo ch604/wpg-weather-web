@@ -18,21 +18,22 @@ ver = "3.1"
 
 ####################### environment variables
 ## "music" Enables or disables music player, ON to turn it on, and anyhing else to disable it.
-music = os.getenv('WPG_MUSIC', "ON")
+music = os.getenv('WPG_MUSIC', default="ON")
 ## "url" is the source for local news feeds.
-url = os.getenv('WPG_RSSFEED', "https://feeds.nbcnews.com/nbcnews/public/news")
+url = os.getenv('WPG_RSSFEED', default="https://feeds.nbcnews.com/nbcnews/public/news")
 ## "homezip" is a valid US zip code.
-homezip = os.getenv('WPG_HOMEZIP', "60601")
+homezip = os.getenv('WPG_HOMEZIP', default="60601")
 ## "extrazips" is an array of 21 additional zip codes which support extra pages of "nationwide weather"
-extrazips = [48127,42127,10001,98039,60007,47750,43537,77301,43004,36043,27513,95758,32301,20500,27948,96795,90001,89166,29572,27959,14301]
+extrazips = ["48127","42127","10001","98039","60007","47750","43537","77301","43004","36043","27513","95758","32301","20500","27948","96795","90001","89166","29572","27959","14301"]
 #Set Time Zone
-TZ = os.getenv('TZ', time.tzname[time.daylight])
+TZ = os.getenv('TZ', default=time.tzname[time.daylight])
 #TODO timezone will not change when DST starts or stops
 
 ####################### classes
 # store weather for a zip code
 class CityWeather:
 	def __init__(self, zip):
+		debug_msg(zip)
 		z = ZipData(zip)
 		self.zip = zip
 		self.state = z.get_state()
@@ -101,15 +102,15 @@ n = NOAA(user_agent="wpg-weather-web")
 @app.route('/')
 def index():
 	weather_data = CityWeather(homezip)
-	# use hourly json array for current conditions [0] and next 6 hours [1-6]
+	# hourly json array for current conditions [0] and next 6 hours [1-6]
 	weather_hourly = weather_data.get_hourly_forecast()
-	# use forecast json array for the 14 day outlook [0-13]
+	# forecast json array for the 14 day outlook [0-13]
 	weather_forecast = weather_data.get_daily_forecast()
-	# use alerts json array for the alerts
+	# alerts json array
 	weather_alerts = weather_data.get_alerts()
 
 	# create objects with current conditions for all of the extra zips
-	nationwide_weather_objects = [CityWeather(zipcode).get_hourly_forecast[0] for zipcode in extrazips]
+	nationwide_weather_objects = [CityWeather(zipcode).get_hourly_forecast()[0] for zipcode in extrazips]
 	#TODO replace the variable monster with the CityWeather objects in this array with smart pagination?
 	# items_per_page = 7
 	# page_number = 6
@@ -124,7 +125,7 @@ def index():
 
 ################old code below here
 
-def debug_msg(message, priority): # debug messenger Written by probnot
+def debug_msg(message, priority=1): # debug messenger Written by probnot
 
     debugmode = 1;
     # 0 = disabled
@@ -494,7 +495,7 @@ def pg1DateTimeUpdate(): #This updates the time and date on page 1
     Year_String = str(current_time.year)
     Hour_String = str(Hour)
 
-#Build current date in YYYY-MM-DD form to obtain more data from NOOAA
+#Build current date in YYYY-MM-DD form to obtain more data from NOAA
 def dateBuild():
     Month_Str = str(current_time.month) #Month value needs to be in string form for this to work
     if current_time.month < 10: #Determines if month is a 1 digit value
@@ -521,12 +522,11 @@ def updateHour(): #Determines what the UpdateHour variable needs to be, which is
 
 def weather_page(PageColour, PageNum): #Written by probnot
     # pull in current seconds and minutes -- to be used to cycle the middle section every 30sec
-    global PageNum
     time_sec = time.localtime().tm_sec
     time_min = time.localtime().tm_min
     
     days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
-    months = [" ", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]    
+    months = [" ", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
     linebreak = ['\n']
 
     PageTotal = 11
@@ -755,7 +755,6 @@ def weather_page(PageColour, PageNum): #Written by probnot
         Pg7_C6_temp = tempDetermine(Pg7_C6_curr_weaval)
         Pg7_C7_temp = tempDetermine(Pg7_C7_curr_weaval)
 
-
         # Western Canada Temperatures & Conditions       
         debug_msg(("WEATHER_PAGE-display page " + str(PageNum)),3) 
         X_VAL = 0
@@ -768,9 +767,8 @@ def weather_page(PageColour, PageNum): #Written by probnot
         s6=(Pg7_C5_Name + "," + Pg7_C5_State + "    " + Pg7_C5_temp + " F" + " " + Pg7_C5_shortForecast)
         s7=(Pg7_C6_Name + "," + Pg7_C6_State + "   " + Pg7_C6_temp + " F" + " " + Pg7_C6_shortForecast)
         s8=(Pg7_C7_Name + "  " + Pg7_C7_temp + " F" + " " + Pg7_C7_shortForecast)
-             
+
     elif (PageNum == 8):   
-    
         # ===================== Screen 8 =====================
         #Set current short forecast
         Pg8_C1_shortForecast = shortFDetermine(Pg8_C1_curr_weaval)
@@ -804,11 +802,9 @@ def weather_page(PageColour, PageNum): #Written by probnot
         s6=(Pg8_C5_Name + "," + Pg8_C5_State + "     " + Pg8_C5_temp + " F" + " " + Pg8_C5_shortForecast)
         s7=(Pg8_C6_Name + "," + Pg8_C6_State + "        " + Pg8_C6_temp + " F" + " " + Pg8_C6_shortForecast)
         s8=(Pg8_C7_Name + "," + Pg8_C7_State + "     " + Pg8_C7_temp + " F" + " " + Pg8_C7_shortForecast)
-    
+
     elif (PageNum == 9):
-        
         # ===================== Screen 9 =====================
-        global startUpdate
         # Data updata screen, only displayed when updating weather data
         debug_msg(("WEATHER_PAGE-display page " + str(PageNum)),3)
         # get local timezone to show on screen
@@ -823,8 +819,8 @@ def weather_page(PageColour, PageNum): #Written by probnot
         s7 = " " 
         s8 = " "
         startUpdate = 1
+
     elif (PageNum == 10):
-        global startUpdate
         startUpdate = 0
         # ===================== Screen 10 =====================
         Pg6_C1_precip = precipDetermine(Pg6_C1_curr_weaval)
@@ -848,12 +844,10 @@ def weather_page(PageColour, PageNum): #Written by probnot
         s8 =("          " + Pg8_C7_Name + "," + Pg8_C7_State + "  " + Pg8_C7_precip + " %")
 
     elif (PageNum == 11):    
-        
         # ===================== Screen 11 =====================
         # custom/extra page - currently used for my channel listing
         # to disable this page, set PageTotal to 10
         debug_msg(("WEATHER_PAGE-display page " + str(PageNum)),3)         
-      
         # create 8 lines of text
         X_VAL = 80
         s1 = "MESSAGE FROM TECHSAVVVVY"
@@ -866,7 +860,6 @@ def weather_page(PageColour, PageNum): #Written by probnot
         s8 = "-TechSavvvvy" 
 
     # create the canvas for middle page text
-
     weather = Canvas(root, height=310, width=720, bg=PageColour)
     weather.place(x=0, y=85)
     weather.config(highlightbackground=PageColour)
@@ -898,7 +891,6 @@ def weather_page(PageColour, PageNum): #Written by probnot
 
 # bottom marquee scrolling text
 def bottom_marquee(grouptotal):
-
     group = 1
 
     # scrolling text canvas
@@ -989,34 +981,6 @@ def music_player(songNumber, playlist, musicpath):
 
 # ROOT main stuff
 def main():
-	Pg6_C1_Name = "DETRIOT" #Set city name for the first city on page 6, used only for looks
-	Pg6_C1_State = "MI" #Set 2 digit state abbreviation for first city on page 6, also only used for looks
-	Pg6_C1_Zip = 48127 #Zip code for first city on page 6, used by NOAA to determine weather data
-
-	# From here on it repeats itself
-	Pg6_C2_Name = "CAVE CITY" ; Pg6_C2_State = "KY" ; Pg6_C2_Zip = 42127
-	Pg6_C3_Name = "N.Y. CITY"; Pg6_C3_State = "NY"; Pg6_C3_Zip = 10001
-	Pg6_C4_Name = "SEATTLE"; Pg6_C4_State = "WA"; Pg6_C4_Zip = 98039
-	Pg6_C5_Name = "CHICAGO"; Pg6_C5_State = "IL" ;Pg6_C5_Zip = 60007
-	Pg6_C6_Name = "MARIETTA" ; Pg6_C6_State = "OH" ; Pg6_C6_Zip = 47750
-	Pg6_C7_Name = "TOLEDO" ; Pg6_C7_State = "OH" ; Pg6_C7_Zip = 43537
-
-	Pg7_C1_Name = "AUSTIN" ; Pg7_C1_State = "TX" ;Pg7_C1_Zip = 77301
-	Pg7_C2_Name = "COLUMBUS" ; Pg7_C2_State = "OH" ;Pg7_C2_Zip = 43004
-	Pg7_C3_Name = "MONTGOMERY" ; Pg7_C3_State = "AL" ; Pg7_C3_Zip = 36043
-	Pg7_C4_Name = "RALEIGH" ; Pg7_C4_State = "NC" ; Pg7_C4_Zip = 27513
-	Pg7_C5_Name = "SACRAMENTO" ; Pg7_C5_State = "CA" ; Pg7_C5_Zip = 95758
-	Pg7_C6_Name = "TALLAHASSEE" ; Pg7_C6_State = "FL" ; Pg7_C6_Zip = 32301
-	Pg7_C7_Name = "WASHINGTON D.C." ; Pg7_C7_State = " " ; Pg7_C7_Zip = 20500
-
-	Pg8_C1_Name = "KILL DEVIL HILLS" ; Pg8_C1_State = "NC" ; Pg8_C1_Zip = 27948
-	Pg8_C2_Name = "HONOLULU" ; Pg8_C2_State = "HI" ; Pg8_C2_Zip = 96795
-	Pg8_C3_Name = "LA ANGELES" ; Pg8_C3_State = "CA" ; Pg8_C3_Zip = 90001
-	Pg8_C4_Name = "LAS VEGAS" ; Pg8_C4_State = "NV" ; Pg8_C4_Zip = 89166
-	Pg8_C5_Name = "MYRTLE BEACH" ; Pg8_C5_State = "SC" ; Pg8_C5_Zip = 29572
-	Pg8_C6_Name = "NAGS HEAD" ; Pg8_C6_State = "NC" ; Pg8_C6_Zip = 27959
-	Pg8_C7_Name = "NIAGRA FALLS" ; Pg8_C7_State = "NY" ; Pg8_C7_Zip = 14301
-
 	root = Tk()
 	root.attributes('-fullscreen',True)
 	root.geometry("720x480") # this must be 720x480 for a proper filled out screen on composite output. 640x480 will have black bar on RH side. use 720x576 for PAL.
@@ -1030,6 +994,7 @@ def main():
 	T_Date = dateBuild()
 	Today_Data_Dirty = extraData()
 	updateHour()
+	startUpdate = 0
 	weatherDataUpdate()
 
 	temp = tempDetermine(curr_weaval)
@@ -1090,4 +1055,31 @@ def main():
 	# loop program  
 	root.mainloop()
 
-main()
+Pg6_C1_Name = "DETRIOT" ; Pg6_C1_State = "MI" ; Pg6_C1_Zip = 48127
+Pg6_C2_Name = "CAVE CITY" ; Pg6_C2_State = "KY"; Pg6_C2_Zip = 42127
+Pg6_C3_Name = "N.Y. CITY"; Pg6_C3_State = "NY"; Pg6_C3_Zip = 10001
+Pg6_C4_Name = "SEATTLE"; Pg6_C4_State = "WA"; Pg6_C4_Zip = 98039
+Pg6_C5_Name = "CHICAGO"; Pg6_C5_State = "IL"; Pg6_C5_Zip = 60007
+Pg6_C6_Name = "MARIETTA" ; Pg6_C6_State = "OH"; Pg6_C6_Zip = 47750
+Pg6_C7_Name = "TOLEDO" ; Pg6_C7_State = "OH"; Pg6_C7_Zip = 43537
+
+Pg7_C1_Name = "AUSTIN" ; Pg7_C1_State = "TX"; Pg7_C1_Zip = 77301
+Pg7_C2_Name = "COLUMBUS" ; Pg7_C2_State = "OH"; Pg7_C2_Zip = 43004
+Pg7_C3_Name = "MONTGOMERY" ; Pg7_C3_State = "AL"; Pg7_C3_Zip = 36043
+Pg7_C4_Name = "RALEIGH" ; Pg7_C4_State = "NC"; Pg7_C4_Zip = 27513
+Pg7_C5_Name = "SACRAMENTO" ; Pg7_C5_State = "CA"; Pg7_C5_Zip = 95758
+Pg7_C6_Name = "TALLAHASSEE" ; Pg7_C6_State = "FL"; Pg7_C6_Zip = 32301
+Pg7_C7_Name = "WASHINGTON D.C." ; Pg7_C7_State = " "; Pg7_C7_Zip = 20500
+
+Pg8_C1_Name = "KILL DEVIL HILLS" ; Pg8_C1_State = "NC"; Pg8_C1_Zip = 27948
+Pg8_C2_Name = "HONOLULU" ; Pg8_C2_State = "HI"; Pg8_C2_Zip = 96795
+Pg8_C3_Name = "LA ANGELES" ; Pg8_C3_State = "CA"; Pg8_C3_Zip = 90001
+Pg8_C4_Name = "LAS VEGAS" ; Pg8_C4_State = "NV"; Pg8_C4_Zip = 89166
+Pg8_C5_Name = "MYRTLE BEACH" ; Pg8_C5_State = "SC"; Pg8_C5_Zip = 29572
+Pg8_C6_Name = "NAGS HEAD" ; Pg8_C6_State = "NC"; Pg8_C6_Zip = 27959
+Pg8_C7_Name = "NIAGRA FALLS" ; Pg8_C7_State = "NY"; Pg8_C7_Zip = 14301
+
+current_time = datetime.datetime.now()
+#main()
+
+app.run(debug=True)
