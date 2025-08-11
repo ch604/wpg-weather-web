@@ -29,7 +29,13 @@
 				<p>DEWPT {{ weather.dewpoint }}</p>
 				<p>PRESS {{ weather.pressure }}</p>
             </div>
-			<div class="slider-item local-forecast">
+			<div class="slider-item local-alerts">
+				<!--local alerts-->
+				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<p style="text-align:center;">WEATHER ADVISORIES</p>
+				<p>{{ len(weather.alerts) }} ACTIVE WEATHER ALERTS</p>
+			</div>
+			<div class="slider-item local-forecast-1">
 				<!--screen 2, local short-term forecast-->
 				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
 			</div>

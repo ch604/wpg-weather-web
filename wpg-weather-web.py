@@ -37,6 +37,7 @@ class CityWeather:
 		self.zip = zip
 		self.state = z.get_state()
 		self.city = z.get_city()
+		self.latlong = z.get_latlong()
 
 	def get_daily_forecast(self):
 		# returns a json array of 14d of forecasts
@@ -44,6 +45,7 @@ class CityWeather:
 			n = NOAA()
 			res = n.get_forecasts(self.zip, 'US', type='forecast')
 			return res
+		return None
 
 	def get_hourly_forecast(self):
 		# returns a json array of 156h of forecasts (about 7 days worth). filter with [0] for current conditions
@@ -51,6 +53,20 @@ class CityWeather:
 			n = NOAA()
 			res = n.get_forecasts(self.zip, 'US', type='forecastHourly')
 			return res
+		return None
+
+	def get_alerts(self):
+		# returns a json object of alerts for the area. 
+		if self.point:
+			n = NOAA()
+			res = n.active_alerts(area=self.point)
+			return res
+		elif self.latlong:
+			n = NOAA()
+			self.point = n.points(self.latlong)['properties']['forecastZone'].rsplit('/', 1)[-1]
+			res = n.active_alerts(zone_id=self.point)
+			return res
+		return None
 	
 
 # translate state/city from a zip code
@@ -86,6 +102,8 @@ def index():
 	weather_hourly = weather_data.get_hourly_forecast()
 	# use forecast json array for the 14 day outlook [0-13]
 	weather_forecast = weather_data.get_daily_forecast()
+	# use alerts json array for the alerts
+	weather_alerts = weather_data.get_alerts()
 
 	# create objects with current conditions for all of the extra zips
 	nationwide_weather_objects = [CityWeather(zipcode).get_hourly_forecast[0] for zipcode in extrazips]
