@@ -119,6 +119,8 @@ def index():
 	# for obj in page_objects:
 	#	print(f"City: {obj.city}")
 
+	return render_template('index.html')
+
 
 ################old code below here
 
