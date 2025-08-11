@@ -22,7 +22,7 @@
 				<p style="text-align:center;">CURRENT CONDITIONS</p>
                 <p>TEMP {{ weather.temperature }}</p>
                 <p>WIND {{ weather.wind.direction }} {{ weather.wind.speed }}</p>
-                <p>{{ weather.condition }}</p>
+                <p>{{ weather.condition.upper() }}</p>
 				<p style="text-align:center;">CHANCE OF PRECIP. {{ weather.precipchance }} %</p>
 				<p>HUMID {{ weather.humidity }} %</p>
 				<p>VISBY {{ weather.visibility }}</p>
@@ -38,23 +38,41 @@
 			<div class="slider-item local-forecast-1">
 				<!--screen 2, local short-term forecast-->
 				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<p style="text-align:center;">LOCAL FORECAST</p>
+				<p>{{ forecast[0]['name'].upper() }}...{{ forecast[0]['detailedForecast'].upper() }}</p>
+			</div>
+			<div class="slider-item local-forecast-2">
+				<!--local short-term forecast and alerts-->
+				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<p style="text-align:center;">LOCAL FORECAST</p>
+				<p>{{ forecast[1]['name'].upper() }}...{{ forecast[1]['detailedForecast'].upper() }}</p>
+			</div>
+			<div class="slider-item local-forecast-3">
+				<!--local short-term forecast and alerts-->
+				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+				<p style="text-align:center;">LOCAL FORECAST</p>
+				<p>{{ forecast[2]['name'].upper() }}...{{ forecast[2]['detailedForecast'].upper() }}</p>
 			</div>
 			<div class="slider-item local-seven-day">
 				<!--screen 3, local upcoming weekly forecast-->
 				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
 			</div>
 			<div class="slider-item local-averages">
-				<!--screen 4, local weather averages-->
+				<!--screen 4, local hi/lo averages-->
+				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
+			</div>
+			<div class="slider-item local-almanac">
+				<!--screen 5, local sunrise/sunset, moon phase forecast-->
 				<h1>{{ weather.location }} {{ weather.forecastdate }}</h1>
 			</div>
 			<div class="slider-item national-weather-1">
-				<!--screen 5, extrazips current conditions-->
-			</div>
-			<div class="slider-item national-weather-2">
 				<!--screen 6, extrazips current conditions-->
 			</div>
-			<div class="slider-item national-weather-3">
+			<div class="slider-item national-weather-2">
 				<!--screen 7, extrazips current conditions-->
+			</div>
+			<div class="slider-item national-weather-3">
+				<!--screen 8, extrazips current conditions-->
 			</div>
         </div>
 
