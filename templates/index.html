@@ -25,16 +25,25 @@
                 <p>{{ weather_data.hourly[0]['shortForecast'].upper() }}</p>
 				<p style="text-align:center;">CHANCE OF PRECIP. {{ weather_data.hourly[0]['probabilityOfPrecipitation']['value'] }} %</p>
 				<p>HUMID {{ weather_data.hourly[0]['relativeHumidity']['value'] }} %</p>
-				<p>DEWPT {{ ( weather_data.current['dewpoint']['value'] * 1.8 ) + 32 }} F</p>
+				{% if weather_data.dewpoint is number %}
+					<p>DEWPT {{ weather_data.dewpoint }} F</p>
+				{% endif %}
 				<p>VISBY {{ weather_data.visibility }} MI</p>
-				<p>HTIDX {{ weather_data.heatindex }} F</p>
-				<p>CHILL {{ weather_data.windchill }} F</p>
+				{% if weather_data.heatindex is number %}
+					<p>HTIDX {{ weather_data.heatindex }} F</p>
+				{% endif %}
+				{% if weather_data.windchill is number %}
+					<p>CHILL {{ weather_data.windchill }} F</p>
+				{% endif %}
             </div>
 			<div class="slider-item local-alerts">
 				<!--local alerts-->
 				<h1>{{ weather_data.city.location }} UPDATED: {{ weather_data.updated }}</h1>
 				<p style="text-align:center;">WEATHER ADVISORIES</p>
 				<p>{{ weather_data.alerts['features']|length }} ACTIVE WEATHER ALERTS</p>
+				{% if weather_data.alerts['features']|length > 0 %}
+					<p>ALERTS HERE</p>
+				{% endif %}
 			</div>
 			<div class="slider-item local-hourly">
 				<!--local next 6 hours-->

@@ -51,7 +51,7 @@ class City:
 		# returns a json array of the current observations by the closest station to the stored zip
 		if self.zip:
 			for i in n.get_observations_by_lat_lon(self.lat, self.long):
-				return str(i)
+				return i
 				break
 		return None
 
@@ -118,9 +118,19 @@ class Weather:
 	def get_weather(self):
 		self.update_time()
 		self.current = self.city.get_current_conditions()
-		self.visibility = m_to_mi(self.current['visibility']['value'])
-		self.heatindex = c_to_f(self.current['heatIndex']['value'])
-		self.windchill = c_to_f(self.current['windChill']['value'])
+		self.visibility = m_to_mi(int(self.current['visibility']['value']))
+		if self.current['dewpoint']['value']:
+			self.dewpoint = c_to_f(float(str(self.current['dewpoint']['value'])))
+		else:
+			self.dewpoint = ""
+		if self.current['heatIndex']['value']:
+			self.heatindex = c_to_f(float(str(self.current['heatIndex']['value'])))
+		else:
+			self.heatindex = ""
+		if self.current['windChill']['value']:
+			self.windchill = c_to_f(float(str(self.current['windChill']['value'])))
+		else:
+			self.windchill = ""
 		self.hourly = self.city.get_hourly_forecast()
 		self.forecast = self.city.get_daily_forecast()
 		self.outlook = self.city.get_sevenday_forecast()
