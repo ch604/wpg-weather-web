@@ -95,3 +95,8 @@ body {
 	display: block;
 	animation: fadeAnimation 0.5s;
 }
+
+@keyframes fadeAnimation {
+	0%   { opacity: 0; }
+	100% { opacity: 1; transition: opacity linear; }
+}

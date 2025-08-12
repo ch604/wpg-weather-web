@@ -3,12 +3,13 @@
 # Updated/modified for USA by TechSavvvvy
 # Updated for web by ch604
 
-import time, datetime, linecache, sys, json
+import time, linecache, sys, json
 import feedparser, requests # for RSS feed
 import pygame, random, os # for background music
 import re # for word shortener
 
 from tkinter import *
+from datetime import datetime
 from noaa_sdk import NOAA # for noaa weather data, added by -TS
 import zipcodes
 from flask import Flask, render_template
@@ -25,33 +26,44 @@ url = os.getenv('WPG_RSSFEED', default="https://feeds.nbcnews.com/nbcnews/public
 homezip = os.getenv('WPG_HOMEZIP', default="60601")
 ## "extrazips" is an array of 21 additional zip codes which support extra pages of "nationwide weather"
 extrazips = ["48127","42127","10001","98039","60007","47750","43537","77301","43004","36043","27513","95758","32301","20500","27948","96795","90001","89166","29572","27959","14301"]
+
 #Set Time Zone
 TZ = os.getenv('TZ', default=time.tzname[time.daylight])
 #TODO timezone will not change when DST starts or stops
 
-####################### classes
-# store weather for a zip code
-class CityWeather:
+# open a NOAA class to interact with weather data
+n = NOAA(user_agent="wpg-weather-web (github.com/ch604/wpg-weather-web)")
+
+####################### classes and functions
+# store city data for a given zip code, functions to call noaa api for weather for that city.
+class City:
 	def __init__(self, zip):
-		debug_msg(zip)
 		z = ZipData(zip)
 		self.zip = zip
-		self.state = z.get_state()
-		self.city = z.get_city()
+		self.city = z.city
+		self.state = z.state
 		self.location = self.city + ", " + self.state
-		self.pointProperties = n.points(z.get_latlong())['properties']
+		self.lat = float(z.zipdata['lat'])
+		self.long = float(z.zipdata['long'])
+		self.pointProperties = n.points(z.get_latlong_str())['properties']
+	
+	def get_current_conditions(self):
+		# returns a json array of the current observations by the closest station to the stored zip
+		if self.zip:
+			for i in n.get_observations_by_lat_lon(self.lat, self.long):
+				return str(i)
+				break
+		return None
 
 	def get_daily_forecast(self):
 		# returns a json array of 14 day/night forecasts (7 days)
 		if self.zip:
-			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
 			return n.get_forecasts(self.zip, 'US', type='forecast')
 		return None
 	
 	def get_sevenday_forecast(self):
 		# returns a json array of upcoming day forecasts, excluding today
 		if self.zip:
-			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
 			res = n.get_forecasts(self.zip, 'US', type='forecast')
 			out = []
 			for i in res:
@@ -63,69 +75,81 @@ class CityWeather:
 	def get_hourly_forecast(self):
 		# returns a json array of 156h of forecasts (about 7 days worth). filter with [0] for current conditions
 		if self.zip:
-			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
 			return n.get_forecasts(self.zip, 'US', type='forecastHourly')
 		return None
 	
 	def get_radar_url(self):
 		# populates self.radar with url of 45m historical loop.
 		if self.pointProperties:
-			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
 			return "https://radar.weather.gov/ridge/standard/" + self.pointProperties['radarStation'] + "_loop.gif"
 		return None
 
 	def get_alerts(self):
 		# returns a json object of alerts for the area. 
 		if self.pointProperties:
-			self.update_time = datetime.datetime.now().strftime('%I:%M %p')
 			return n.active_alerts(zone_id=self.pointProperties['forecastZone'].rsplit('/', 1)[-1])
 		return None
 
 
-# translate state/city from a zip code
+# translate location data from a zip code
 class ZipData:
 	def __init__(self, zip):
 		if zipcodes.is_real(zip):
 			self.zipdata = zipcodes.matching(zip)[0]
+			self.state = self.zipdata['state'].upper()
+			self.city = self.zipdata['city'].upper()
 		return None
 	
-	def get_state(self):
-		if self.zipdata:
-			return self.zipdata['state'].upper()
-		return None
-	
-	def get_city(self):
-		if self.zipdata:
-			return self.zipdata['city'].upper()
-		return None
-
-	def get_latlong(self):
+	def get_latlong_str(self):
 		if self.zipdata:
 			return self.zipdata['lat'] + "," + self.zipdata['long']
 		return None
 
 
+# object to store weather data json arrays
+class Weather:
+	def __init__(self, zip):
+		debug_msg("making weather object for " + zip)
+		# save self.city to reference City object and functions later
+		self.city = City(zip)
+		self.radarimg = self.city.get_radar_url()
+		self.get_weather()
+	
+	def get_weather(self):
+		self.update_time()
+		self.current = self.city.get_current_conditions()
+		self.visibility = m_to_mi(self.current['visibility']['value'])
+		self.heatindex = c_to_f(self.current['heatIndex']['value'])
+		self.windchill = c_to_f(self.current['windChill']['value'])
+		self.hourly = self.city.get_hourly_forecast()
+		self.forecast = self.city.get_daily_forecast()
+		self.outlook = self.city.get_sevenday_forecast()
+		self.alerts = self.city.get_alerts()
+		return None
+	
+	def update_time(self):
+		self.updated = datetime.now().strftime('%I:%M %p')
+		return None
+
+
+def c_to_f(i):
+	return round((i * 1.8) + 32)
+
+def m_to_mi(i):
+	return round(i / 1609)
+
 ####################### flask app and routes
 app = Flask(__name__)
-n = NOAA(user_agent="wpg-weather-web (github.com/ch604/wpg-weather-web)")
 
 @app.route('/')
 def index():
-	weather_data = CityWeather(homezip)
-	# hourly json array for current conditions [0] and next 6 hours [1-6]
-	weather_hourly = weather_data.get_hourly_forecast()
-	# forecast json array for the day/night forecast and 7 day outlook
-	weather_forecast = weather_data.get_daily_forecast()
-	weather_outlook = weather_data.get_sevenday_forecast()
-	# alerts json array
-	weather_alerts = weather_data.get_alerts()
-	# radar url
-	weather_radar = weather_data.get_radar_url()
+	# generate weather_data object for homezip
+	weather_data = Weather(homezip)
 
 	# create objects with current conditions for all of the extra zips
 	#TODO async this
-	#nationwide_weather_objects = [CityWeather(zipcode).get_hourly_forecast()[0] for zipcode in extrazips]
-	#TODO replace the variable monster with the CityWeather objects in this array with smart pagination?
+	#nationwide_weather_objects = [City(zipcode).get_hourly_forecast()[0] for zipcode in extrazips]
+	#TODO replace the variable monster with the City objects in this array with smart pagination?
 	# items_per_page = 7
 	# page_number = 6
 	# start_index = (page_number - 1) * items_per_page
@@ -401,7 +425,7 @@ def weatherDataUpdate(): #Obtaining weather data from NWS/NOAA
     global updateTimer
     global current_time
 #Set weather data for pages 6-8
-    current_time = datetime.datetime.now()
+    current_time = datetime.now()
     if current_time.hour == UpdateHour:
      updateTimer = 10000
      if startUpdate == 1:
@@ -449,7 +473,7 @@ def monthSet():
 
 #Determine Hour and AM/PM
 def pg1TimeSet():
-    current_time = datetime.datetime.now()
+    current_time = datetime.now()
     debug_msg("Updating Hour",2)
     global Hour
     global AM_PM
@@ -1001,7 +1025,7 @@ def main():
 	root.config(cursor="none", bg="green")
 	root.wm_title("wpg-weather-web")
 	updateTimer = 1800000 #30 minutes
-	current_time = datetime.datetime.now()
+	current_time = datetime.now()
 	curr_weaval=""
 	pullWeatherData()
 	pg1DateTimeUpdate()
@@ -1093,7 +1117,7 @@ Pg8_C5_Name = "MYRTLE BEACH" ; Pg8_C5_State = "SC"; Pg8_C5_Zip = 29572
 Pg8_C6_Name = "NAGS HEAD" ; Pg8_C6_State = "NC"; Pg8_C6_Zip = 27959
 Pg8_C7_Name = "NIAGRA FALLS" ; Pg8_C7_State = "NY"; Pg8_C7_Zip = 14301
 
-current_time = datetime.datetime.now()
+current_time = datetime.now()
 #main()
 
 app.run(debug=True)
