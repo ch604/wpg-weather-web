@@ -81,6 +81,10 @@
 			<div class="slider-item local-seven-day">
 				<!--local upcoming weekly forecast-->
 				<h1>{{ weather_data.city.location }} UPDATED: {{ weather_data.updated }}</h1>
+				<p style="text-align:center;">7 DAY OUTLOOK</p>
+				{% for i in weather_data.outlook %}
+					<p>{{ i['name'] }}: {{ i['temperature'] }} {{ i['temperatureUnit'] }} {{ i['shortForecast'] }}</p>
+				{% endfor %}
 			</div>
 			<div class="slider-item local-averages">
 				<!--local hi/lo averages-->
