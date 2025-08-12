@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>{{ prog }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
 </head>
 <body>
@@ -24,16 +24,16 @@
                 <p>WIND {{ weather_data.hourly[0]['windSpeed'] }} {{ weather_data.hourly[0]['windDirection'] }}</p>
                 <p>{{ weather_data.hourly[0]['shortForecast'].upper() }}</p>
 				<p style="text-align:center;">CHANCE OF PRECIP. {{ weather_data.hourly[0]['probabilityOfPrecipitation']['value'] }} %</p>
-				<p>HUMID {{ weather_data.hourly[0]['relativeHumidity']['value'] }} %</p>
+				<p>HUMIDITY {{ weather_data.hourly[0]['relativeHumidity']['value'] }} %</p>
 				{% if weather_data.dewpoint is number %}
-					<p>DEWPT {{ weather_data.dewpoint }} F</p>
+					<p>DEWPOINT {{ weather_data.dewpoint }} F</p>
 				{% endif %}
-				<p>VISBY {{ weather_data.visibility }} MI</p>
+				<p>VISIBLTY {{ weather_data.visibility }} MI</p>
 				{% if weather_data.heatindex is number %}
-					<p>HTIDX {{ weather_data.heatindex }} F</p>
+					<p>HEATINDX {{ weather_data.heatindex }} F</p>
 				{% endif %}
 				{% if weather_data.windchill is number %}
-					<p>CHILL {{ weather_data.windchill }} F</p>
+					<p>WNDCHILL {{ weather_data.windchill }} F</p>
 				{% endif %}
             </div>
 			<div class="slider-item local-alerts">

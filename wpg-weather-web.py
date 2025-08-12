@@ -15,6 +15,7 @@ import zipcodes
 from flask import Flask, render_template
 
 prog = "wpg-weather-web"
+title = "⛅ WPG WEATHER CHANNEL"
 ver = "3.1"
 
 ####################### environment variables
@@ -32,7 +33,7 @@ TZ = os.getenv('TZ', default=time.tzname[time.daylight])
 #TODO timezone will not change when DST starts or stops
 
 # open a NOAA class to interact with weather data
-n = NOAA(user_agent="wpg-weather-web (github.com/ch604/wpg-weather-web)")
+n = NOAA(user_agent=prog + " (github.com/ch604/wpg-weather-web)")
 
 ####################### classes and functions
 # store city data for a given zip code, functions to call noaa api for weather for that city.
@@ -150,6 +151,13 @@ def m_to_mi(i):
 
 ####################### flask app and routes
 app = Flask(__name__)
+
+@app.context_processor
+def variable_adder():
+	return {
+		'title': title,
+		'prog': prog
+	}
 
 @app.route('/')
 def index():
