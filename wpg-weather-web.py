@@ -7,18 +7,26 @@ import time, linecache, sys, json
 import feedparser, requests # for RSS feed
 import pygame, random, os # for background music
 import re # for word shortener
-
 from tkinter import *
 from datetime import datetime
+from dateutil import tz
+
 from noaa_sdk import NOAA # for noaa weather data, added by -TS
-import zipcodes
+import zipcodes # to get location data from zipcodes
+
+# for almanac data
+import astral
+from astral.sun import sun
+from astral.moon import moonrise, moonset, phase
+
+# for serving sites
 from flask import Flask, render_template
 
+####################### variables
 prog = "wpg-weather-web"
 title = "⛅ WPG WEATHER CHANNEL"
 ver = "3.1"
 
-####################### environment variables
 ## "music" Enables or disables music player, ON to turn it on, and anyhing else to disable it.
 music = os.getenv('WPG_MUSIC', default="ON")
 ## "url" is the source for local news feeds.
@@ -45,6 +53,7 @@ class City:
 		self.location = self.city + ", " + self.state
 		self.lat = float(z.zipdata['lat'])
 		self.long = float(z.zipdata['long'])
+		self.timezone = z.zipdata['timezone']
 		self.pointProperties = n.points(z.get_latlong_str())['properties']
 	
 	def get_current_conditions(self):
@@ -142,6 +151,54 @@ class Weather:
 		return None
 
 
+# almanac-type data object
+class Almanac:
+	def __init__(self, zip):
+		self.city = City(zip)
+		self.astro = astral.LocationInfo(self.city.city, self.city.state, self.city.timezone, self.city.lat, self.city.long)
+	
+	def get_almanac_data(date):
+		if self.astro:
+			self.get_sun_data(date)
+			self.get_moon_data(date)
+		#TODO get historical averages? meteostat downloads are dead
+		return None
+
+	def get_sun_data(date):
+		if self.astro:
+			s = sun(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone))
+			self.sunrise = s['sunrise'].strftime('%I:%M %p')
+			self.sunset = s['sunset'].strftime('%I:%M %p')
+		return None
+
+	def get_moon_data(date):
+		if self.astro:
+			self.moonrise = moonrise(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone))
+			self.moonset = moonset(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone))
+			match round(phase(date=date)):
+				case 0:
+					self.phase = "New"
+				case num if num < 7:
+					self.phase = "Waxing Crescent"
+				case 7:
+					self.phase = "First Quarter"
+				case num if num < 14:
+					self.phase = "Waxing Gibbous"
+				case 14:
+					self.phase = "Full"
+				case num if num < 21:
+					self.phase = "Waning Gibbous"
+				case 21:
+					self.phase = "Third Quarter"
+				case num if num < 28:
+					self.phase = "Waning Crescent"
+				case 28:
+					self.phase = "New"
+				case _:
+					pass
+		return None
+
+
 def c_to_f(i):
 	return round((i * 1.8) + 32)
 
@@ -173,6 +230,8 @@ def variable_adder():
 def index():
 	# generate weather_data object for homezip
 	weather_data = Weather(homezip)
+	# generate almanac_data object for homezip
+	almanac_data = Almanac(homezip)
 
 	# create objects with current conditions for all of the extra zips
 	#TODO async this

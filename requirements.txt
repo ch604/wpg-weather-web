@@ -1,3 +1,4 @@
+astral
 feedparser
 flask
 noaa_sdk
