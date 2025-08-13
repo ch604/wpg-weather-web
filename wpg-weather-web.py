@@ -36,10 +36,6 @@ homezip = os.getenv('WPG_HOMEZIP', default="60601")
 ## "extrazips" is an array of 21 additional zip codes which support extra pages of "nationwide weather"
 extrazips = ["48127","42127","10001","98039","60007","47750","43537","77301","43004","36043","27513","95758","32301","20500","27948","96795","90001","89166","29572","27959","14301"]
 
-#Set Time Zone
-TZ = os.getenv('TZ', default=time.tzname[time.daylight])
-#TODO timezone will not change when DST starts or stops
-
 noaa_user_agent = prog + " (github.com/ch604/wpg-weather-web)"
 
 ####################### classes and functions
@@ -649,6 +645,7 @@ def weather_page(PageColour, PageNum): #Written by probnot
     # pull in current seconds and minutes -- to be used to cycle the middle section every 30sec
     time_sec = time.localtime().tm_sec
     time_min = time.localtime().tm_min
+    TZ = time.tzname[time.daylight]
     
     days = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
     months = [" ", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]

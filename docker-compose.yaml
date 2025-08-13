@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 9000:9000
+      - 5000:5000
     dns:
       - 1.1.1.1
       - 1.0.0.1
@@ -14,4 +14,3 @@ services:
       - "WPG_HOMEZIP=48205"
       - "WPG_MUSIC=ON"
       - "WPG_RSSFEED=https://www.wxyz.com/news/region/detroit.rss"
-      - "WPG_TZ=EDT"
