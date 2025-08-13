@@ -153,24 +153,24 @@ class Almanac:
 		self.city = City(zip)
 		self.astro = astral.LocationInfo(self.city.city, self.city.state, self.city.timezone, self.city.lat, self.city.long)
 	
-	def get_almanac_data(date):
+	def get_almanac_data(self, date):
 		if self.astro:
 			self.get_sun_data(date)
 			self.get_moon_data(date)
 		#TODO get historical averages? meteostat downloads are dead
 		return None
 
-	def get_sun_data(date):
+	def get_sun_data(self, date):
 		if self.astro:
 			s = sun(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone))
 			self.sunrise = s['sunrise'].strftime('%I:%M %p')
 			self.sunset = s['sunset'].strftime('%I:%M %p')
 		return None
 
-	def get_moon_data(date):
+	def get_moon_data(self, date):
 		if self.astro:
-			self.moonrise = moonrise(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone))
-			self.moonset = moonset(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone))
+			self.moonrise = moonrise(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone)).strftime('%I:%M %p')
+			self.moonset = moonset(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone)).strftime('%I:%M %p')
 			match round(phase(date=date)):
 				case 0:
 					self.phase = "New"
@@ -228,6 +228,7 @@ def index():
 	weather_data = Weather(homezip)
 	# generate almanac_data object for homezip
 	almanac_data = Almanac(homezip)
+	almanac_data.get_almanac_data(datetime.now())
 
 	# create objects with current conditions for all of the extra zips
 	#TODO async this
