@@ -32,8 +32,7 @@ extrazips = ["48127","42127","10001","98039","60007","47750","43537","77301","43
 TZ = os.getenv('TZ', default=time.tzname[time.daylight])
 #TODO timezone will not change when DST starts or stops
 
-# open a NOAA class to interact with weather data
-n = NOAA(user_agent=prog + " (github.com/ch604/wpg-weather-web)")
+noaa_user_agent = prog + " (github.com/ch604/wpg-weather-web)"
 
 ####################### classes and functions
 # store city data for a given zip code, functions to call noaa api for weather for that city.
@@ -150,13 +149,24 @@ def m_to_mi(i):
 	return round(i / 1609)
 
 ####################### flask app and routes
+# open a NOAA class to interact with weather data, define the user_agent
+n = NOAA(user_agent=noaa_user_agent)
+# open a flask class for the app
 app = Flask(__name__)
 
+# add the sixhour_time_format function to jinja2 template
+@app.template_filter("sixhour_time_format")
+def sixhour_time_format(input):
+	noaatime_fmt = '%Y-%m-%dT%H:%M:%S%z'
+	sixhourtime_fmt = '%^a, %^b %d, %l %p'
+	return datetime.strptime(input, noaatime_fmt).strftime(sixhourtime_fmt)
+
+# export global variables to jinja2
 @app.context_processor
 def variable_adder():
 	return {
 		'title': title,
-		'prog': prog
+		'prog': prog,
 	}
 
 @app.route('/')

@@ -53,6 +53,9 @@
 				<!--local next 6 hours-->
 				<h1>{{ weather_data.city.location }} UPDATED: {{ weather_data.updated }}</h1>
 				<p style="text-align:center;">NEXT 6 HOURS</p>
+				{% for i in range(1, 6) %}
+					<p>{{ weather_data.hourly[i]['startTime'] | sixhour_time_format }}...{{ weather_data.hourly[i]['temperature'] }} {{ weather_data.hourly[i]['temperatureUnit'] }}...{{ weather_data.hourly[i]['shortForecast'].upper() }} </p>
+				{% endfor %}
 			</div>
 			<div class="slider-item local-forecast-1">
 				<!--local short-term forecast-->
