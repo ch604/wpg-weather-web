@@ -14,7 +14,7 @@ For standalone, just run the python script after installing the requirements lis
 
 The original application was written by [probnot](https://github.com/probnot/wpg-weatherchan), with modifications by [TechSavvvvy](https://github.com/TechSavvvvy/wpg-weatherchan-USA) to use NOAA weather for the U S and A.
 
-This app uses [NOAA](https://github.com/paulokuong/noaa) to get the weather data from the National Weather Serivce. It also uses the fonts [VCR OSD Mono](https://www.dafont.com/vcr-osd-mono.font) and [7-Segment Normal](https://blogfonts.com/7-segment-normal.font).
+This app uses [NOAA](https://github.com/paulokuong/noaa) to get the weather data from the National Weather Serivce. It also uses the fonts [VCR OSD Mono](https://www.dafont.com/vcr-osd-mono.font) and [SquareFont](https://www.dafont.com/squarefont.font).
 
 ## License
 

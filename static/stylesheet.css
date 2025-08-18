@@ -1,7 +1,7 @@
 @font-face {
-    font-family: '7-Segment Normal';
-    src: url('7-Segment-Normal.woff2') format('woff2'),
-        url('7-Segment-Normal.woff') format('woff');
+    font-family: 'SquareFont';
+    src: url('SquareFont.woff2') format('woff2'),
+        url('SquareFont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -35,7 +35,7 @@ body {
     top: 20px;
     right: 20px;
     font-size: 24px;
-	font-family: '7-Segment Normal';
+	font-family: 'SquareFont';
 }
 
 .title-container {
