@@ -1,3 +1,4 @@
+// update the clock once per second
 function updateClock() {
 	const localTime = new Date();
 

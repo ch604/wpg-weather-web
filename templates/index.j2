@@ -32,4 +32,11 @@
 	<script src="static/js/clock.js"></script>
 	<script src="static/js/slider.js"></script>
 	<script src="static/js/update.js"></script>
+	{% if music == "ON" %}
+		<audio id="music-player" autoplay></audio>
+		<script>
+			const mp3Files = {{ music_files | tojson }};
+		</script>
+		<script src="static/js/music.js"></script>
+	{% endif %}
 </body>

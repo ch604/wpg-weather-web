@@ -6,15 +6,17 @@ This app creates the old-school looking weather channel that was common on Winni
 
 ## Usage
 
-For docker, dowload and build the Dockerfile, then run it after exporting variables for your city and news feed.
+For docker, dowload and build the Dockerfile, then run it after exporting variables for your zip code and news feed.
 
 For standalone, just run the python script after installing the requirements listed in the txt file.
+
+If you choose to enable music, you will need to interact with the page before it can autoplay. Click on the clock in the top right of the page after it loads to begin playback, or see [Chrome Autoplay Policies](https://developer.chrome.com/blog/autoplay/#developer_switches) to launch a browser with autoplay enabled.
 
 ## Attribution
 
 The original application was written by [probnot](https://github.com/probnot/wpg-weatherchan), with modifications by [TechSavvvvy](https://github.com/TechSavvvvy/wpg-weatherchan-USA) to use NOAA weather for the U S and A.
 
-This app uses [NOAA](https://github.com/paulokuong/noaa) to get the weather data from the National Weather Serivce. It also uses the fonts [VCR OSD Mono](https://www.dafont.com/vcr-osd-mono.font) and [SquareFont](https://www.dafont.com/squarefont.font).
+This app uses [NOAA](https://github.com/paulokuong/noaa) to get the weather data from the National Weather Serivce. It also uses the fonts [VCR OSD Mono](https://www.dafont.com/vcr-osd-mono.font) and [SquareFont](https://www.dafont.com/squarefont.font). Background music is provided by [pixabay](https://pixabay.com/music/) and is AI generated.
 
 ## License
 

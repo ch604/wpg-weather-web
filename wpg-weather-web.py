@@ -5,9 +5,7 @@
 
 import time, linecache, sys, json
 import feedparser, requests # for RSS feed
-import pygame, random, os # for background music
-import re # for word shortener
-from tkinter import *
+import random, os # for background music
 from datetime import datetime
 from dateutil import tz
 
@@ -235,6 +233,10 @@ n = NOAA(user_agent=noaa_user_agent)
 weather_data = Weather(homezip)
 almanac_data = Almanac(homezip)
 
+# make a playlist
+music_files = [f for f in os.listdir('static/audio') if f.endswith('.mp3')]
+random.shuffle(music_files)
+
 
 ####################### flask app and routes
 # open a flask class for the app
@@ -254,7 +256,9 @@ def variable_adder():
 		'title': title,
 		'prog': prog,
 		'weather_data': weather_data,
-		'almanac_data': almanac_data
+		'almanac_data': almanac_data,
+		'music': music,
+		'music_files': music_files
 	}
 
 @app.route('/')

@@ -1,3 +1,4 @@
+// rotate through the slides (weather info pages) every 10 seconds
 let slidePosition=0;
 const sliders=document.querySelectorAll('.slider-item');
 const totalSlider=sliders.length;
