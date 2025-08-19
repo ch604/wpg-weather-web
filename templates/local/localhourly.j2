@@ -2,7 +2,7 @@
 	{# local next 6 hours #}
 	{% include 'local/localheader.j2' %}
 	<p style="text-align:center;">NEXT 6 HOURS</p>
-	{% for i in range(1, 6) %}
+	{% for i in range(1, 7) %}
 		<p>{{ weather_data.hourly[i]['startTime'] | sixhour_time_format }}...{{ weather_data.hourly[i]['temperature'] }} {{ weather_data.hourly[i]['temperatureUnit'] }}...{{ weather_data.hourly[i]['shortForecast'].upper() }} </p>
 	{% endfor %}
 </div>
