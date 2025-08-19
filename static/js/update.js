@@ -4,7 +4,7 @@ function updateData() {
 		url: '/update',
 		type: 'GET',
 		success: function(response) {
-			$('#dynamic-data').html(response);
+			$(document).html(response);
 		}
 	})
 }

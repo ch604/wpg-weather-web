@@ -1,10 +1,12 @@
 <div class="slider-item local-averages">
 	<!--local hi/lo averages-->
 	{% include 'local/localheader.j2' %}
+	<p style="text-align:center;">LOCAL AVERAGES</p>
 </div>
 <div class="slider-item local-almanac">
 	<!--local sunrise/sunset, moon phase forecast-->
 	{% include 'local/localheader.j2' %}
+	<p style="text-align:center;">ASTROLOGY</p>
 	<p>SUNRISE: {{ almanac_data.sunrise }}</p>
 	<p>SUNSET: {{ almanac_data.sunset }}</p>
 	<br>

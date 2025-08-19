@@ -11,8 +11,11 @@ from tkinter import *
 from datetime import datetime
 from dateutil import tz
 
-from noaa_sdk import NOAA # for noaa weather data, added by -TS
-import zipcodes # to get location data from zipcodes
+# for weather data
+from noaa_sdk import NOAA
+
+# for location data
+import zipcodes
 
 # for almanac data
 import astral
@@ -225,6 +228,7 @@ match rss_speed:
 	case _:
 		rss_speed_divisor = 15
 
+
 # add the sixhour_time_format function to jinja2 template
 @app.template_filter("sixhour_time_format")
 def sixhour_time_format(input):
@@ -238,19 +242,16 @@ def variable_adder():
 	return {
 		'title': title,
 		'prog': prog,
+		'weather_data': weather_data,
+		'almanac_data': almanac_data
 	}
 
 @app.route('/')
+@app.route('/update')
 def index():
-	# generate weather_data object for homezip
-	weather_data = Weather(homezip)
 	weather_data.get_weather()
-	# generate almanac_data object for homezip
-	almanac_data = Almanac(homezip)
 	almanac_data.get_almanac_data(datetime.now())
-	# create news feed object for rss feed url
 	news_text = build_ticker(feedparser.parse(rss_feed))
-
 	news_speed = str(round(len(news_text)/rss_speed_divisor)) + 's'
 
 	# create objects with current conditions for all of the extra zips
@@ -1220,4 +1221,6 @@ Pg8_C7_Name = "NIAGRA FALLS" ; Pg8_C7_State = "NY"; Pg8_C7_Zip = 14301
 current_time = datetime.now()
 #main()
 
+weather_data = Weather(homezip)
+almanac_data = Almanac(homezip)
 app.run(debug=True)
