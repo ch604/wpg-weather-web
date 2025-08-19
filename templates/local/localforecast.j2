@@ -1,0 +1,18 @@
+<div class="slider-item local-forecast-1">
+	{# local short-term forecast #}
+	{% include 'local/localheader.j2' %}
+	<p style="text-align:center;">LOCAL FORECAST</p>
+	<p>{{ weather_data.forecast[0]['name'].upper() }}...{{ weather_data.forecast[0]['detailedForecast'].upper() }}</p>
+</div>
+<div class="slider-item local-forecast-2">
+	{# local short-term forecast #}
+	{% include 'local/localheader.j2' %}
+	<p style="text-align:center;">LOCAL FORECAST</p>
+	<p>{{ weather_data.forecast[1]['name'].upper() }}...{{ weather_data.forecast[1]['detailedForecast'].upper() }}</p>
+</div>
+<div class="slider-item local-forecast-3">
+	{# local short-term forecast #}
+	{% include 'local/localheader.j2' %}
+	<p style="text-align:center;">LOCAL FORECAST</p>
+	<p>{{ weather_data.forecast[2]['name'].upper() }}...{{ weather_data.forecast[2]['detailedForecast'].upper() }}</p>
+</div>

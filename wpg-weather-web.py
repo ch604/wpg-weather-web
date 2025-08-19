@@ -257,7 +257,7 @@ def index():
 	#TODO async this
 	#nationwide_weather_objects = [City(zipcode).get_hourly_forecast()[0] for zipcode in extrazips]
 
-	return render_template('index.html', **locals())
+	return render_template('index.j2', **locals())
 
 
 ################old code below here

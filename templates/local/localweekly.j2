@@ -1,0 +1,8 @@
+<div class="slider-item local-weekly">
+	{# local upcoming weekly forecast #}
+	{% include 'local/localheader.j2' %}
+	<p style="text-align:center;">7 DAY OUTLOOK</p>
+	{% for i in weather_data.outlook %}
+		<p>{{ i['name'] }}: {{ i['temperature'] }} {{ i['temperatureUnit'] }} {{ i['shortForecast'] }}</p>
+	{% endfor %}
+</div>
