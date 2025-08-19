@@ -22,8 +22,9 @@ import astral
 from astral.sun import sun
 from astral.moon import moonrise, moonset, phase
 
-# for serving sites
+# for serving sites and making websocket
 from flask import Flask, render_template
+from flask_socketio import SocketIO, emit
 
 ####################### variables
 prog = "wpg-weather-web"

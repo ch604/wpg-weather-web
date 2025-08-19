@@ -1,6 +1,7 @@
 astral
 feedparser
 flask
+flask-socketio
 noaa_sdk
 pygame
 zipcodes
