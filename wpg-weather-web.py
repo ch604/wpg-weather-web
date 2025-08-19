@@ -120,7 +120,6 @@ class Weather:
 		# save self.city to reference City object and functions later
 		self.city = City(zip)
 		self.radarimg = self.city.get_radar_url()
-		self.get_weather()
 	
 	def get_weather(self):
 		self.update_time()
@@ -245,6 +244,7 @@ def variable_adder():
 def index():
 	# generate weather_data object for homezip
 	weather_data = Weather(homezip)
+	weather_data.get_weather()
 	# generate almanac_data object for homezip
 	almanac_data = Almanac(homezip)
 	almanac_data.get_almanac_data(datetime.now())
