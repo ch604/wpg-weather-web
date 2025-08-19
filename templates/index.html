@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ prog }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+	<style>
+		.ticker {
+			animation: ticker-animation {{ news_speed }} linear infinite;
+		}
+	</style>
 </head>
 <body>
     <div class="main-container">
@@ -109,7 +114,7 @@
         </div>
 
         <div class="ticker-wrap">
-            <div class="ticker"></div>
+            <div class="ticker">{{ news_text }}</div>
         </div>
     </div>
 

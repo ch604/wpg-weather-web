@@ -29,8 +29,10 @@ ver = "3.1"
 
 ## "music" Enables or disables music player, ON to turn it on, and anyhing else to disable it.
 music = os.getenv('WPG_MUSIC', default="ON")
-## "url" is the source for local news feeds.
-url = os.getenv('WPG_RSSFEED', default="https://feeds.nbcnews.com/nbcnews/public/news")
+## "rss_feed" is the source for local news feeds.
+rss_feed = os.getenv('WPG_RSSFEED', default="https://feeds.nbcnews.com/nbcnews/public/news")
+## rss_speed is the speed of the news feed ticker (1 is slow, 3 is fast)
+rss_speed = os.getenv('WPG_RSSSPEED', default=2)
 ## "homezip" is a valid US zip code.
 homezip = os.getenv('WPG_HOMEZIP', default="60601")
 ## "extrazips" is an array of 21 additional zip codes which support extra pages of "nationwide weather"
@@ -201,11 +203,28 @@ def c_to_f(i):
 def m_to_mi(i):
 	return round(i / 1609)
 
+def build_ticker(news):
+	if len(news.entries) > 0:
+		news_items = [ entry.description for entry in news.entries ]
+		ticker_string = news.feed.title + ' updated ' + news.feed.updated
+		for story in news_items:
+			ticker_string = ticker_string + ' ... ' + story
+		return ticker_string
+	return None
+
+
 ####################### flask app and routes
 # open a NOAA class to interact with weather data, define the user_agent
 n = NOAA(user_agent=noaa_user_agent)
 # open a flask class for the app
 app = Flask(__name__)
+match rss_speed:
+	case 3:
+		rss_speed_divisor = 20
+	case 1:
+		rss_speed_divisor = 10
+	case _:
+		rss_speed_divisor = 15
 
 # add the sixhour_time_format function to jinja2 template
 @app.template_filter("sixhour_time_format")
@@ -229,18 +248,14 @@ def index():
 	# generate almanac_data object for homezip
 	almanac_data = Almanac(homezip)
 	almanac_data.get_almanac_data(datetime.now())
+	# create news feed object for rss feed url
+	news_text = build_ticker(feedparser.parse(rss_feed))
+
+	news_speed = str(round(len(news_text)/rss_speed_divisor)) + 's'
 
 	# create objects with current conditions for all of the extra zips
 	#TODO async this
 	#nationwide_weather_objects = [City(zipcode).get_hourly_forecast()[0] for zipcode in extrazips]
-	#TODO replace the variable monster with the City objects in this array with smart pagination?
-	# items_per_page = 7
-	# page_number = 6
-	# start_index = (page_number - 1) * items_per_page
-	# end_index = start_index + items_per_page
-	# page_objects = nationwide_weather_objects[start_index:end_index]
-	# for obj in page_objects:
-	#	print(f"City: {obj.city}")
 
 	return render_template('index.html', **locals())
 
@@ -1027,7 +1042,7 @@ def bottom_marquee(grouptotal):
     for r in range(width): #create an empty string of 35 characters
         pad = pad + " " 
 
-    wpg = feedparser.parse(url)
+    wpg = feedparser.parse(rss_feed)
     debug_msg("BOTTOM_MARQUEE-RSS feed refreshed",1)
 
     # Add first entry to string without padding
@@ -1062,7 +1077,7 @@ def bottom_marquee(grouptotal):
                 restart_marquee = True
                 marquee.move(text, pixels+729, 0) # reset the location
                 p = 0 # keep the for loop from ending
-                wpg = feedparser.parse(url)
+                wpg = feedparser.parse(rss_feed)
                 debug_msg("BOTTOM_MARQUEE-RSS feed refreshed",1)
 
 # generate playlist from folder
