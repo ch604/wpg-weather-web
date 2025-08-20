@@ -244,7 +244,6 @@ news_data = News(rss_feed)
 
 # make a playlist
 music_files = [f for f in os.listdir('static/audio') if f.endswith('.mp3')]
-random.shuffle(music_files)
 
 
 ####################### flask app and routes
@@ -273,6 +272,7 @@ def variable_adder():
 
 @app.route('/')
 def index():
+	random.shuffle(music_files)
 	weather_data.get_weather()
 	almanac_data.get_almanac_data(datetime.now())
 	news_data.build_ticker()
