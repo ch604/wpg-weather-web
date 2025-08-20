@@ -125,12 +125,12 @@ class ZipData:
 # object to store weather data json arrays
 class Weather:
 	def __init__(self, zip):
-		debug_msg("making weather object for " + zip)
 		# save self.city to reference City object and functions later
 		self.city = City(zip)
 		self.radarimg = self.city.get_radar_url()
 	
 	def get_weather(self):
+		debug_msg("pulling weather for %s (%s)" % (self.city.city, self.city.zip))
 		self.update_time()
 		self.current = self.city.get_current_conditions()
 		self.visibility = m_to_mi(int(self.current['visibility']['value']))
@@ -205,20 +205,28 @@ class Almanac:
 		return None
 
 
+class News:
+	def __init__(self, url):
+		self.url = url
+
+	def build_ticker(self):
+		self.feed = feedparser.parse(self.url) 
+		self.ticker = ""
+		self.speed = "300s"
+		if len(self.feed.entries) > 0:
+			stories = [ entry.description for entry in self.feed.entries ]
+			self.ticker = self.feed.feed.title + ' updated ' + self.feed.feed.updated
+			for story in stories:
+				self.ticker = self.ticker + ' ... ' + story
+			self.speed = str(round(len(self.ticker)/rss_speed_divisor)) + 's'
+		return None
+
+
 def c_to_f(i):
 	return round((i * 1.8) + 32)
 
 def m_to_mi(i):
 	return round(i / 1609)
-
-def build_ticker(news):
-	if len(news.entries) > 0:
-		news_items = [ entry.description for entry in news.entries ]
-		ticker_string = news.feed.title + ' updated ' + news.feed.updated
-		for story in news_items:
-			ticker_string = ticker_string + ' ... ' + story
-		return ticker_string
-	return None
 
 def debug_msg(message):
 	timestr = time.strftime("%Y%m%d-%H:%M.")
@@ -232,6 +240,7 @@ n = NOAA(user_agent=noaa_user_agent)
 # init classes for homezip data
 weather_data = Weather(homezip)
 almanac_data = Almanac(homezip)
+news_data = News(rss_feed)
 
 # make a playlist
 music_files = [f for f in os.listdir('static/audio') if f.endswith('.mp3')]
@@ -257,6 +266,7 @@ def variable_adder():
 		'prog': prog,
 		'weather_data': weather_data,
 		'almanac_data': almanac_data,
+		'news_data': news_data,
 		'music': music,
 		'music_files': music_files
 	}
@@ -265,8 +275,7 @@ def variable_adder():
 def index():
 	weather_data.get_weather()
 	almanac_data.get_almanac_data(datetime.now())
-	news_text = build_ticker(feedparser.parse(rss_feed))
-	news_speed = str(round(len(news_text)/rss_speed_divisor)) + 's'
+	news_data.build_ticker()
 
 	# create objects with current conditions for all of the extra zips
 	#TODO async this
