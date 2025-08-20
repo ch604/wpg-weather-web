@@ -8,16 +8,18 @@ function playNextTrack() {
         // get url for the next track
         const nextTrack = `/static/audio/${mp3Files[currentIndex]}`;
         audioPlayer.src = nextTrack;
-        audioPlayer.play().catch(error => {
-            // if the user hasn't interacted yet
-            console.log("Playback was prevented:", error);
-        });
+        var playPromise = audioPlayer.play();
 
-        audioPlayer.load();
-        audioPlayer.play();
-
-        // move to the next track in the list after playback starts
-        currentIndex++;
+		if (playPromise !== undefined) {
+			playPromise.then(_ => {
+                // move to the next track in the list after playback starts
+                currentIndex++;
+			})
+			.catch(error => {
+				// playback was prevented
+            	console.log("Playback was prevented:", error);
+			});
+		}
 
         // loop back to the beginning if we reach the end
         if (currentIndex >= mp3Files.length) {
@@ -37,7 +39,7 @@ document.getElementById('current-time').addEventListener('click', () => {
 });
 
 // in the case that autoplay is enabled with a browser switch for headless launch, attempt to play the track on pageload
-window.onload(playNextTrack);
+window.onload = playNextTrack;
 
 // listen for the 'ended' event to play the next track
 audioPlayer.addEventListener('ended', playNextTrack);
