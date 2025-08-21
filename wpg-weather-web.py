@@ -219,7 +219,7 @@ class News:
 			self.ticker = self.feed.feed.title + ' updated ' + self.feed.feed.updated
 			for story in stories:
 				self.ticker = self.ticker + ' ... ' + story
-			self.speed = str(round(len(self.ticker)/rss_speed_divisor)) + 's'
+			self.speed = round(len(self.ticker)/rss_speed_divisor)
 		return None
 
 

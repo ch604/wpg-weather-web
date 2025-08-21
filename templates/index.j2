@@ -9,7 +9,7 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
 	<style>
 		.ticker {
-			animation: ticker-animation {{ news_data.speed }} linear infinite;
+			animation: ticker-animation {{ news_data.speed ~ 's' }} linear infinite;
 		}
 	</style>
 </head>
