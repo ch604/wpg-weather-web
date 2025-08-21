@@ -23,6 +23,7 @@ from astral.moon import moonrise, moonset, phase
 # for serving sites and making websocket
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
+from threading import Thread, Event
 
 ####################### variables
 prog = "wpg-weather-web"
@@ -50,7 +51,7 @@ extrazips = ["48127","42127","10001","98039","60007","47750","43537","77301","43
 noaa_user_agent = prog + " (github.com/ch604/wpg-weather-web)"
 
 ####################### classes and functions
-# store city data for a given zip code, functions to call noaa api for weather for that city.
+# store city data for a given zip code, functions to call noaa api and return weather for that city.
 class City:
 	def __init__(self, zip):
 		z = ZipData(zip)
@@ -208,11 +209,11 @@ class Almanac:
 class News:
 	def __init__(self, url):
 		self.url = url
+		self.ticker = ""
+		self.speed = "300s"
 
 	def build_ticker(self):
 		self.feed = feedparser.parse(self.url) 
-		self.ticker = ""
-		self.speed = "300s"
 		if len(self.feed.entries) > 0:
 			stories = [ entry.description for entry in self.feed.entries ]
 			self.ticker = self.feed.feed.title + ' updated ' + self.feed.feed.updated
@@ -249,6 +250,30 @@ music_files = [f for f in os.listdir('static/audio') if f.endswith('.mp3')]
 ####################### flask app and routes
 # open a flask class for the app
 app = Flask(__name__)
+app.secret_key = os.urandom(12).hex()
+socketio = SocketIO(app)
+
+# set up a thread for regular socket communication
+thread = Thread()
+thread_stop_event = Event()
+
+def local_weather_updater():
+	while not thread_stop_event.is_set():
+		# sleep for 15 minutes before updating
+		socketio.sleep(900)
+		weather_data.get_weather()
+		almanac_data.get_almanac_data(datetime.now())
+		# re-render the slides and emit that html to clients
+		with app.app_context():
+			new_slides = render_template('local.j2', **locals())
+			socketio.emit('update_slides', {'html': new_slides})
+
+def local_news_updater():
+	while not thread_stop_event.is_set():
+		socketio.sleep(news_data.speed)
+		news_data.build_ticker()
+		with app.app_context():
+			socketio.emit('update_ticker', {'news': news_data.ticker})
 
 # add the sixhour_time_format function to jinja2 template
 @app.template_filter("sixhour_time_format")
@@ -278,14 +303,22 @@ def index():
 	news_data.build_ticker()
 
 	# create objects with current conditions for all of the extra zips
-	#TODO async this
+	#TODO async nationwide weather
 	#nationwide_weather_objects = [City(zipcode).get_hourly_forecast()[0] for zipcode in extrazips]
 
 	return render_template('index.j2', **locals())
 
-@app.route('/update')
-def update():
-	pass
+@socketio.on('connect')
+def connect():
+	global thread
+	print('client connected')
+	if not thread.is_alive():
+		print('starting thread')
+		thread = socketio.start_background_task(local_weather_updater)
+
+@socketio.on('disconnect')
+def disconnect():
+    print('Client disconnected')
 
 ####################### start the webserver
-app.run(debug=True)
+socketio.run(app, debug=True)

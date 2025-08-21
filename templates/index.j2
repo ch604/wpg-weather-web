@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ prog }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
 	<style>
 		.ticker {
 			animation: ticker-animation {{ news_data.speed }} linear infinite;
@@ -19,13 +20,13 @@
             <div class="clock-container"><span id="current-time"></span></div>
         </div>
 
-        <div class="display-area">
+        <div class="display-area" id="slides">
 			{% include 'local.j2' %}
 			{# include 'national.j2' #}
         </div>
 
         <div class="ticker-wrap">
-            <div class="ticker">{{ news_data.ticker }}</div>
+            <div class="ticker" id="ticker">{{ news_data.ticker }}</div>
         </div>
     </div>
 
