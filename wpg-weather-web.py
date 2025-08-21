@@ -247,16 +247,18 @@ news_data = News(rss_feed)
 music_files = [f for f in os.listdir('static/audio') if f.endswith('.mp3')]
 
 
-####################### flask app and routes
+####################### flask app setup
 # open a flask class for the app
 app = Flask(__name__)
 app.secret_key = os.urandom(12).hex()
 socketio = SocketIO(app)
 
 # set up a thread for regular socket communication
-thread = Thread()
+thread_weather = Thread()
+thread_news = Thread()
 thread_stop_event = Event()
 
+####################### threaded functions
 def local_weather_updater():
 	while not thread_stop_event.is_set():
 		# sleep for 15 minutes before updating
@@ -270,11 +272,13 @@ def local_weather_updater():
 
 def local_news_updater():
 	while not thread_stop_event.is_set():
+		# sleep until the news ticker should have completely moved across the screen
 		socketio.sleep(news_data.speed)
 		news_data.build_ticker()
 		with app.app_context():
 			socketio.emit('update_ticker', {'news': news_data.ticker})
 
+####################### routes
 # add the sixhour_time_format function to jinja2 template
 @app.template_filter("sixhour_time_format")
 def sixhour_time_format(input):
@@ -295,6 +299,7 @@ def variable_adder():
 		'music_files': music_files
 	}
 
+# main page
 @app.route('/')
 def index():
 	random.shuffle(music_files)
@@ -308,13 +313,18 @@ def index():
 
 	return render_template('index.j2', **locals())
 
+# socket listeners
 @socketio.on('connect')
 def connect():
-	global thread
+	global thread_weather
+	global thread_news
 	print('client connected')
-	if not thread.is_alive():
-		print('starting thread')
-		thread = socketio.start_background_task(local_weather_updater)
+	if not thread_weather.is_alive():
+		print('starting weather thread')
+		thread_weather = socketio.start_background_task(local_weather_updater)
+	if not thread_news.is_alive():
+		print('starting news thread')
+		thread_news = socketio.start_background_task(local_news_updater)
 
 @socketio.on('disconnect')
 def disconnect():
