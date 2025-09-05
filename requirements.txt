@@ -3,5 +3,5 @@ feedparser
 flask
 flask-socketio
 noaa_sdk
-pygame
+threading
 zipcodes

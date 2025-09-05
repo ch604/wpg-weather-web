@@ -3,7 +3,7 @@
 # Updated/modified for USA by TechSavvvvy
 # Updated for web by ch604
 
-import time, linecache, sys, json
+import time, sys, json
 import feedparser, requests # for RSS feed
 import random, os # for background music
 from datetime import datetime
@@ -155,6 +155,7 @@ class Weather:
 	
 	def update_time(self):
 		self.updated = datetime.now().strftime('%I:%M %p')
+		self.forecast_date = datetime.now().strftime('%a, %b %d').upper()
 		return None
 
 
@@ -163,6 +164,7 @@ class Almanac:
 	def __init__(self, zip):
 		self.city = City(zip)
 		self.astro = astral.LocationInfo(self.city.city, self.city.state, self.city.timezone, self.city.lat, self.city.long)
+		self.tz = tz.gettz(self.astro.timezone)
 	
 	def get_almanac_data(self, date):
 		if self.astro:
@@ -173,15 +175,15 @@ class Almanac:
 
 	def get_sun_data(self, date):
 		if self.astro:
-			s = sun(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone))
+			s = sun(self.astro.observer, date=date, tzinfo=self.tz)
 			self.sunrise = s['sunrise'].strftime('%I:%M %p')
 			self.sunset = s['sunset'].strftime('%I:%M %p')
 		return None
 
 	def get_moon_data(self, date):
 		if self.astro:
-			self.moonrise = moonrise(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone)).strftime('%I:%M %p')
-			self.moonset = moonset(self.astro.observer, date=date, tzinfo=tz.gettz(self.astro.timezone)).strftime('%I:%M %p')
+			self.moonrise = moonrise(self.astro.observer, date=date, tzinfo=self.tz).strftime('%I:%M %p')
+			self.moonset = moonset(self.astro.observer, date=date, tzinfo=self.tz).strftime('%I:%M %p')
 			match round(phase(date=date)):
 				case 0:
 					self.phase = "New"
