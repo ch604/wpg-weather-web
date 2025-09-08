@@ -24,6 +24,17 @@ body {
     overflow: hidden;
 }
 
+#loading-img {
+    height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#loading-img img {
+	height: 60vh;
+}
+
 .main-container {
     height: 100vh;
     display: flex;

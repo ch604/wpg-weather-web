@@ -1,0 +1,9 @@
+{% include 'head.j2' %}
+<body>
+	<div id="loading-img"></div>
+	<script> 
+		const images = {{ loading_screens | tojson }};
+		$('<img src="static/img/' + images[Math.floor(Math.random() * images.length)] + '">').appendTo('#loading-img');
+		window.location.replace('/weather');
+	</script>
+</body>

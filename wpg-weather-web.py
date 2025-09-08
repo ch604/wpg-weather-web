@@ -212,7 +212,7 @@ class News:
 	def __init__(self, url):
 		self.url = url
 		self.ticker = ""
-		self.speed = "300s"
+		self.speed = 300
 
 	def build_ticker(self):
 		self.feed = feedparser.parse(self.url) 
@@ -247,6 +247,8 @@ news_data = News(rss_feed)
 
 # make a playlist
 music_files = [f for f in os.listdir('static/audio') if f.endswith('.mp3')]
+# enum loading screens
+loading_screens = [f for f in os.listdir('static/img') if f.endswith(('.png', '.jpg', '.gif'))]
 
 
 ####################### flask app setup
@@ -298,12 +300,17 @@ def variable_adder():
 		'almanac_data': almanac_data,
 		'news_data': news_data,
 		'music': music,
-		'music_files': music_files
+		'music_files': music_files,
+		'loading_screens': loading_screens
 	}
 
 # main page
 @app.route('/')
-def index():
+def loading():
+	return render_template('loading.j2', **locals())
+
+@app.route('/weather')
+def weather():
 	random.shuffle(music_files)
 	weather_data.get_weather()
 	almanac_data.get_almanac_data(datetime.now())
@@ -313,7 +320,7 @@ def index():
 	#TODO async nationwide weather
 	#nationwide_weather_objects = [City(zipcode).get_hourly_forecast()[0] for zipcode in extrazips]
 
-	return render_template('index.j2', **locals())
+	return render_template('weather.j2', **locals())
 
 # socket listeners
 @socketio.on('connect')
