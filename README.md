@@ -20,11 +20,14 @@ If you choose to enable music, you will need to interact with the page before it
 
 ## Attribution
 
+### Core
 The original application was written by [probnot](https://github.com/probnot/wpg-weatherchan), with modifications by [TechSavvvvy](https://github.com/TechSavvvvy/wpg-weatherchan-USA) to use NOAA weather for the U S and A.
 
-This app uses [NOAA](https://github.com/paulokuong/noaa) to get the weather data and radar images from the National Weather Serivce. [Astral](https://github.com/sffjunkie/astral) is the calculation source for sunrise and sunset times.
+### Libraries
+This app uses [NOAA](https://github.com/paulokuong/noaa) to get the weather data and radar images from the National Weather Serivce. [Astral](https://github.com/sffjunkie/astral) is the calculation source for sunrise and sunset times. County adjacency comes from [pconrad](https://github.com/pconrad/python-county-adjacency), with data via US Census Bureau. FIPS county code translation sourced from [nokane](https://github.com/nokane/FIPS_state_county_codes).
 
-It also uses the fonts [VCR OSD Mono](https://www.dafont.com/vcr-osd-mono.font) and [SquareFont](https://www.dafont.com/squarefont.font). Included background music is provided by [pixabay](https://pixabay.com/music/) and is AI generated. Included loading screens are from Gemini 2.5 Flash and are also AI generated.
+### Media
+It also uses the fonts [VCR OSD Mono](https://www.dafont.com/vcr-osd-mono.font) and [SquareFont](https://www.dafont.com/squarefont.font). Included background music is provided by [pixabay](https://pixabay.com/music/) and is AI generated. Included loading screens are also AI generated, posited by me to Gemini 2.5 Flash.
 
 ## License
 
