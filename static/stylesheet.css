@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'SquareFont';
-    src: url('SquareFont.woff2') format('woff2'),
-        url('SquareFont.woff') format('woff');
+    src: url('font/SquareFont.woff2') format('woff2'),
+        url('font/SquareFont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -9,8 +9,8 @@
 
 @font-face {
     font-family: 'VCR OSD Mono';
-    src: url('VCROSDMono.woff2') format('woff2'),
-        url('VCROSDMono.woff') format('woff');
+    src: url('font/VCROSDMono.woff2') format('woff2'),
+        url('font/VCROSDMono.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
