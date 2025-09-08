@@ -176,14 +176,28 @@ class Almanac:
 	def get_sun_data(self, date):
 		if self.astro:
 			s = sun(self.astro.observer, date=date, tzinfo=self.tz)
-			self.sunrise = s['sunrise'].strftime('%I:%M %p')
-			self.sunset = s['sunset'].strftime('%I:%M %p')
+			# account for possibility of no sunrise/set in some areas
+			try:
+				self.sunrise = s['sunrise'].strftime('%I:%M %p')
+			except:
+				self.sunrise = "N/A"
+			try:
+				self.sunset = s['sunset'].strftime('%I:%M %p')
+			except:
+				self.sunset = "N/A"
 		return None
 
 	def get_moon_data(self, date):
 		if self.astro:
-			self.moonrise = moonrise(self.astro.observer, date=date, tzinfo=self.tz).strftime('%I:%M %p')
-			self.moonset = moonset(self.astro.observer, date=date, tzinfo=self.tz).strftime('%I:%M %p')
+			# account for possibility of no moonrise/set on some days
+			try:
+				self.moonrise = moonrise(self.astro.observer, date=date, tzinfo=self.tz).strftime('%I:%M %p')
+			except:
+				self.moonrise = "N/A"
+			try:
+				self.moonset = moonset(self.astro.observer, date=date, tzinfo=self.tz).strftime('%I:%M %p')
+			except:
+				self.moonset = "N/A"
 			match round(phase(date=date)):
 				case 0:
 					self.phase = "New"
