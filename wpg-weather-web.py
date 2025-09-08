@@ -3,17 +3,19 @@
 # Updated/modified for USA by TechSavvvvy
 # Updated for web by ch604
 
-import time, sys, json
-import feedparser, requests # for RSS feed
-import random, os # for background music
+import json, os, random, sys, time
 from datetime import datetime
 from dateutil import tz
+
+# for rss feed and generic api access
+import feedparser, requests
 
 # for weather data
 from noaa_sdk import NOAA
 
 # for location data
 import zipcodes
+from county_adjacency.convert_data_to_json import convert_full_county_name
 
 # for almanac data
 import astral
@@ -63,6 +65,7 @@ class City:
 		self.long = float(z.zipdata['long'])
 		self.timezone = z.zipdata['timezone']
 		self.pointProperties = n.points(z.get_latlong_str())['properties']
+		self.adjacent_counties = z.get_adj_counties()
 	
 	def get_current_conditions(self):
 		# returns a json array of the current observations by the closest station to the stored zip
@@ -122,6 +125,11 @@ class ZipData:
 			return self.zipdata['lat'] + "," + self.zipdata['long']
 		return None
 
+	def get_adj_counties(self):
+		if self.zipdata:
+			co = convert_full_county_name(self.zipdata['county'] + ', ' + self.zipdata['state'])
+			return json.load(open('county_adjacency/county_adjacency.json'))[co]
+			
 
 # object to store weather data json arrays
 class Weather:
