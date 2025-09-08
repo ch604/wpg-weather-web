@@ -12,6 +12,8 @@ For docker, dowload and build the Dockerfile, then run it after exporting variab
 
 For standalone, just run the python script after installing the requirements listed in the txt file.
 
+You can load up the 'static/img' directory with random loading screens (or just one) and the 'static/audio' directory with your fav weather muzak in mp3 format.
+
 ### Music
 
 If you choose to enable music, you will need to interact with the page before it can autoplay. _Click on the clock_ in the top right of the page after it loads to begin playback, or see [Chrome Autoplay Policies](https://developer.chrome.com/blog/autoplay/#developer_switches) to launch a browser with autoplay enabled, if you need to do this on a machine without pointer input.
@@ -22,8 +24,10 @@ The original application was written by [probnot](https://github.com/probnot/wpg
 
 This app uses [NOAA](https://github.com/paulokuong/noaa) to get the weather data and radar images from the National Weather Serivce. [Astral](https://github.com/sffjunkie/astral) is the calculation source for sunrise and sunset times.
 
-It also uses the fonts [VCR OSD Mono](https://www.dafont.com/vcr-osd-mono.font) and [SquareFont](https://www.dafont.com/squarefont.font). Background music is provided by [pixabay](https://pixabay.com/music/) and is AI generated.
+It also uses the fonts [VCR OSD Mono](https://www.dafont.com/vcr-osd-mono.font) and [SquareFont](https://www.dafont.com/squarefont.font). Included background music is provided by [pixabay](https://pixabay.com/music/) and is AI generated. Included loading screens are from Gemini 2.5 Flash and are also AI generated.
 
 ## License
 
 This code is available under the terms of the [MIT License]
+
+This was a pet project to help me learn python, but I ended up learning about sockets, flask/jinja, and css in the meantime. As a pet project, upkeep is not guaranteed, but forking is welcome.
