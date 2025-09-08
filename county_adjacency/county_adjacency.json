@@ -12366,15 +12366,6 @@
    "MN Stevens",
    "MN Swift"
   ],
-"MN Todd" : [
-   "MN Cass",
-   "MN Douglas",
-   "MN Morrison",
-   "MN Otter Tail",
-   "MN Stearns",
-   "MN Todd",
-   "MN Wadena"
-  ],
 "MN Traverse" : [
    "MN Big Stone",
    "MN Grant",
@@ -28004,628 +27995,628 @@
    "WY Niobrara",
    "WY Weston"
   ],
-"PR Adjuntas Municipio" : [
-   "PR Adjuntas Municipio",
-   "PR Guayanilla Municipio",
-   "PR Lares Municipio",
-   "PR Peñuelas Municipio",
-   "PR Ponce Municipio",
-   "PR Utuado Municipio",
-   "PR Yauco Municipio"
-  ],
-"PR Aguada Municipio" : [
-   "PR Aguada Municipio",
-   "PR Aguadilla Municipio",
-   "PR Añasco Municipio",
-   "PR Moca Municipio",
-   "PR Rincón Municipio"
-  ],
-"PR Aguadilla Municipio" : [
-   "PR Aguada Municipio",
-   "PR Aguadilla Municipio",
-   "PR Isabela Municipio",
-   "PR Moca Municipio"
-  ],
-"PR Aguas Buenas Municipio" : [
-   "PR Aguas Buenas Municipio",
-   "PR Bayamón Municipio",
-   "PR Caguas Municipio",
-   "PR Cidra Municipio",
-   "PR Comerío Municipio",
-   "PR Guaynabo Municipio",
-   "PR San Juan Municipio"
-  ],
-"PR Aibonito Municipio" : [
-   "PR Aibonito Municipio",
-   "PR Barranquitas Municipio",
-   "PR Cayey Municipio",
-   "PR Cidra Municipio",
-   "PR Coamo Municipio",
-   "PR Salinas Municipio"
-  ],
-"PR Añasco Municipio" : [
-   "PR Aguada Municipio",
-   "PR Añasco Municipio",
-   "PR Las Marías Municipio",
-   "PR Mayagüez Municipio",
-   "PR Moca Municipio",
-   "PR Rincón Municipio",
-   "PR San Sebastián Municipio"
-  ],
-"PR Arecibo Municipio" : [
-   "PR Arecibo Municipio",
-   "PR Barceloneta Municipio",
-   "PR Ciales Municipio",
-   "PR Florida Municipio",
-   "PR Hatillo Municipio",
-   "PR Utuado Municipio"
-  ],
-"PR Arroyo Municipio" : [
-   "PR Arroyo Municipio",
-   "PR Guayama Municipio",
-   "PR Patillas Municipio"
-  ],
-"PR Barceloneta Municipio" : [
-   "PR Arecibo Municipio",
-   "PR Barceloneta Municipio",
-   "PR Florida Municipio",
-   "PR Manatí Municipio"
-  ],
-"PR Barranquitas Municipio" : [
-   "PR Aibonito Municipio",
-   "PR Barranquitas Municipio",
-   "PR Cidra Municipio",
-   "PR Coamo Municipio",
-   "PR Comerío Municipio",
-   "PR Corozal Municipio",
-   "PR Naranjito Municipio",
-   "PR Orocovis Municipio"
-  ],
-"PR Bayamón Municipio" : [
-   "PR Aguas Buenas Municipio",
-   "PR Bayamón Municipio",
-   "PR Cataño Municipio",
-   "PR Comerío Municipio",
-   "PR Guaynabo Municipio",
-   "PR Naranjito Municipio",
-   "PR Toa Alta Municipio",
-   "PR Toa Baja Municipio"
-  ],
-"PR Cabo Rojo Municipio" : [
-   "PR Cabo Rojo Municipio",
-   "PR Hormigueros Municipio",
-   "PR Lajas Municipio",
-   "PR Mayagüez Municipio",
-   "PR San Germán Municipio"
-  ],
-"PR Caguas Municipio" : [
-   "PR Aguas Buenas Municipio",
-   "PR Caguas Municipio",
-   "PR Cayey Municipio",
-   "PR Cidra Municipio",
-   "PR Gurabo Municipio",
-   "PR San Juan Municipio",
-   "PR San Lorenzo Municipio",
-   "PR Trujillo Alto Municipio"
-  ],
-"PR Camuy Municipio" : [
-   "PR Camuy Municipio",
-   "PR Hatillo Municipio",
-   "PR Lares Municipio",
-   "PR Quebradillas Municipio",
-   "PR San Sebastißn Municipio"
-  ],
-"PR Canóvanas Municipio" : [
-   "PR Canóvanas Municipio",
-   "PR Carolina Municipio",
-   "PR Gurabo Municipio",
-   "PR Juncos Municipio",
-   "PR Las Piedras Municipio",
-   "PR Loíza Municipio",
-   "PR Río Grande Municipio"
-  ],
-"PR Carolina Municipio" : [
-   "PR Canóvanas Municipio",
-   "PR Carolina Municipio",
-   "PR Gurabo Municipio",
-   "PR Juncos Municipio",
-   "PR Loíza Municipio",
-   "PR San Juan Municipio",
-   "PR Trujillo Alto Municipio"
-  ],
-"PR Cataño Municipio" : [
-   "PR Bayam?n Municipio",
-   "PR Cataño Municipio",
-   "PR Guaynabo Municipio",
-   "PR San Juan Municipio",
-   "PR Toa Baja Municipio"
-  ],
-"PR Cayey Municipio" : [
-   "PR Aibonito Municipio",
-   "PR Caguas Municipio",
-   "PR Cayey Municipio",
-   "PR Cidra Municipio",
-   "PR Guayama Municipio",
-   "PR Patillas Municipio",
-   "PR Salinas Municipio",
-   "PR San Lorenzo Municipio"
-  ],
-"PR Ceiba Municipio" : [
-   "PR Ceiba Municipio",
-   "PR Culebra Municipio",
-   "PR Fajardo Municipio",
-   "PR Luquillo Municipio",
-   "PR Naguabo Municipio",
-   "PR Río Grande Municipio",
-   "PR Vieques Municipio"
-  ],
-"PR Ciales Municipio" : [
-   "PR Arecibo Municipio",
-   "PR Ciales Municipio",
-   "PR Florida Municipio",
-   "PR Jayuya Municipio",
-   "PR Manatí Municipio",
-   "PR Morovis Municipio",
-   "PR Orocovis Municipio",
-   "PR Utuado Municipio"
-  ],
-"PR Cidra Municipio" : [
-   "PR Aguas Buenas Municipio",
-   "PR Aibonito Municipio",
-   "PR Barranquitas Municipio",
-   "PR Caguas Municipio",
-   "PR Cayey Municipio",
-   "PR Cidra Municipio",
-   "PR Comerío Municipio"
-  ],
-"PR Coamo Municipio" : [
-   "PR Aibonito Municipio",
-   "PR Barranquitas Municipio",
-   "PR Coamo Municipio",
-   "PR Juana Díaz Municipio",
-   "PR Orocovis Municipio",
-   "PR Salinas Municipio",
-   "PR Santa Isabel Municipio",
-   "PR Villalba Municipio"
-  ],
-"PR Comerío Municipio" : [
-   "PR Aguas Buenas Municipio",
-   "PR Barranquitas Municipio",
-   "PR Bayamón Municipio",
-   "PR Cidra Municipio",
-   "PR Comerío Municipio",
-   "PR Naranjito Municipio"
-  ],
-"PR Corozal Municipio" : [
-   "PR Barranquitas Municipio",
-   "PR Corozal Municipio",
-   "PR Morovis Municipio",
-   "PR Naranjito Municipio",
-   "PR Orocovis Municipio",
-   "PR Toa Alta Municipio",
-   "PR Vega Alta Municipio"
-  ],
-"PR Culebra Municipio" : [
-   "PR Ceiba Municipio",
-   "PR Culebra Municipio"
-  ],
-"PR Dorado Municipio" : [
-   "PR Dorado Municipio",
-   "PR Toa Alta Municipio",
-   "PR Toa Baja Municipio",
-   "PR Vega Alta Municipio"
-  ],
-"PR Fajardo Municipio" : [
-   "PR Ceiba Municipio",
-   "PR Fajardo Municipio",
-   "PR Luquillo Municipio"
-  ],
-"PR Florida Municipio" : [
-   "PR Arecibo Municipio",
-   "PR Barceloneta Municipio",
-   "PR Ciales Municipio",
-   "PR Florida Municipio",
-   "PR Manatí Municipio"
-  ],
-"PR Guánica Municipio" : [
-   "PR Guánica Municipio",
-   "PR Guayanilla Municipio",
-   "PR Lajas Municipio",
-   "PR Sabana Grande Municipio",
-   "PR Yauco Municipio"
-  ],
-"PR Guayama Municipio" : [
-   "PR Arroyo Municipio",
-   "PR Cayey Municipio",
-   "PR Guayama Municipio",
-   "PR Patillas Municipio",
-   "PR Salinas Municipio"
-  ],
-"PR Guayanilla Municipio" : [
-   "PR Adjuntas Municipio",
-   "PR Guánica Municipio",
-   "PR Guayanilla Municipio",
-   "PR Peñuelas Municipio",
-   "PR Yauco Municipio"
-  ],
-"PR Guaynabo Municipio" : [
-   "PR Aguas Buenas Municipio",
-   "PR Bayamón Municipio",
-   "PR Cataño Municipio",
-   "PR Guaynabo Municipio",
-   "PR San Juan Municipio"
-  ],
-"PR Gurabo Municipio" : [
-   "PR Caguas Municipio",
-   "PR Canóvanas Municipio",
-   "PR Carolina Municipio",
-   "PR Gurabo Municipio",
-   "PR Juncos Municipio",
-   "PR San Lorenzo Municipio",
-   "PR Trujillo Alto Municipio"
-  ],
-"PR Hatillo Municipio" : [
-   "PR Arecibo Municipio",
-   "PR Camuy Municipio",
-   "PR Hatillo Municipio",
-   "PR Lares Municipio",
-   "PR Utuado Municipio"
-  ],
-"PR Hormigueros Municipio" : [
-   "PR Cabo Rojo Municipio",
-   "PR Hormigueros Municipio",
-   "PR Mayagüez Municipio",
-   "PR San Germán Municipio"
-  ],
-"PR Humacao Municipio" : [
-   "PR Humacao Municipio",
-   "PR Las Piedras Municipio",
-   "PR Naguabo Municipio",
-   "PR Yabucoa Municipio"
-  ],
-"PR Isabela Municipio" : [
-   "PR Aguadilla Municipio",
-   "PR Isabela Municipio",
-   "PR Moca Municipio",
-   "PR Quebradillas Municipio",
-   "PR San Sebastián Municipio"
-  ],
-"PR Jayuya Municipio" : [
-   "PR Ciales Municipio",
-   "PR Jayuya Municipio",
-   "PR Juana Díaz Municipio",
-   "PR Orocovis Municipio",
-   "PR Ponce Municipio",
-   "PR Utuado Municipio"
-  ],
-"PR Juana Díaz Municipio" : [
-   "PR Coamo Municipio",
-   "PR Jayuya Municipio",
-   "PR Juana Díaz Municipio",
-   "PR Orocovis Municipio",
-   "PR Ponce Municipio",
-   "PR Santa Isabel Municipio",
-   "PR Villalba Municipio"
-  ],
-"PR Juncos Municipio" : [
-   "PR Canóvanas Municipio",
-   "PR Carolina Municipio",
-   "PR Gurabo Municipio",
-   "PR Juncos Municipio",
-   "PR Las Piedras Municipio",
-   "PR San Lorenzo Municipio"
-  ],
-"PR Lajas Municipio" : [
-   "PR Cabo Rojo Municipio",
-   "PR Guánica Municipio",
-   "PR Lajas Municipio",
-   "PR Sabana Grande Municipio",
-   "PR San Germán Municipio"
-  ],
-"PR Lares Municipio" : [
-   "PR Adjuntas Municipio",
-   "PR Camuy Municipio",
-   "PR Hatillo Municipio",
-   "PR Lares Municipio",
-   "PR Las Marías Municipio",
-   "PR Maricao Municipio",
-   "PR San Sebastián Municipio",
-   "PR Utuado Municipio",
-   "PR Yauco Municipio"
-  ],
-"PR Las Marías Municipio" : [
-   "PR Añasco Municipio",
-   "PR Lares Municipio",
-   "PR Las Marías Municipio",
-   "PR Maricao Municipio",
-   "PR Mayagüez Municipio",
-   "PR San Sebastián Municipio"
-  ],
-"PR Las Piedras Municipio" : [
-   "PR Canóvanas Municipio",
-   "PR Humacao Municipio",
-   "PR Juncos Municipio",
-   "PR Las Piedras Municipio",
-   "PR Naguabo Municipio",
-   "PR Río Grande Municipio",
-   "PR San Lorenzo Municipio",
-   "PR Yabucoa Municipio"
-  ],
-"PR Loíza Municipio" : [
-   "PR Canóvanas Municipio",
-   "PR Carolina Municipio",
-   "PR Loíza Municipio",
-   "PR Río Grande Municipio"
-  ],
-"PR Luquillo Municipio" : [
-   "PR Ceiba Municipio",
-   "PR Fajardo Municipio",
-   "PR Luquillo Municipio",
-   "PR Río Grande Municipio"
-  ],
-"PR Manatí Municipio" : [
-   "PR Barceloneta Municipio",
-   "PR Ciales Municipio",
-   "PR Florida Municipio",
-   "PR Manatí Municipio",
-   "PR Morovis Municipio",
-   "PR Vega Alta Municipio",
-   "PR Vega Baja Municipio"
-  ],
-"PR Maricao Municipio" : [
-   "PR Lares Municipio",
-   "PR Las Marías Municipio",
-   "PR Maricao Municipio",
-   "PR Mayagüez Municipio",
-   "PR Sabana Grande Municipio",
-   "PR San Germán Municipio",
-   "PR Yauco Municipio"
-  ],
-"PR Maunabo Municipio" : [
-   "PR Maunabo Municipio",
-   "PR Patillas Municipio",
-   "PR Yabucoa Municipio"
-  ],
-"PR Mayagüez Municipio" : [
-   "PR Añasco Municipio",
-   "PR Cabo Rojo Municipio",
-   "PR Hormigueros Municipio",
-   "PR Las Marías Municipio",
-   "PR Maricao Municipio",
-   "PR Mayagüez Municipio",
-   "PR Rinc?n Municipio",
-   "PR San Germán Municipio"
-  ],
-"PR Moca Municipio" : [
-   "PR Aguada Municipio",
-   "PR Aguadilla Municipio",
-   "PR Añasco Municipio",
-   "PR Isabela Municipio",
-   "PR Moca Municipio",
-   "PR San Sebastián Municipio"
-  ],
-"PR Morovis Municipio" : [
-   "PR Ciales Municipio",
-   "PR Corozal Municipio",
-   "PR Manatí Municipio",
-   "PR Morovis Municipio",
-   "PR Orocovis Municipio",
-   "PR Vega Alta Municipio",
-   "PR Vega Baja Municipio"
-  ],
-"PR Naguabo Municipio" : [
-   "PR Ceiba Municipio",
-   "PR Humacao Municipio",
-   "PR Las Piedras Municipio",
-   "PR Naguabo Municipio",
-   "PR Río Grande Municipio"
-  ],
-"PR Naranjito Municipio" : [
-   "PR Barranquitas Municipio",
-   "PR Bayamón Municipio",
-   "PR Comerío Municipio",
-   "PR Corozal Municipio",
-   "PR Naranjito Municipio",
-   "PR Toa Alta Municipio"
-  ],
-"PR Orocovis Municipio" : [
-   "PR Barranquitas Municipio",
-   "PR Ciales Municipio",
-   "PR Coamo Municipio",
-   "PR Corozal Municipio",
-   "PR Jayuya Municipio",
-   "PR Juana Díaz Municipio",
-   "PR Morovis Municipio",
-   "PR Orocovis Municipio",
-   "PR Villalba Municipio"
-  ],
-"PR Patillas Municipio" : [
-   "PR Arroyo Municipio",
-   "PR Cayey Municipio",
-   "PR Guayama Municipio",
-   "PR Maunabo Municipio",
-   "PR Patillas Municipio",
-   "PR San Lorenzo Municipio",
-   "PR Yabucoa Municipio"
-  ],
-"PR Peñuelas Municipio" : [
-   "PR Adjuntas Municipio",
-   "PR Guayanilla Municipio",
-   "PR Peñuelas Municipio",
-   "PR Ponce Municipio"
-  ],
-"PR Ponce Municipio" : [
-   "PR Adjuntas Municipio",
-   "PR Jayuya Municipio",
-   "PR Juana D?az Municipio",
-   "PR Peñuelas Municipio",
-   "PR Ponce Municipio",
-   "PR Utuado Municipio"
-  ],
-"PR Quebradillas Municipio" : [
-   "PR Camuy Municipio",
-   "PR Isabela Municipio",
-   "PR Quebradillas Municipio",
-   "PR San Sebastißn Municipio"
-  ],
-"PR Rincón Municipio" : [
-   "PR Aguada Municipio",
-   "PR Añasco Municipio",
-   "PR Mayagüez Municipio",
-   "PR Rincón Municipio"
-  ],
-"PR Río Grande Municipio" : [
-   "PR Can?vanas Municipio",
-   "PR Ceiba Municipio",
-   "PR Las Piedras Municipio",
-   "PR Loíza Municipio",
-   "PR Luquillo Municipio",
-   "PR Naguabo Municipio",
-   "PR Río Grande Municipio"
-  ],
-"PR Sabana Grande Municipio" : [
-   "PR Guánica Municipio",
-   "PR Lajas Municipio",
-   "PR Maricao Municipio",
-   "PR Sabana Grande Municipio",
-   "PR San Germßn Municipio",
-   "PR Yauco Municipio"
-  ],
-"PR Salinas Municipio" : [
-   "PR Aibonito Municipio",
-   "PR Cayey Municipio",
-   "PR Coamo Municipio",
-   "PR Guayama Municipio",
-   "PR Salinas Municipio",
-   "PR Santa Isabel Municipio"
-  ],
-"PR San Germán Municipio" : [
-   "PR Cabo Rojo Municipio",
-   "PR Hormigueros Municipio",
-   "PR Lajas Municipio",
-   "PR Maricao Municipio",
-   "PR Mayagüez Municipio",
-   "PR Sabana Grande Municipio",
-   "PR San Germán Municipio"
-  ],
-"PR San Juan Municipio" : [
-   "PR Aguas Buenas Municipio",
-   "PR Caguas Municipio",
-   "PR Carolina Municipio",
-   "PR Cataño Municipio",
-   "PR Guaynabo Municipio",
-   "PR San Juan Municipio",
-   "PR Toa Baja Municipio",
-   "PR Trujillo Alto Municipio"
-  ],
-"PR San Lorenzo Municipio" : [
-   "PR Caguas Municipio",
-   "PR Cayey Municipio",
-   "PR Gurabo Municipio",
-   "PR Juncos Municipio",
-   "PR Las Piedras Municipio",
-   "PR Patillas Municipio",
-   "PR San Lorenzo Municipio",
-   "PR Yabucoa Municipio"
-  ],
-"PR San Sebastián Municipio" : [
-   "PR Añasco Municipio",
-   "PR Camuy Municipio",
-   "PR Isabela Municipio",
-   "PR Lares Municipio",
-   "PR Las Marías Municipio",
-   "PR Moca Municipio",
-   "PR Quebradillas Municipio",
-   "PR San Sebastián Municipio"
-  ],
-"PR Santa Isabel Municipio" : [
-   "PR Coamo Municipio",
-   "PR Juana Díaz Municipio",
-   "PR Salinas Municipio",
-   "PR Santa Isabel Municipio"
-  ],
-"PR Toa Alta Municipio" : [
-   "PR Bayamón Municipio",
-   "PR Corozal Municipio",
-   "PR Dorado Municipio",
-   "PR Naranjito Municipio",
-   "PR Toa Alta Municipio",
-   "PR Toa Baja Municipio",
-   "PR Vega Alta Municipio"
-  ],
-"PR Toa Baja Municipio" : [
-   "PR Bayamón Municipio",
-   "PR Cataño Municipio",
-   "PR Dorado Municipio",
-   "PR San Juan Municipio",
-   "PR Toa Alta Municipio",
-   "PR Toa Baja Municipio"
-  ],
-"PR Trujillo Alto Municipio" : [
-   "PR Caguas Municipio",
-   "PR Carolina Municipio",
-   "PR Gurabo Municipio",
-   "PR San Juan Municipio",
-   "PR Trujillo Alto Municipio"
-  ],
-"PR Utuado Municipio" : [
-   "PR Adjuntas Municipio",
-   "PR Arecibo Municipio",
-   "PR Ciales Municipio",
-   "PR Hatillo Municipio",
-   "PR Jayuya Municipio",
-   "PR Lares Municipio",
-   "PR Ponce Municipio",
-   "PR Utuado Municipio"
-  ],
-"PR Vega Alta Municipio" : [
-   "PR Corozal Municipio",
-   "PR Dorado Municipio",
-   "PR Manatí Municipio",
-   "PR Morovis Municipio",
-   "PR Toa Alta Municipio",
-   "PR Vega Alta Municipio",
-   "PR Vega Baja Municipio"
-  ],
-"PR Vega Baja Municipio" : [
-   "PR Manatí Municipio",
-   "PR Morovis Municipio",
-   "PR Vega Alta Municipio",
-   "PR Vega Baja Municipio"
-  ],
-"PR Vieques Municipio" : [
-   "PR Ceiba Municipio",
-   "PR Vieques Municipio"
-  ],
-"PR Villalba Municipio" : [
-   "PR Coamo Municipio",
-   "PR Juana Díaz Municipio",
-   "PR Orocovis Municipio",
-   "PR Villalba Municipio"
-  ],
-"PR Yabucoa Municipio" : [
-   "PR Humacao Municipio",
-   "PR Las Piedras Municipio",
-   "PR Maunabo Municipio",
-   "PR Patillas Municipio",
-   "PR San Lorenzo Municipio",
-   "PR Yabucoa Municipio"
-  ],
-"PR Yauco Municipio" : [
-   "PR Adjuntas Municipio",
-   "PR Guánica Municipio",
-   "PR Guayanilla Municipio",
-   "PR Lares Municipio",
-   "PR Maricao Municipio",
-   "PR Sabana Grande Municipio",
-   "PR Yauco Municipio"
-  ],
-"AS Eastern District" : [
-   "AS Eastern District",
-   "AS Western District"
-  ],
-"AS Manu'a District" : [
-   "AS Manu'a District"
+"PR Adjuntas" : [
+   "PR Adjuntas",
+   "PR Guayanilla",
+   "PR Lares",
+   "PR Peñuelas",
+   "PR Ponce",
+   "PR Utuado",
+   "PR Yauco"
+  ],
+"PR Aguada" : [
+   "PR Aguada",
+   "PR Aguadilla",
+   "PR Añasco",
+   "PR Moca",
+   "PR Rincón"
+  ],
+"PR Aguadilla" : [
+   "PR Aguada",
+   "PR Aguadilla",
+   "PR Isabela",
+   "PR Moca"
+  ],
+"PR Aguas Buenas" : [
+   "PR Aguas Buenas",
+   "PR Bayamón",
+   "PR Caguas",
+   "PR Cidra",
+   "PR Comerío",
+   "PR Guaynabo",
+   "PR San Juan"
+  ],
+"PR Aibonito" : [
+   "PR Aibonito",
+   "PR Barranquitas",
+   "PR Cayey",
+   "PR Cidra",
+   "PR Coamo",
+   "PR Salinas"
+  ],
+"PR Añasco" : [
+   "PR Aguada",
+   "PR Añasco",
+   "PR Las Marías",
+   "PR Mayagüez",
+   "PR Moca",
+   "PR Rincón",
+   "PR San Sebastián"
+  ],
+"PR Arecibo" : [
+   "PR Arecibo",
+   "PR Barceloneta",
+   "PR Ciales",
+   "PR Florida",
+   "PR Hatillo",
+   "PR Utuado"
+  ],
+"PR Arroyo" : [
+   "PR Arroyo",
+   "PR Guayama",
+   "PR Patillas"
+  ],
+"PR Barceloneta" : [
+   "PR Arecibo",
+   "PR Barceloneta",
+   "PR Florida",
+   "PR Manatí"
+  ],
+"PR Barranquitas" : [
+   "PR Aibonito",
+   "PR Barranquitas",
+   "PR Cidra",
+   "PR Coamo",
+   "PR Comerío",
+   "PR Corozal",
+   "PR Naranjito",
+   "PR Orocovis"
+  ],
+"PR Bayamón" : [
+   "PR Aguas Buenas",
+   "PR Bayamón",
+   "PR Cataño",
+   "PR Comerío",
+   "PR Guaynabo",
+   "PR Naranjito",
+   "PR Toa Alta",
+   "PR Toa Baja"
+  ],
+"PR Cabo Rojo" : [
+   "PR Cabo Rojo",
+   "PR Hormigueros",
+   "PR Lajas",
+   "PR Mayagüez",
+   "PR San Germán"
+  ],
+"PR Caguas" : [
+   "PR Aguas Buenas",
+   "PR Caguas",
+   "PR Cayey",
+   "PR Cidra",
+   "PR Gurabo",
+   "PR San Juan",
+   "PR San Lorenzo",
+   "PR Trujillo Alto"
+  ],
+"PR Camuy" : [
+   "PR Camuy",
+   "PR Hatillo",
+   "PR Lares",
+   "PR Quebradillas",
+   "PR San Sebastißn"
+  ],
+"PR Canóvanas" : [
+   "PR Canóvanas",
+   "PR Carolina",
+   "PR Gurabo",
+   "PR Juncos",
+   "PR Las Piedras",
+   "PR Loíza",
+   "PR Río Grande"
+  ],
+"PR Carolina" : [
+   "PR Canóvanas",
+   "PR Carolina",
+   "PR Gurabo",
+   "PR Juncos",
+   "PR Loíza",
+   "PR San Juan",
+   "PR Trujillo Alto"
+  ],
+"PR Cataño" : [
+   "PR Bayam?n",
+   "PR Cataño",
+   "PR Guaynabo",
+   "PR San Juan",
+   "PR Toa Baja"
+  ],
+"PR Cayey" : [
+   "PR Aibonito",
+   "PR Caguas",
+   "PR Cayey",
+   "PR Cidra",
+   "PR Guayama",
+   "PR Patillas",
+   "PR Salinas",
+   "PR San Lorenzo"
+  ],
+"PR Ceiba" : [
+   "PR Ceiba",
+   "PR Culebra",
+   "PR Fajardo",
+   "PR Luquillo",
+   "PR Naguabo",
+   "PR Río Grande",
+   "PR Vieques"
+  ],
+"PR Ciales" : [
+   "PR Arecibo",
+   "PR Ciales",
+   "PR Florida",
+   "PR Jayuya",
+   "PR Manatí",
+   "PR Morovis",
+   "PR Orocovis",
+   "PR Utuado"
+  ],
+"PR Cidra" : [
+   "PR Aguas Buenas",
+   "PR Aibonito",
+   "PR Barranquitas",
+   "PR Caguas",
+   "PR Cayey",
+   "PR Cidra",
+   "PR Comerío"
+  ],
+"PR Coamo" : [
+   "PR Aibonito",
+   "PR Barranquitas",
+   "PR Coamo",
+   "PR Juana Díaz",
+   "PR Orocovis",
+   "PR Salinas",
+   "PR Santa Isabel",
+   "PR Villalba"
+  ],
+"PR Comerío" : [
+   "PR Aguas Buenas",
+   "PR Barranquitas",
+   "PR Bayamón",
+   "PR Cidra",
+   "PR Comerío",
+   "PR Naranjito"
+  ],
+"PR Corozal" : [
+   "PR Barranquitas",
+   "PR Corozal",
+   "PR Morovis",
+   "PR Naranjito",
+   "PR Orocovis",
+   "PR Toa Alta",
+   "PR Vega Alta"
+  ],
+"PR Culebra" : [
+   "PR Ceiba",
+   "PR Culebra"
+  ],
+"PR Dorado" : [
+   "PR Dorado",
+   "PR Toa Alta",
+   "PR Toa Baja",
+   "PR Vega Alta"
+  ],
+"PR Fajardo" : [
+   "PR Ceiba",
+   "PR Fajardo",
+   "PR Luquillo"
+  ],
+"PR Florida" : [
+   "PR Arecibo",
+   "PR Barceloneta",
+   "PR Ciales",
+   "PR Florida",
+   "PR Manatí"
+  ],
+"PR Guánica" : [
+   "PR Guánica",
+   "PR Guayanilla",
+   "PR Lajas",
+   "PR Sabana Grande",
+   "PR Yauco"
+  ],
+"PR Guayama" : [
+   "PR Arroyo",
+   "PR Cayey",
+   "PR Guayama",
+   "PR Patillas",
+   "PR Salinas"
+  ],
+"PR Guayanilla" : [
+   "PR Adjuntas",
+   "PR Guánica",
+   "PR Guayanilla",
+   "PR Peñuelas",
+   "PR Yauco"
+  ],
+"PR Guaynabo" : [
+   "PR Aguas Buenas",
+   "PR Bayamón",
+   "PR Cataño",
+   "PR Guaynabo",
+   "PR San Juan"
+  ],
+"PR Gurabo" : [
+   "PR Caguas",
+   "PR Canóvanas",
+   "PR Carolina",
+   "PR Gurabo",
+   "PR Juncos",
+   "PR San Lorenzo",
+   "PR Trujillo Alto"
+  ],
+"PR Hatillo" : [
+   "PR Arecibo",
+   "PR Camuy",
+   "PR Hatillo",
+   "PR Lares",
+   "PR Utuado"
+  ],
+"PR Hormigueros" : [
+   "PR Cabo Rojo",
+   "PR Hormigueros",
+   "PR Mayagüez",
+   "PR San Germán"
+  ],
+"PR Humacao" : [
+   "PR Humacao",
+   "PR Las Piedras",
+   "PR Naguabo",
+   "PR Yabucoa"
+  ],
+"PR Isabela" : [
+   "PR Aguadilla",
+   "PR Isabela",
+   "PR Moca",
+   "PR Quebradillas",
+   "PR San Sebastián"
+  ],
+"PR Jayuya" : [
+   "PR Ciales",
+   "PR Jayuya",
+   "PR Juana Díaz",
+   "PR Orocovis",
+   "PR Ponce",
+   "PR Utuado"
+  ],
+"PR Juana Díaz" : [
+   "PR Coamo",
+   "PR Jayuya",
+   "PR Juana Díaz",
+   "PR Orocovis",
+   "PR Ponce",
+   "PR Santa Isabel",
+   "PR Villalba"
+  ],
+"PR Juncos" : [
+   "PR Canóvanas",
+   "PR Carolina",
+   "PR Gurabo",
+   "PR Juncos",
+   "PR Las Piedras",
+   "PR San Lorenzo"
+  ],
+"PR Lajas" : [
+   "PR Cabo Rojo",
+   "PR Guánica",
+   "PR Lajas",
+   "PR Sabana Grande",
+   "PR San Germán"
+  ],
+"PR Lares" : [
+   "PR Adjuntas",
+   "PR Camuy",
+   "PR Hatillo",
+   "PR Lares",
+   "PR Las Marías",
+   "PR Maricao",
+   "PR San Sebastián",
+   "PR Utuado",
+   "PR Yauco"
+  ],
+"PR Las Marías" : [
+   "PR Añasco",
+   "PR Lares",
+   "PR Las Marías",
+   "PR Maricao",
+   "PR Mayagüez",
+   "PR San Sebastián"
+  ],
+"PR Las Piedras" : [
+   "PR Canóvanas",
+   "PR Humacao",
+   "PR Juncos",
+   "PR Las Piedras",
+   "PR Naguabo",
+   "PR Río Grande",
+   "PR San Lorenzo",
+   "PR Yabucoa"
+  ],
+"PR Loíza" : [
+   "PR Canóvanas",
+   "PR Carolina",
+   "PR Loíza",
+   "PR Río Grande"
+  ],
+"PR Luquillo" : [
+   "PR Ceiba",
+   "PR Fajardo",
+   "PR Luquillo",
+   "PR Río Grande"
+  ],
+"PR Manatí" : [
+   "PR Barceloneta",
+   "PR Ciales",
+   "PR Florida",
+   "PR Manatí",
+   "PR Morovis",
+   "PR Vega Alta",
+   "PR Vega Baja"
+  ],
+"PR Maricao" : [
+   "PR Lares",
+   "PR Las Marías",
+   "PR Maricao",
+   "PR Mayagüez",
+   "PR Sabana Grande",
+   "PR San Germán",
+   "PR Yauco"
+  ],
+"PR Maunabo" : [
+   "PR Maunabo",
+   "PR Patillas",
+   "PR Yabucoa"
+  ],
+"PR Mayagüez" : [
+   "PR Añasco",
+   "PR Cabo Rojo",
+   "PR Hormigueros",
+   "PR Las Marías",
+   "PR Maricao",
+   "PR Mayagüez",
+   "PR Rinc?n",
+   "PR San Germán"
+  ],
+"PR Moca" : [
+   "PR Aguada",
+   "PR Aguadilla",
+   "PR Añasco",
+   "PR Isabela",
+   "PR Moca",
+   "PR San Sebastián"
+  ],
+"PR Morovis" : [
+   "PR Ciales",
+   "PR Corozal",
+   "PR Manatí",
+   "PR Morovis",
+   "PR Orocovis",
+   "PR Vega Alta",
+   "PR Vega Baja"
+  ],
+"PR Naguabo" : [
+   "PR Ceiba",
+   "PR Humacao",
+   "PR Las Piedras",
+   "PR Naguabo",
+   "PR Río Grande"
+  ],
+"PR Naranjito" : [
+   "PR Barranquitas",
+   "PR Bayamón",
+   "PR Comerío",
+   "PR Corozal",
+   "PR Naranjito",
+   "PR Toa Alta"
+  ],
+"PR Orocovis" : [
+   "PR Barranquitas",
+   "PR Ciales",
+   "PR Coamo",
+   "PR Corozal",
+   "PR Jayuya",
+   "PR Juana Díaz",
+   "PR Morovis",
+   "PR Orocovis",
+   "PR Villalba"
+  ],
+"PR Patillas" : [
+   "PR Arroyo",
+   "PR Cayey",
+   "PR Guayama",
+   "PR Maunabo",
+   "PR Patillas",
+   "PR San Lorenzo",
+   "PR Yabucoa"
+  ],
+"PR Peñuelas" : [
+   "PR Adjuntas",
+   "PR Guayanilla",
+   "PR Peñuelas",
+   "PR Ponce"
+  ],
+"PR Ponce" : [
+   "PR Adjuntas",
+   "PR Jayuya",
+   "PR Juana D?az",
+   "PR Peñuelas",
+   "PR Ponce",
+   "PR Utuado"
+  ],
+"PR Quebradillas" : [
+   "PR Camuy",
+   "PR Isabela",
+   "PR Quebradillas",
+   "PR San Sebastißn"
+  ],
+"PR Rincón" : [
+   "PR Aguada",
+   "PR Añasco",
+   "PR Mayagüez",
+   "PR Rincón"
+  ],
+"PR Río Grande" : [
+   "PR Can?vanas",
+   "PR Ceiba",
+   "PR Las Piedras",
+   "PR Loíza",
+   "PR Luquillo",
+   "PR Naguabo",
+   "PR Río Grande"
+  ],
+"PR Sabana Grande" : [
+   "PR Guánica",
+   "PR Lajas",
+   "PR Maricao",
+   "PR Sabana Grande",
+   "PR San Germßn",
+   "PR Yauco"
+  ],
+"PR Salinas" : [
+   "PR Aibonito",
+   "PR Cayey",
+   "PR Coamo",
+   "PR Guayama",
+   "PR Salinas",
+   "PR Santa Isabel"
+  ],
+"PR San Germán" : [
+   "PR Cabo Rojo",
+   "PR Hormigueros",
+   "PR Lajas",
+   "PR Maricao",
+   "PR Mayagüez",
+   "PR Sabana Grande",
+   "PR San Germán"
+  ],
+"PR San Juan" : [
+   "PR Aguas Buenas",
+   "PR Caguas",
+   "PR Carolina",
+   "PR Cataño",
+   "PR Guaynabo",
+   "PR San Juan",
+   "PR Toa Baja",
+   "PR Trujillo Alto"
+  ],
+"PR San Lorenzo" : [
+   "PR Caguas",
+   "PR Cayey",
+   "PR Gurabo",
+   "PR Juncos",
+   "PR Las Piedras",
+   "PR Patillas",
+   "PR San Lorenzo",
+   "PR Yabucoa"
+  ],
+"PR San Sebastián" : [
+   "PR Añasco",
+   "PR Camuy",
+   "PR Isabela",
+   "PR Lares",
+   "PR Las Marías",
+   "PR Moca",
+   "PR Quebradillas",
+   "PR San Sebastián"
+  ],
+"PR Santa Isabel" : [
+   "PR Coamo",
+   "PR Juana Díaz",
+   "PR Salinas",
+   "PR Santa Isabel"
+  ],
+"PR Toa Alta" : [
+   "PR Bayamón",
+   "PR Corozal",
+   "PR Dorado",
+   "PR Naranjito",
+   "PR Toa Alta",
+   "PR Toa Baja",
+   "PR Vega Alta"
+  ],
+"PR Toa Baja" : [
+   "PR Bayamón",
+   "PR Cataño",
+   "PR Dorado",
+   "PR San Juan",
+   "PR Toa Alta",
+   "PR Toa Baja"
+  ],
+"PR Trujillo Alto" : [
+   "PR Caguas",
+   "PR Carolina",
+   "PR Gurabo",
+   "PR San Juan",
+   "PR Trujillo Alto"
+  ],
+"PR Utuado" : [
+   "PR Adjuntas",
+   "PR Arecibo",
+   "PR Ciales",
+   "PR Hatillo",
+   "PR Jayuya",
+   "PR Lares",
+   "PR Ponce",
+   "PR Utuado"
+  ],
+"PR Vega Alta" : [
+   "PR Corozal",
+   "PR Dorado",
+   "PR Manatí",
+   "PR Morovis",
+   "PR Toa Alta",
+   "PR Vega Alta",
+   "PR Vega Baja"
+  ],
+"PR Vega Baja" : [
+   "PR Manatí",
+   "PR Morovis",
+   "PR Vega Alta",
+   "PR Vega Baja"
+  ],
+"PR Vieques" : [
+   "PR Ceiba",
+   "PR Vieques"
+  ],
+"PR Villalba" : [
+   "PR Coamo",
+   "PR Juana Díaz",
+   "PR Orocovis",
+   "PR Villalba"
+  ],
+"PR Yabucoa" : [
+   "PR Humacao",
+   "PR Las Piedras",
+   "PR Maunabo",
+   "PR Patillas",
+   "PR San Lorenzo",
+   "PR Yabucoa"
+  ],
+"PR Yauco" : [
+   "PR Adjuntas",
+   "PR Guánica",
+   "PR Guayanilla",
+   "PR Lares",
+   "PR Maricao",
+   "PR Sabana Grande",
+   "PR Yauco"
+  ],
+"AS Eastern" : [
+   "AS Eastern",
+   "AS Western"
+  ],
+"AS Manu'a" : [
+   "AS Manu'a"
   ],
 "AS Rose Island" : [
    "AS Rose Island"
@@ -28633,36 +28624,36 @@
 "AS Swains Island" : [
    "AS Swains Island"
   ],
-"AS Western District" : [
-   "AS Eastern District",
-   "AS Western District"
+"AS Western" : [
+   "AS Eastern",
+   "AS Western"
   ],
 "GU Guam" : [
    "GU Guam"
   ],
-"MP Northern Islands Municipality" : [
-   "MP Northern Islands Municipality"
+"MP Northern Islands" : [
+   "MP Northern Islands"
   ],
-"MP Rota Municipality" : [
-   "MP Rota Municipality"
+"MP Rota" : [
+   "MP Rota"
   ],
-"MP Saipan Municipality" : [
-   "MP Saipan Municipality",
-   "MP Tinian Municipality"
+"MP Saipan" : [
+   "MP Saipan",
+   "MP Tinian"
   ],
-"MP Tinian Municipality" : [
-   "MP Saipan Municipality",
-   "MP Tinian Municipality"
+"MP Tinian" : [
+   "MP Saipan",
+   "MP Tinian"
   ],
-"VI St. Croix Island" : [
-   "VI St. Croix Island"
+"VI St. Croix" : [
+   "VI St. Croix"
   ],
-"VI St. John Island" : [
-   "VI St. John Island",
-   "VI St. Thomas Island"
+"VI St. John" : [
+   "VI St. John",
+   "VI St. Thomas"
   ],
-"VI St. Thomas Island" : [
-   "VI St. John Island",
-   "VI St. Thomas Island"
+"VI St. Thomas" : [
+   "VI St. John",
+   "VI St. Thomas"
   ]
 }
