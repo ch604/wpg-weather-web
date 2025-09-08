@@ -15,7 +15,6 @@ from noaa_sdk import NOAA
 
 # for location data
 import zipcodes
-from county_adjacency.convert_data_to_json import convert_full_county_name
 
 # for almanac data
 import astral
@@ -126,9 +125,14 @@ class ZipData:
 		return None
 
 	def get_adj_counties(self):
+		"""Return FIPS codes for adjacent counties (plus own county)"""
 		if self.zipdata:
-			co = convert_full_county_name(self.zipdata['county'] + ', ' + self.zipdata['state'])
-			return json.load(open('county_adjacency/county_adjacency.json'))[co]
+			co = remove_county_suffix(self.zipdata['county'], self.zipdata['state'])
+			for i in json.load(open('county_adjacency_by_fips.json')):
+				if i['county'] == co and i['state'] == self.zipdata['state']:
+					return i['adj']
+					break
+		return None
 			
 
 # object to store weather data json arrays
@@ -259,6 +263,29 @@ def m_to_mi(i):
 def debug_msg(message):
 	timestr = time.strftime("%Y%m%d-%H:%M.")
 	print(timestr + '.' + prog + "." + ver + "." + message)
+
+def remove_county_suffix(full_name, state):
+	"""Turn 'Name County/Municipality/Borough' to 'Name'"""
+	# dont remove 'city' from VA independent cities
+	match state:
+		case "AK":
+			return ( full_name.replace(" City and Borough","")
+			 .replace(" Census Area","")
+			 .replace(" Municipality","")
+			 .replace(" Borough","")
+			)
+		case "LA":
+			return full_name.replace(" Parish","")
+		case "PR":
+			return full_name.replace(" Municipio","")
+		case "AS":
+			return full_name.replace(" District","")
+		case "MP":
+			return full_name.replace(" Municipality","")
+		case "VI":
+			return full_name.replace(" Island","")
+		case _:
+			return full_name.replace(" County","")
 
 
 ####################### initialize
