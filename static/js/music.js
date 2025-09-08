@@ -1,5 +1,6 @@
 // play mp3s from the static/audio folder in a constant shuffle loop
 const audioPlayer = document.getElementById('music-player');
+// mp3Files is already randomized from python script
 let currentIndex = 0;
 let hasStarted = false;
 
