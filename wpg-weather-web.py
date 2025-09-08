@@ -160,6 +160,9 @@ class Weather:
 		self.outlook = self.city.get_sevenday_forecast()
 		self.alerts = self.city.get_alerts()
 		return None
+
+	def get_alerts(self):
+		self.alerts = self.city.get_alerts()
 	
 	def update_time(self):
 		self.updated = datetime.now().strftime('%I:%M %p')
