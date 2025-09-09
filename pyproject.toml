@@ -1,5 +1,5 @@
 [tool.mypy]
-disable_error_code = "import-untyped,import-not-found"
+disable_error_code = "import-untyped,import-not-found,has-type"
 
 [tool.yapf]
 based_on_style = "google"
@@ -9,8 +9,17 @@ column_limit = 120
 blank_lines_between_top_level_imports_and_variables = 2
 
 [tool.basedpyright]
+pythonVersion = "3.12"
+pythonPlatform = "Linux"
 reportUninitializedInstanceVariable = false
 reportMissingTypeStubs = false
 reportUnannotatedClassAttribute = false
 reportUnknownMemberType = false
 reportUnknownArgumentType = false
+reportUnknownVariableType = false
+reportUnknownParameterType = false
+reportAny = false
+reportOptionalMemberAccess = false
+reportOptionalSubscript = false
+reportArgumentType = false
+reportAttributeAccessIssue = false

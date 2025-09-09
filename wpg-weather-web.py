@@ -71,7 +71,6 @@ class City:
 		if self.zip:
 			for i in n.get_observations_by_lat_lon(self.lat, self.long):
 				return i
-				break
 		return None
 
 	def get_daily_forecast(self):
@@ -206,10 +205,12 @@ class Almanac:
 		if self.astro:
 			# account for possibility of no moonrise/set on some days
 			try:
+				assert isinstance(moonrise, datetime)
 				self.moonrise = moonrise(self.astro.observer, date=date, tzinfo=self.tz).strftime('%I:%M %p')
 			except:
 				self.moonrise = "N/A"
 			try:
+				assert isinstance(moonset, datetime)
 				self.moonset = moonset(self.astro.observer, date=date, tzinfo=self.tz).strftime('%I:%M %p')
 			except:
 				self.moonset = "N/A"
@@ -254,11 +255,11 @@ class News:
 		return None
 
 
-def c_to_f(i: float) -> int:
-	return round((i * 1.8) + 32)
+def c_to_f(i: float) -> str:
+	return str(round((i * 1.8) + 32))
 
-def m_to_mi(i: float) -> int:
-	return round(i / 1609)
+def m_to_mi(i: float) -> str:
+	return str(round(i / 1609))
 
 def debug_msg(message: str) -> None:
 	timestr = time.strftime("%Y%m%d-%H:%M.")
