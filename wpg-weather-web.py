@@ -260,7 +260,7 @@ class ACIS:
     self.fips = fips
 
   def call_api(self, date: datetime, stat: str, best: bool) -> None:
-    """Get the daily record 'stat' from the last 50 years from 'date' from all stations in the county 'self.fips'"""
+    """Get the daily record 'stat' for the last 50 years from 'date' from all stations in the county 'self.fips'"""
     # stat is the endpoint to hit, like pcpn or maxt
     # best is the reduce target, true being max and false being min
     # eg: j.call_api("01101", datetime.now(), "snow", True)
