@@ -144,11 +144,11 @@ class ZipData:
     return None
 
 
-# object to store weather data json arrays
+# object to store weather data arrays
 class Weather:
   def __init__(self, zip: str) -> None:
-    # save self.city to reference City object and functions later
     self.city = City(zip)
+    self.acis = ACIS(self.city.fips)
     self.radarimg = self.city.get_radar_url()
 
   def get_weather(self) -> None:
@@ -256,8 +256,8 @@ class ACIS:
     self.headers = {'Content-Type': 'application/json'}
     self.fips = fips
 
-  def call_api(self, fips: str, date: datetime, stat: str, best: bool) -> None:
-    """Get the daily record 'stat' from the last 50 years from 'date' from all stations in the county 'fips'"""
+  def call_api(self, date: datetime, stat: str, best: bool) -> None:
+    """Get the daily record 'stat' from the last 50 years from 'date' from all stations in the county 'self.fips'"""
     # stat is the endpoint to hit, like pcpn or maxt
     # best is the reduce target, true being max and false being min
     # eg: j.call_api("01101", datetime.now(), "snow", True)
@@ -269,7 +269,7 @@ class ACIS:
       reduce = "min"
     yday_idx = date.timetuple().tm_yday - 1
     body = {
-      "county": fips,
+      "county": self.fips,
       "sdate": str(date.year - 50) + "-01-01",
       "edate": str(date.year) + "-12-31",
       "elems": [{
@@ -300,24 +300,24 @@ class ACIS:
     except:
       return None
 
-  def get_daily_maxt(self, fips: str, date: datetime) -> None:
+  def get_daily_maxt(self, date: datetime) -> None:
     """Record High Temp"""
-    self.call_api(fips, date, "maxt", True)
+    self.call_api(date, "maxt", True)
     return None
 
-  def get_daily_mint(self, fips: str, date: datetime) -> None:
+  def get_daily_mint(self, date: datetime) -> None:
     """Record Low Temp"""
-    self.call_api(fips, date, "mint", False)
+    self.call_api(date, "mint", False)
     return None
 
-  def get_daily_pcpn(self, fips: str, date: datetime) -> None:
+  def get_daily_pcpn(self, date: datetime) -> None:
     """Record Rainfall"""
-    self.call_api(fips, date, "pcpn", True)
+    self.call_api(date, "pcpn", True)
     return None
 
-  def get_daily_snow(self, fips: str, date: datetime) -> None:
+  def get_daily_snow(self, date: datetime) -> None:
     """Record Snowfall"""
-    self.call_api(fips, date, "snow", True)
+    self.call_api(date, "snow", True)
     return None
 
 
