@@ -7,3 +7,10 @@ indent_width = 2
 continuation_indent_width = 2
 column_limit = 120
 blank_lines_between_top_level_imports_and_variables = 2
+
+[tool.basedpyright]
+reportUninitializedInstanceVariable = false
+reportMissingTypeStubs = false
+reportUnannotatedClassAttribute = false
+reportUnknownMemberType = false
+reportUnknownArgumentType = false

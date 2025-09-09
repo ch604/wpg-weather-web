@@ -3,7 +3,7 @@
 # Updated/modified for USA by TechSavvvvy
 # Updated for web by ch604
 
-import json, os, random, sys, time
+import json, os, random, time
 from datetime import datetime
 from dateutil import tz
 
@@ -54,7 +54,7 @@ noaa_user_agent = prog + " (github.com/ch604/wpg-weather-web)"
 ####################### classes and functions
 # store city data for a given zip code, functions to call noaa api and return weather for that city.
 class City:
-	def __init__(self, zip):
+	def __init__(self, zip: str) -> None:
 		z = ZipData(zip)
 		self.zip = zip
 		self.city = z.city
@@ -112,14 +112,14 @@ class City:
 
 # translate location data from a zip code
 class ZipData:
-	def __init__(self, zip):
+	def __init__(self, zip: str) -> None:
 		if zipcodes.is_real(zip):
 			self.zipdata = zipcodes.matching(zip)[0]
 			self.state = self.zipdata['state'].upper()
 			self.city = self.zipdata['city'].upper()
 		return None
 	
-	def get_latlong_str(self):
+	def get_latlong_str(self) -> str | None:
 		if self.zipdata:
 			return self.zipdata['lat'] + "," + self.zipdata['long']
 		return None
@@ -131,18 +131,17 @@ class ZipData:
 			for i in json.load(open('county_adjacency_by_fips.json')):
 				if i['county'] == co and i['state'] == self.zipdata['state']:
 					return i['adj']
-					break
 		return None
 			
 
 # object to store weather data json arrays
 class Weather:
-	def __init__(self, zip):
+	def __init__(self, zip: str) -> None:
 		# save self.city to reference City object and functions later
 		self.city = City(zip)
 		self.radarimg = self.city.get_radar_url()
 	
-	def get_weather(self):
+	def get_weather(self) -> None:
 		debug_msg("pulling weather for %s (%s)" % (self.city.city, self.city.zip))
 		self.update_time()
 		self.current = self.city.get_current_conditions()
@@ -165,10 +164,11 @@ class Weather:
 		self.alerts = self.city.get_alerts()
 		return None
 
-	def get_alerts(self):
+	def get_alerts(self) -> None:
 		self.alerts = self.city.get_alerts()
+		return None
 	
-	def update_time(self):
+	def update_time(self) -> None:
 		self.updated = datetime.now().strftime('%I:%M %p')
 		self.forecast_date = datetime.now().strftime('%a, %b %d').upper()
 		return None
@@ -176,19 +176,19 @@ class Weather:
 
 # almanac-type data object
 class Almanac:
-	def __init__(self, zip):
+	def __init__(self, zip: str) -> None:
 		self.city = City(zip)
 		self.astro = astral.LocationInfo(self.city.city, self.city.state, self.city.timezone, self.city.lat, self.city.long)
 		self.tz = tz.gettz(self.astro.timezone)
 	
-	def get_almanac_data(self, date):
+	def get_almanac_data(self, date: datetime) -> None:
 		if self.astro:
 			self.get_sun_data(date)
 			self.get_moon_data(date)
 		#TODO get historical averages? meteostat downloads are dead
 		return None
 
-	def get_sun_data(self, date):
+	def get_sun_data(self, date: datetime) -> None:
 		if self.astro:
 			s = sun(self.astro.observer, date=date, tzinfo=self.tz)
 			# account for possibility of no sunrise/set in some areas
@@ -202,7 +202,7 @@ class Almanac:
 				self.sunset = "N/A"
 		return None
 
-	def get_moon_data(self, date):
+	def get_moon_data(self, date: datetime) -> None:
 		if self.astro:
 			# account for possibility of no moonrise/set on some days
 			try:
@@ -238,12 +238,12 @@ class Almanac:
 
 
 class News:
-	def __init__(self, url):
+	def __init__(self, url: str) -> None:
 		self.url = url
 		self.ticker = ""
 		self.speed = 300
 
-	def build_ticker(self):
+	def build_ticker(self) -> None:
 		self.feed = feedparser.parse(self.url) 
 		if len(self.feed.entries) > 0:
 			stories = [ entry.description for entry in self.feed.entries ]
@@ -254,17 +254,18 @@ class News:
 		return None
 
 
-def c_to_f(i):
+def c_to_f(i: float) -> int:
 	return round((i * 1.8) + 32)
 
-def m_to_mi(i):
+def m_to_mi(i: float) -> int:
 	return round(i / 1609)
 
-def debug_msg(message):
+def debug_msg(message: str) -> None:
 	timestr = time.strftime("%Y%m%d-%H:%M.")
 	print(timestr + '.' + prog + "." + ver + "." + message)
+	return None
 
-def remove_county_suffix(full_name, state):
+def remove_county_suffix(full_name: str, state: str) -> str:
 	"""Turn 'Name County/Municipality/Borough' to 'Name'"""
 	# dont remove 'city' from VA independent cities
 	match state:
@@ -337,7 +338,7 @@ def local_news_updater():
 ####################### routes
 # add the sixhour_time_format function to jinja2 template
 @app.template_filter("sixhour_time_format")
-def sixhour_time_format(input):
+def sixhour_time_format(input: str) -> str:
 	noaatime_fmt = '%Y-%m-%dT%H:%M:%S%z'
 	sixhourtime_fmt = '%^a, %^b %d, %l %p'
 	return datetime.strptime(input, noaatime_fmt).strftime(sixhourtime_fmt)
