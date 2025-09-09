@@ -148,7 +148,6 @@ class ZipData:
 class Weather:
   def __init__(self, zip: str) -> None:
     self.city = City(zip)
-    self.acis = ACIS(self.city.fips)
     self.radarimg = self.city.get_radar_url()
 
   def get_weather(self) -> None:
@@ -177,6 +176,10 @@ class Weather:
   def get_alerts(self) -> None:
     self.alerts = self.city.get_alerts()
     return None
+
+  def get_records(self) -> None:
+    self.acis = ACIS(self.city.fips)
+    self.acis.get_all_records(datetime.now())
 
   def update_time(self) -> None:
     self.updated = datetime.now().strftime('%I:%M %p')
@@ -299,6 +302,13 @@ class ACIS:
         return None
     except:
       return None
+
+  def get_all_records(self, date: datetime) -> None:
+    self.get_daily_maxt(date)
+    self.get_daily_mint(date)
+    self.get_daily_pcpn(date)
+    self.get_daily_snow(date)
+    return None
 
   def get_daily_maxt(self, date: datetime) -> None:
     """Record High Temp"""
