@@ -23,7 +23,7 @@ from astral.moon import moonrise, moonset, phase
 
 # for serving sites and making websocket
 from flask import Flask, render_template
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 from threading import Thread, Event
 
 ####################### variables
