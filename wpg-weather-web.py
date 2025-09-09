@@ -238,6 +238,32 @@ class Almanac:
 		return None
 
 
+class Threadex:
+	def __init__(self) -> None:
+		self.url = "https://data.rcc-acis.org"
+
+	def get_daily_min_max(self, fips: str) -> None:
+		params = {
+			'county': fips,
+			'sdate': '1970-01-01',
+			'edate': '2025-12-31',
+			'elems': [ {
+				'name': 'maxt',
+				'duration': 'dly',
+				'reduce': {
+					'add': 'date',
+					'reduce': 'max'
+				}
+			} ]
+		}
+		try:
+			f = requests.get(self.url + "MultiStnData", params)
+			if not f.ok or "error" in json.loads(f.content):
+				return None
+			json.loads(f.content)['meta']
+		except:
+			return None
+
 class News:
 	def __init__(self, url: str) -> None:
 		self.url = url
