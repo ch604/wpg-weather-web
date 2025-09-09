@@ -20,11 +20,13 @@ If you choose to enable music, you will need to interact with the page before it
 
 ## Attribution
 
-### Core
+### Code
 The original application was written by [probnot](https://github.com/probnot/wpg-weatherchan), with modifications by [TechSavvvvy](https://github.com/TechSavvvvy/wpg-weatherchan-USA) to use NOAA weather for the U S and A.
 
 ### Libraries
-This app uses [NOAA](https://github.com/paulokuong/noaa) to get the weather data and radar images from the National Weather Serivce. [Astral](https://github.com/sffjunkie/astral) is the calculation source for sunrise and sunset times. County adjacency comes from [pconrad](https://github.com/pconrad/python-county-adjacency), with data via US Census Bureau. FIPS county code translation sourced from [nokane](https://github.com/nokane/FIPS_state_county_codes), which I slammed together with county adjacency to make a nice adjacency array with FIPS codes.
+This app uses [NOAA-SDK](https://github.com/paulokuong/noaa) to get weather data and radar images from the National Weather Serivce. [Astral](https://github.com/sffjunkie/astral) is the calculation source for sunrise and sunset times. Historical weather records are pulled from [ACIS](https://www.rcc-acis.org/docs_webservices).
+
+County adjacency comes from [pconrad](https://github.com/pconrad/python-county-adjacency), with data via US Census Bureau. FIPS county code translation sourced from [nokane](https://github.com/nokane/FIPS_state_county_codes), and I slammed these together to make a static adjacency JSON file with FIPS codes.
 
 ### Media
 It also uses the fonts [VCR OSD Mono](https://www.dafont.com/vcr-osd-mono.font) and [SquareFont](https://www.dafont.com/squarefont.font). Included background music is provided by [pixabay](https://pixabay.com/music/) and is AI generated. Included loading screens are also AI generated, posited by me to Gemini 2.5 Flash.
@@ -33,4 +35,4 @@ It also uses the fonts [VCR OSD Mono](https://www.dafont.com/vcr-osd-mono.font) 
 
 This code is available under the terms of the [MIT License]
 
-This was a pet project to help me learn python, but I ended up learning about sockets, flask/jinja, and css in the meantime. As a pet project, upkeep is not guaranteed, but forking is welcome.
+This was a pet project to help me learn python, but I also ended up learning about sockets, flask/jinja, and css in the meantime. As a pet project, upkeep is not guaranteed, but forking is welcome.
