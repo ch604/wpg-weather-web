@@ -257,7 +257,7 @@ class ACIS:
     self.fips = fips
 
   def call_api(self, fips: str, date: datetime, stat: str, best: bool) -> None:
-    """Get the daily record 'stat' from the last 30 years from 'date' from all stations in the county 'fips'"""
+    """Get the daily record 'stat' from the last 50 years from 'date' from all stations in the county 'fips'"""
     # stat is the endpoint to hit, like pcpn or maxt
     # best is the reduce target, true being max and false being min
     # eg: j.call_api("01101", datetime.now(), "snow", True)
@@ -270,7 +270,7 @@ class ACIS:
     yday_idx = date.timetuple().tm_yday - 1
     body = {
       "county": fips,
-      "sdate": str(date.year - 30) + "-01-01",
+      "sdate": str(date.year - 50) + "-01-01",
       "edate": str(date.year) + "-12-31",
       "elems": [{
         "name": stat,
