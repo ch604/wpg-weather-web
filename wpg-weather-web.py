@@ -249,31 +249,77 @@ class Almanac:
     return None
 
 
-class Threadex:
-	def __init__(self) -> None:
-		self.url = "https://data.rcc-acis.org"
+class ACIS:
+  """pull data from ACIS api"""
+  def __init__(self, fips: str) -> None:
+    self.url = "https://data.rcc-acis.org/"
+    self.headers = {'Content-Type': 'application/json'}
+    self.fips = fips
 
-	def get_daily_min_max(self, fips: str) -> None:
-		params = {
-			'county': fips,
-			'sdate': '1970-01-01',
-			'edate': '2025-12-31',
-			'elems': [ {
-				'name': 'maxt',
-				'duration': 'dly',
-				'reduce': {
-					'add': 'date',
-					'reduce': 'max'
-				}
-			} ]
-		}
-		try:
-			f = requests.get(self.url + "MultiStnData", params)
-			if not f.ok or "error" in json.loads(f.content):
-				return None
-			json.loads(f.content)['meta']
-		except:
-			return None
+  def call_api(self, fips: str, date: datetime, stat: str, best: bool) -> None:
+    """Get the daily record 'stat' from the last 30 years from 'date' from all stations in the county 'fips'"""
+    # stat is the endpoint to hit, like pcpn or maxt
+    # best is the reduce target, true being max and false being min
+    # eg: j.call_api("01101", datetime.now(), "snow", True)
+    #     will set j.daily_snow and j.daily_snow_date
+    operator: typing.Callable[[int, int], bool] = lambda x, y: x > y  # Use greater than for max
+    reduce = "max"
+    if not best:
+      operator = lambda x, y: x < y  # Use less than for min
+      reduce = "min"
+    yday_idx = date.timetuple().tm_yday - 1
+    body = {
+      "county": fips,
+      "sdate": str(date.year - 30) + "-01-01",
+      "edate": str(date.year) + "-12-31",
+      "elems": [{
+        "name": stat,
+        "interval": "dly",
+        "duration": 1,
+        "smry": {
+          "add": "date",
+          "reduce": reduce
+        },
+        "smry_only": "1",
+        "groupby": "year"
+      }]
+    }
+    try:
+      f = requests.post(self.url + "MultiStnData", headers=self.headers, data=body)
+      if not f.ok or "error" in json.loads(f.content):
+        return None
+      for d in json.loads(f.content)['data']:
+        if not getattr(self, "daily_" + stat) or operator(int(d['smry'][0][yday_idx][0]), getattr(self, "daily_" + stat)):
+          setattr(self, "daily_" + stat, int(d['smry'][0][yday_idx][0]))
+          setattr(self, "daily_" + stat + "_date", d['smry'][0][yday_idx][1])
+      if not getattr(self, "daily_" + stat):
+        # we didnt get any values from the data, set N/A
+        setattr(self, "daily_" + stat, "N/A")
+        setattr(self, "daily_" + stat + "_date", "N/A")
+        return None
+    except:
+      return None
+
+  def get_daily_maxt(self, fips: str, date: datetime) -> None:
+    """Record High Temp"""
+    self.call_api(fips, date, "maxt", True)
+    return None
+
+  def get_daily_mint(self, fips: str, date: datetime) -> None:
+    """Record Low Temp"""
+    self.call_api(fips, date, "mint", False)
+    return None
+
+  def get_daily_pcpn(self, fips: str, date: datetime) -> None:
+    """Record Rainfall"""
+    self.call_api(fips, date, "pcpn", True)
+    return None
+
+  def get_daily_snow(self, fips: str, date: datetime) -> None:
+    """Record Snowfall"""
+    self.call_api(fips, date, "snow", True)
+    return None
+
 
 class News:
   def __init__(self, url: str) -> None:
