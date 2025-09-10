@@ -3,7 +3,7 @@
 # Updated/modified for USA by TechSavvvvy
 # Updated for web by ch604
 
-import json, os, random, time
+import concurrent.futures, json, os, random, time
 from datetime import datetime
 from dateutil import tz
 from threading import Thread, Event
@@ -152,8 +152,14 @@ class Weather:
 
   def get_weather(self) -> None:
     debug_msg("pulling weather for %s (%s)" % (self.city.city, self.city.zip))
-    self.update_time()
-    self.current = self.city.get_current_conditions()
+    pool = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+    pool.submit(self.update_time)  # pyright: ignore[reportUnusedCallResult]
+    pool.submit(self.set_current)  # pyright: ignore[reportUnusedCallResult]
+    pool.submit(self.set_hourly)  # pyright: ignore[reportUnusedCallResult]
+    pool.submit(self.set_forecast)  # pyright: ignore[reportUnusedCallResult]
+    pool.submit(self.set_outlook)  # pyright: ignore[reportUnusedCallResult]
+    pool.submit(self.get_alerts)  # pyright: ignore[reportUnusedCallResult]
+    pool.shutdown(wait=True)
     self.visibility = m_to_mi(int(self.current['visibility']['value']))
     if self.current['dewpoint']['value']:
       self.dewpoint = c_to_f(float(str(self.current['dewpoint']['value'])))
@@ -167,11 +173,6 @@ class Weather:
       self.windchill = c_to_f(float(str(self.current['windChill']['value'])))
     else:
       self.windchill = ""
-    self.hourly = self.city.get_hourly_forecast()
-    self.forecast = self.city.get_daily_forecast()
-    self.outlook = self.city.get_sevenday_forecast()
-    self.get_alerts()
-    return None
 
   def get_alerts(self) -> None:
     self.alerts = self.city.get_alerts()
@@ -179,6 +180,18 @@ class Weather:
   def get_records(self) -> None:
     self.acis = ACIS(self.city.fips)
     self.acis.get_all_records(datetime.now())
+
+  def set_current(self) -> None:
+    self.current = self.city.get_current_conditions()
+
+  def set_forecast(self) -> None:
+    self.forecast = self.city.get_daily_forecast()
+
+  def set_hourly(self) -> None:
+    self.hourly = self.city.get_hourly_forecast()
+
+  def set_outlook(self) -> None:
+    self.outlook = self.city.get_sevenday_forecast()
 
   def update_time(self) -> None:
     self.updated = datetime.now().strftime('%I:%M %p')
@@ -283,11 +296,12 @@ class ACIS:
       return None
 
   def get_all_records(self, date: datetime) -> None:
-    self.get_daily_maxt(date)
-    self.get_daily_mint(date)
-    self.get_daily_pcpn(date)
-    self.get_daily_snow(date)
-    return None
+    pool = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+    pool.submit(self.get_daily_maxt, date)  # pyright: ignore[reportUnusedCallResult]
+    pool.submit(self.get_daily_mint, date)  # pyright: ignore[reportUnusedCallResult]
+    pool.submit(self.get_daily_pcpn, date)  # pyright: ignore[reportUnusedCallResult]
+    pool.submit(self.get_daily_snow, date)  # pyright: ignore[reportUnusedCallResult]
+    pool.shutdown(wait=True)
 
   def get_daily_maxt(self, date: datetime) -> None:
     """Record High Temp"""
