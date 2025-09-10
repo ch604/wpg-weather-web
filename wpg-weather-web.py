@@ -23,7 +23,7 @@ from astral.sun import sun
 from astral.moon import moonrise, moonset, phase
 
 # for serving sites and making websocket
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 from threading import Thread, Event
 
@@ -398,6 +398,9 @@ thread_weather = Thread()
 thread_news = Thread()
 thread_stop_event = Event()
 
+# track client connections
+clients = set()
+
 ####################### threaded functions
 def local_weather_updater():
   while not thread_stop_event.is_set():
@@ -465,17 +468,22 @@ def weather() -> str:
 def connect() -> None:
   global thread_weather
   global thread_news
-  print('client connected')
+  debug_msg(f"client {request.sid} connected")
+  clients.add(request.sid)
   if not thread_weather.is_alive():
-    print('starting weather thread')
+    debug_msg('starting weather thread')
     thread_weather = socketio.start_background_task(local_weather_updater)
   if not thread_news.is_alive():
-    print('starting news thread')
+    debug_msg('starting news thread')
     thread_news = socketio.start_background_task(local_news_updater)
 
 @socketio.on('disconnect')
-def disconnect():
-  print('Client disconnected')
+def disconnect() -> None:
+  debug_msg(f"Client {request.sid} disconnected")
+  clients.discard(request.sid)
+  if not clients:
+    debug_msg('No clients remaining, stopping threads')
+    thread_stop_event.set()
 
 ####################### start the webserver
 socketio.run(app, debug=True)
