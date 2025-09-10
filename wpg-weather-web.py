@@ -30,7 +30,7 @@ from flask_socketio import SocketIO
 ####################### variables
 prog = "wpg-weather-web"
 title = "⛅ WPG WEATHER CHANNEL"
-ver = "3.1"
+ver = "3.2"
 
 ## "music" Enables or disables music player, ON to turn it on, and anyhing else to disable it.
 music = os.getenv('WPG_MUSIC', default="ON")
