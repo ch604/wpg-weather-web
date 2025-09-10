@@ -1,10 +1,10 @@
 FROM python:3.12-slim
 
-ADD wpg-weather-web.py .
-ADD templates .
-ADD static .
-ADD county_adjacency_by_fips.json
-ADD requirements.txt .
+RUN mkdir ./templates ./static
+
+COPY ["wpg-weather-web.py", "county_adjacency_by_fips.json", "requirements.txt", "./"]
+COPY templates/ ./templates/
+COPY static/ ./templates/
 
 RUN pip install -r requirements.txt
 
