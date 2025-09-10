@@ -3,9 +3,10 @@
 # Updated/modified for USA by TechSavvvvy
 # Updated for web by ch604
 
-import json, os, random, time, typing
+import json, os, random, time
 from datetime import datetime
 from dateutil import tz
+from typing import Any, Callable
 
 # for rss feed and generic api access
 import feedparser, requests
@@ -170,7 +171,7 @@ class Weather:
     self.hourly = self.city.get_hourly_forecast()
     self.forecast = self.city.get_daily_forecast()
     self.outlook = self.city.get_sevenday_forecast()
-    self.alerts = self.city.get_alerts()
+    self.get_alerts()
     return None
 
   def get_alerts(self) -> None:
@@ -198,12 +199,11 @@ class Almanac:
     if self.astro:
       self.get_sun_data(date)
       self.get_moon_data(date)
-    #TODO get historical averages? meteostat downloads are dead
     return None
 
   def get_sun_data(self, date: datetime) -> None:
     if self.astro:
-      s = sun(self.astro.observer, date=date, tzinfo=self.tz)
+      s = sun(self.astro.observer, date, tzinfo=self.tz)
       # account for possibility of no sunrise/set in some areas
       try:
         self.sunrise = s['sunrise'].strftime('%I:%M %p')
@@ -265,37 +265,22 @@ class ACIS:
     # best is the reduce target, true being max and false being min
     # eg: j.call_api("01101", datetime.now(), "snow", True)
     #     will set j.daily_snow and j.daily_snow_date
-    operator: typing.Callable[[int, int], bool] = lambda x, y: x > y  # Use greater than for max
+    operator: Callable[[float, float], bool] = lambda x, y: x > y  # Use greater than for max
     reduce = "max"
     if not best:
       operator = lambda x, y: x < y  # Use less than for min
       reduce = "min"
     yday_idx = date.timetuple().tm_yday - 1
-    body = {
-      "county": self.fips,
-      "sdate": str(date.year - 50) + "-01-01",
-      "edate": str(date.year) + "-12-31",
-      "elems": [{
-        "name": stat,
-        "interval": "dly",
-        "duration": 1,
-        "smry": {
-          "add": "date",
-          "reduce": reduce
-        },
-        "smry_only": "1",
-        "groupby": "year"
-      }]
-    }
+    body = '{"county": "' + self.fips + '", "sdate": "' + str(date.year - 50) + '-01-01", "edate": "' + str(date.year) + '-12-31", "elems": [{"name": "' + stat + '", "interval": "dly", "duration": 1, "smry": {"add": "date", "reduce": "' + reduce + '"}, "smry_only": "1", "groupby": "year"}]}'
     try:
       f = requests.post(self.url + "MultiStnData", headers=self.headers, data=body)
       if not f.ok or "error" in json.loads(f.content):
         return None
       for d in json.loads(f.content)['data']:
-        if not getattr(self, "daily_" + stat) or operator(int(d['smry'][0][yday_idx][0]), getattr(self, "daily_" + stat)):
-          setattr(self, "daily_" + stat, int(d['smry'][0][yday_idx][0]))
-          setattr(self, "daily_" + stat + "_date", d['smry'][0][yday_idx][1])
-      if not getattr(self, "daily_" + stat):
+        if not getattr(self, "daily_" + stat, False) or operator(float(d['smry'][0][yday_idx][0]), getattr(self, "daily_" + stat)):
+          setattr(self, "daily_" + stat, float(d['smry'][0][yday_idx][0]))
+          setattr(self, "daily_" + stat + "_date", d['smry'][0][yday_idx][1].split('-')[0])
+      if not getattr(self, "daily_" + stat, False):
         # we didnt get any values from the data, set N/A
         setattr(self, "daily_" + stat, "N/A")
         setattr(self, "daily_" + stat + "_date", "N/A")
@@ -313,11 +298,15 @@ class ACIS:
   def get_daily_maxt(self, date: datetime) -> None:
     """Record High Temp"""
     self.call_api(date, "maxt", True)
+    if getattr(self, "daily_maxt", False) and type(self.daily_maxt) == float:
+      self.daily_maxt = int(round(self.daily_maxt))
     return None
 
   def get_daily_mint(self, date: datetime) -> None:
     """Record Low Temp"""
     self.call_api(date, "mint", False)
+    if getattr(self, "daily_mint", False) and type(self.daily_mint) == float:
+      self.daily_mint = int(round(self.daily_mint))
     return None
 
   def get_daily_pcpn(self, date: datetime) -> None:
@@ -415,6 +404,7 @@ def local_weather_updater():
     # sleep for 15 minutes before updating
     socketio.sleep(900)
     weather_data.get_weather()
+    weather_data.get_records()
     almanac_data.get_almanac_data(datetime.now())
     # re-render the slides and emit that html to clients
     with app.app_context():
@@ -439,7 +429,7 @@ def sixhour_time_format(input: str) -> str:
 
 # export global variables to jinja2
 @app.context_processor
-def variable_adder():
+def variable_adder() -> dict[str, Any] :
   return {
    'title': title,
    'prog': prog,
@@ -453,13 +443,14 @@ def variable_adder():
 
 # main page
 @app.route('/')
-def loading():
+def loading() -> str:
   return render_template('loading.j2', **locals())
 
 @app.route('/weather')
-def weather():
+def weather() -> str:
   random.shuffle(music_files)
   weather_data.get_weather()
+  weather_data.get_records()
   almanac_data.get_almanac_data(datetime.now())
   news_data.build_ticker()
 
@@ -471,7 +462,7 @@ def weather():
 
 # socket listeners
 @socketio.on('connect')
-def connect():
+def connect() -> None:
   global thread_weather
   global thread_news
   print('client connected')

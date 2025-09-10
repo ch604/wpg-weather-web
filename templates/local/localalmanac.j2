@@ -1,7 +1,11 @@
 <div class="slider-item local-averages">
 	<!--local hi/lo averages-->
 	{% include 'local/localheader.j2' %}
-	<p style="text-align:center;">LOCAL AVERAGES FOR {{ weather_data.forecast_date }}</p>
+	<p style="text-align:center;">LOCAL RECORDS FOR {{ weather_data.forecast_date }}</p>
+	<p>HI: {{ weather_data.acis.daily_maxt }} F IN {{ weather_data.acis.daily_maxt_date }}</p>
+	<p>LO: {{ weather_data.acis.daily_mint }} F IN {{ weather_data.acis.daily_mint_date }}</p>
+	<p>RAIN: {{ weather_data.acis.daily_pcpn }} INCHES IN {{ weather_data.acis.daily_pcpn_date }}</p>
+	<p>SNOW: {{ weather_data.acis.daily_snow }} INCHES IN {{ weather_data.acis.daily_snow_date }}</p>
 </div>
 <div class="slider-item local-almanac">
 	<!--local sunrise/sunset, moon phase forecast-->

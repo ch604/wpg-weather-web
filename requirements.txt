@@ -3,6 +3,6 @@ feedparser
 flask
 flask-socketio
 noaa_sdk
-threading
+python-dateutil
 typing
 zipcodes
