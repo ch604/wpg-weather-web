@@ -1,7 +1,7 @@
 astral
 feedparser
 flask
-flask-socketio
+flask-socketio>=5.0.0
 gunicorn
 noaa_sdk
 python-dateutil
