@@ -6,6 +6,7 @@
 import json, os, random, time
 from datetime import datetime
 from dateutil import tz
+from threading import Thread, Event
 from typing import Any, Callable
 
 # for rss feed and generic api access
@@ -25,7 +26,6 @@ from astral.moon import moonrise, moonset, phase
 # for serving sites and making websocket
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
-from threading import Thread, Event
 
 ####################### variables
 prog = "wpg-weather-web"
@@ -81,7 +81,7 @@ class City:
       return n.get_forecasts(self.zip, 'US', type='forecast')
     return None
 
-  def get_sevenday_forecast(self):
+  def get_sevenday_forecast(self) -> list[Any] | None:
     # returns a json array of upcoming day forecasts, excluding today
     if self.zip:
       res = n.get_forecasts(self.zip, 'US', type='forecast')
@@ -118,14 +118,13 @@ class ZipData:
       self.zipdata = zipcodes.matching(zip)[0]
       self.state = self.zipdata['state'].upper()
       self.city = self.zipdata['city'].upper()
-    return None
 
-  def get_latlong_str(self) -> str | None:
+  def get_latlong_str(self) -> (str | None):
     if self.zipdata:
       return self.zipdata['lat'] + "," + self.zipdata['long']
     return None
 
-  def get_fips(self):
+  def get_fips(self) -> (str | None):
     """Return FIPS codes for county containing zip"""
     if self.zipdata:
       co = remove_county_suffix(self.zipdata['county'], self.zipdata['state'])
@@ -135,7 +134,7 @@ class ZipData:
     return None
 
 
-  def get_adj_counties(self):
+  def get_adj_counties(self) -> (list[str] | None):
     """Return FIPS codes for adjacent counties (plus own county)"""
     if self.zipdata:
       co = remove_county_suffix(self.zipdata['county'], self.zipdata['state'])
@@ -176,7 +175,6 @@ class Weather:
 
   def get_alerts(self) -> None:
     self.alerts = self.city.get_alerts()
-    return None
 
   def get_records(self) -> None:
     self.acis = ACIS(self.city.fips)
@@ -185,7 +183,6 @@ class Weather:
   def update_time(self) -> None:
     self.updated = datetime.now().strftime('%I:%M %p')
     self.forecast_date = datetime.now().strftime('%a, %b %d').upper()
-    return None
 
 
 # almanac-type data object
@@ -199,7 +196,6 @@ class Almanac:
     if self.astro:
       self.get_sun_data(date)
       self.get_moon_data(date)
-    return None
 
   def get_sun_data(self, date: datetime) -> None:
     if self.astro:
@@ -213,7 +209,6 @@ class Almanac:
         self.sunset = s['sunset'].strftime('%I:%M %p')
       except:
         self.sunset = "N/A"
-    return None
 
   def get_moon_data(self, date: datetime) -> None:
     if self.astro:
@@ -228,7 +223,7 @@ class Almanac:
         self.moonset = moonset(self.astro.observer, date=date, tzinfo=self.tz).strftime('%I:%M %p')
       except:
         self.moonset = "N/A"
-      match round(phase(date=date)):
+      match round(phase(date)):
         case 0:
           self.phase = "New"
         case num if num < 7:
@@ -249,7 +244,6 @@ class Almanac:
           self.phase = "New"
         case _:
           pass
-    return None
 
 
 class ACIS:
