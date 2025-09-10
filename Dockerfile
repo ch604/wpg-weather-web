@@ -4,7 +4,7 @@ RUN mkdir ./templates ./static
 
 COPY ["wpg-weather-web.py", "county_adjacency_by_fips.json", "requirements.txt", "./"]
 COPY templates/ ./templates/
-COPY static/ ./templates/
+COPY static/ ./static/
 
 RUN pip install -r requirements.txt
 
