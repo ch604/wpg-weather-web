@@ -1,6 +1,7 @@
 services:
   wpg-weather-web:
-    container_name: ghcr.io/ch604/wpg-weather-web:latest
+    image: ghcr.io/ch604/wpg-weather-web:latest
+    container_name: wpg-weather-web
     restart: unless-stopped
     ports:
       - 5000:5000
