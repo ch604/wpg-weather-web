@@ -8,4 +8,4 @@ COPY static/ ./static/
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "./wpg-weather-web.py"]
+CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:5000", "wpg-weather-web:app"]
