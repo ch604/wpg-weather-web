@@ -8,11 +8,11 @@ This app creates the old-school looking weather channel that was common on Winni
 
 ## Usage
 
-For docker, dowload and build the Dockerfile, then run it after exporting variables for your zip code and news feed.
+For docker/podman compose or portainer, download the docker-compose.yaml file and update your ENV variables. If you like, you can map your own volumes to 'static/audio' and/or 'static/img' to change random music and random loading screens respectively.
 
-For standalone, just run the python script after installing the requirements listed in the txt file.
+For standalone, just run the python script after pip installing the requirements listed in requirements.txt. You can load up the 'static/img' directory with random loading screens (or just one) and the 'static/audio' directory with your fav weather muzak in mp3 format.
 
-You can load up the 'static/img' directory with random loading screens (or just one) and the 'static/audio' directory with your fav weather muzak in mp3 format.
+Default is to serve on localhost:5000.
 
 ### Music
 
