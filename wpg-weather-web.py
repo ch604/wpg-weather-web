@@ -494,4 +494,4 @@ def disconnect() -> None:
     thread_stop_event.set()
 
 ####################### start the webserver
-socketio.run(app, debug=True)
+socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
