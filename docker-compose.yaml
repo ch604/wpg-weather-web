@@ -2,9 +2,6 @@ services:
   wpg-weather-web:
     container_name: ghcr.io/ch604/wpg-weather-web:latest
     restart: unless-stopped
-    build:
-      context: .
-      dockerfile: ./Dockerfile
     ports:
       - 5000:5000
     dns:
