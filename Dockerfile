@@ -10,4 +10,4 @@ RUN pip install -r requirements.txt
 
 EXPOSE 5000
 
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:5000", "--access-logfile", "-", "wpg-weather-web:app"]
+CMD ["gunicorn", "-k", "eventlet", "-w", "1", "-b", "0.0.0.0:5000", "--access-logfile", "-", "wpg-weather-web:app"]
